@@ -83,6 +83,30 @@ public class Graph<T> {
         return marks[nIndex];
     }
 
+    public List<T> getNeighbors(T node) throws IllegalArgumentException, NullPointerException {
+        if (edges == null) {
+            throw new NullPointerException("Nodes must be finalized first.");
+        }
+
+        int nIndex = nodes.indexOf(node);
+        if (nIndex == -1) {
+            throw new IllegalArgumentException("Node is not present in the graph.");
+        }
+
+        ArrayList<T> neighbors = new ArrayList<>();
+
+        for (int i = 0; i < edges.length; i++) {
+            if (i == nIndex) {
+                continue;
+            }
+            if (edges[nIndex][i] != null) {
+                neighbors.add(nodes.get(i));
+            }
+        }
+
+        return neighbors;
+    }
+
     public List<T> getNodes() {
         return nodes;
     }
