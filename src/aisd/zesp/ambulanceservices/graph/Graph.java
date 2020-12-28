@@ -78,4 +78,8 @@ public class Graph<T> {
 
         return marks[nIndex];
     }
+
+    public List<T> getNodes() {
+        return nodes;
+    }
 }
