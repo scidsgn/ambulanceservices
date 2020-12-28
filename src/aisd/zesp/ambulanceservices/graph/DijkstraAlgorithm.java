@@ -1,6 +1,7 @@
 package aisd.zesp.ambulanceservices.graph;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DijkstraAlgorithm<T> {
@@ -9,17 +10,77 @@ public class DijkstraAlgorithm<T> {
     private final List<T> previousNodes;
 
     public DijkstraAlgorithm(Graph<T> graph) {
-        int n = graph.getNodes().size();
-
         this.graph = graph;
-        distances = new Double[n];
-        previousNodes = new ArrayList<T>(n);
+        distances = new Double[graph.size()];
+        previousNodes = new ArrayList<>();
     }
 
-    public List<T> getPath(T target) {
-        List<T> nodes = graph.getNodes();
+    private T getNextNode() {
+        double minDist = Double.POSITIVE_INFINITY;
+        T minNode = null;
 
-        int nIndex = nodes.indexOf(target);
+        for (int i = 0; i < graph.size(); i++) {
+            T node = graph.getNode(i);
+
+            if (graph.getMark(node)) {
+                continue;
+            }
+
+            double nodeDist = distances[i];
+            if (nodeDist < minDist) {
+                minDist = nodeDist;
+                minNode = node;
+            }
+        }
+
+        return minNode;
+    }
+
+    private void iterateOverNeighbors(T node) {
+        List<T> neighbors = graph.getNeighbors(node);
+        double baseDistance = distances[graph.indexOf(node)];
+
+        graph.setMark(node, true);
+
+        for (T neighbor: neighbors) {
+            if (graph.getMark(neighbor)) {
+                continue;
+            }
+
+            int nIndex = graph.indexOf(neighbor);
+            double length = graph.getLength(node, neighbor);
+
+            if (baseDistance + length < distances[nIndex]) {
+                distances[nIndex] = baseDistance + length;
+                previousNodes.set(nIndex, node);
+            }
+        }
+    }
+
+    public void execute(T source) throws IllegalArgumentException {
+        int nIndex = graph.indexOf(source);
+        if (nIndex == -1) {
+            throw new IllegalArgumentException("Node is not present in the graph.");
+        }
+
+        Arrays.fill(distances, Double.POSITIVE_INFINITY);
+        distances[nIndex] = 0.0;
+
+        previousNodes.clear();
+        for (int i = 0; i < graph.size(); i++) {
+            previousNodes.add(null);
+        }
+
+        graph.setAllMarks(false);
+
+        T nextNode;
+        while ((nextNode = getNextNode()) != null) {
+            iterateOverNeighbors(nextNode);
+        }
+    }
+
+    public List<T> getPath(T target) throws IllegalArgumentException {
+        int nIndex = graph.indexOf(target);
         if (nIndex == -1) {
             throw new IllegalArgumentException("Node is not present in the graph.");
         }
@@ -31,9 +92,9 @@ public class DijkstraAlgorithm<T> {
         List<T> path = new ArrayList<>();
 
         do {
-            path.add(nodes.get(nIndex));
+            path.add(graph.getNode(nIndex));
 
-            nIndex = nodes.indexOf(previousNodes.get(nIndex));
+            nIndex = graph.indexOf(previousNodes.get(nIndex));
         } while (nIndex != -1);
 
         return path;
