@@ -108,6 +108,10 @@ public class Graph<T> {
         return neighbors;
     }
 
+    public T getNode(int index) {
+        return nodes.get(index);
+    }
+
     public List<T> getNodes() {
         return nodes;
     }
@@ -160,6 +164,10 @@ public class Graph<T> {
         return pathLength;
     }
 
+    public int indexOf(T node) {
+        return nodes.indexOf(node);
+    }
+
     public void setAllMarks(boolean mark) throws NullPointerException {
         if (marks == null) {
             throw new NullPointerException("Nodes must be finalized first.");
@@ -179,5 +187,9 @@ public class Graph<T> {
         }
 
         marks[nIndex] = mark;
+    }
+
+    public int size() {
+        return nodes.size();
     }
 }
