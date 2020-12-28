@@ -23,8 +23,17 @@ class GraphTest {
         graph.addNode(5);
     }
 
+    void addDefaultConnections() {
+        graph.finalizeNodes();
+
+        for (int i = 1; i <= 3; i++) {
+            graph.connectNodes(i, i + 1, 2 * i + 1);
+            graph.connectNodes(i, i + 2, 10);
+        }
+    }
+
     @Test
-    void addNodeWillSucceed() {
+    void addNodeSucceeds() {
         addDefaultNodes();
 
         List<Integer> nodes = graph.getNodes();
@@ -55,5 +64,42 @@ class GraphTest {
         graph.finalizeNodes();
 
         assertThrows(NullPointerException.class, () -> graph.addNode(6));
+    }
+
+    @Test
+    void connectNodesSucceeds() {
+        addDefaultNodes();
+        addDefaultConnections();
+
+        for (int i = 1; i <= 3; i++) {
+            assertEquals(2 * i + 1, graph.getLength(i, i + 1));
+            assertEquals(10, graph.getLength(i, i + 2));
+
+            assertEquals(2 * i + 1, graph.getLength(i + 1, i));
+            assertEquals(10, graph.getLength(i + 2, i));
+        }
+    }
+
+    @Test
+    void connectNodesThrowsBeforeFinalizing() {
+        addDefaultNodes();
+
+        assertThrows(NullPointerException.class, () -> graph.connectNodes(1, 3, 6));
+    }
+
+    @Test
+    void connectNodesThrowsOnInvalidNodes() {
+        addDefaultNodes();
+        addDefaultConnections();
+
+        assertThrows(IllegalArgumentException.class, () -> graph.connectNodes(1, 6, 6));
+    }
+
+    @Test
+    void connectNodesThrowsOnAlreadyConnected() {
+        addDefaultNodes();
+        addDefaultConnections();
+
+        assertThrows(IllegalArgumentException.class, () -> graph.connectNodes(1, 3, 6));
     }
 }
