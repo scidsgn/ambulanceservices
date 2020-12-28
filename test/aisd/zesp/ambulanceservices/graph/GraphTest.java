@@ -102,4 +102,31 @@ class GraphTest {
 
         assertThrows(IllegalArgumentException.class, () -> graph.connectNodes(1, 3, 6));
     }
+
+    @Test
+    void finalizeNodesSucceeds() {
+        addDefaultNodes();
+
+        assertDoesNotThrow(() -> graph.finalizeNodes());
+    }
+
+    @Test
+    void finalizeNodesThrowsOnEmptyGraph() {
+        assertThrows(IllegalArgumentException.class, () -> graph.finalizeNodes());
+    }
+
+    @Test
+    void getLengthThrowsBeforeFinalizing() {
+        addDefaultNodes();
+
+        assertThrows(NullPointerException.class, () -> graph.getLength(1, 2));
+    }
+
+    @Test
+    void getLengthThrowsOnInvalidNodes() {
+        addDefaultNodes();
+        addDefaultConnections();
+
+        assertThrows(IllegalArgumentException.class, () -> graph.getLength(1, 6));
+    }
 }
