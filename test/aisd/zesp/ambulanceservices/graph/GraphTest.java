@@ -32,6 +32,14 @@ class GraphTest {
         }
     }
 
+    void addDefaultMarks() {
+        graph.setMark(1, true);
+        graph.setMark(2, true);
+        graph.setMark(3, false);
+        graph.setMark(4, false);
+        graph.setMark(5, true);
+    }
+
     @Test
     void addNodeSucceeds() {
         addDefaultNodes();
@@ -131,6 +139,34 @@ class GraphTest {
     }
 
     @Test
+    void getMarkSucceeds() {
+        addDefaultNodes();
+        graph.finalizeNodes();
+        addDefaultMarks();
+
+        boolean[] marks = {true, true, false, false, true};
+
+        for (int i = 1; i <= 5; i++) {
+            assertEquals(marks[i - 1], graph.getMark(i));
+        }
+    }
+
+    @Test
+    void getMarkThrowsBeforeFinalizing() {
+        addDefaultNodes();
+
+        assertThrows(NullPointerException.class, () -> graph.getMark(2));
+    }
+
+    @Test
+    void getMarkThrowsOnInvalidNodes() {
+        addDefaultNodes();
+        graph.finalizeNodes();
+
+        assertThrows(IllegalArgumentException.class, () -> graph.getMark(6));
+    }
+
+    @Test
     void getNeighborsSucceeds() {
         addDefaultNodes();
         addDefaultConnections();
@@ -157,6 +193,29 @@ class GraphTest {
         addDefaultConnections();
 
         assertThrows(IllegalArgumentException.class, () -> graph.getNeighbors(6));
+    }
+
+    @Test
+    void getNodesSucceeds() {
+        addDefaultNodes();
+        graph.finalizeNodes();
+        addDefaultMarks();
+
+        Integer[] allNodes = {1, 2, 3, 4, 5};
+        Integer[] trueNodes = {1, 2, 5};
+        Integer[] falseNodes = {3, 4};
+
+        assertArrayEquals(allNodes, graph.getNodes().toArray());
+        assertArrayEquals(trueNodes, graph.getNodes(true).toArray());
+        assertArrayEquals(falseNodes, graph.getNodes(false).toArray());
+    }
+
+    @Test
+    void getNodesWithMarkThrowsBeforeFinalizing() {
+        addDefaultNodes();
+
+        assertThrows(NullPointerException.class, () -> graph.getNodes(true));
+        assertThrows(NullPointerException.class, () -> graph.getNodes(false));
     }
 
     @Test
@@ -217,5 +276,39 @@ class GraphTest {
         Integer[] path = {1, 5};
 
         assertThrows(NullPointerException.class, () -> graph.getPathLength(path));
+    }
+
+    @Test
+    void setAllMarksSucceeds() {
+        addDefaultNodes();
+        graph.finalizeNodes();
+
+        graph.setAllMarks(true);
+
+        for (int i = 1; i <= 5; i++) {
+            assertTrue(graph.getMark(i));
+        }
+    }
+
+    @Test
+    void setAllMarksThrowsBeforeFinalizing() {
+        addDefaultNodes();
+
+        assertThrows(NullPointerException.class, () -> graph.setAllMarks(true));
+    }
+
+    @Test
+    void setMarkThrowsBeforeFinalizing() {
+        addDefaultNodes();
+
+        assertThrows(NullPointerException.class, () -> graph.setMark(1, true));
+    }
+
+    @Test
+    void setMarkThrowsOnInvalidNodes() {
+        addDefaultNodes();
+        graph.finalizeNodes();
+
+        assertThrows(IllegalArgumentException.class, () -> graph.setMark(6, true));
     }
 }

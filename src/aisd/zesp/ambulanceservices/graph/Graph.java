@@ -72,7 +72,7 @@ public class Graph<T> {
     }
 
     public boolean getMark(T node) throws IllegalArgumentException, NullPointerException {
-        if (edges == null) {
+        if (marks == null) {
             throw new NullPointerException("Nodes must be finalized first.");
         }
 
@@ -112,7 +112,11 @@ public class Graph<T> {
         return nodes;
     }
 
-    public List<T> getNodes(boolean mark) {
+    public List<T> getNodes(boolean mark) throws NullPointerException {
+        if (marks == null) {
+            throw new NullPointerException("Nodes must be finalized first.");
+        }
+
         return nodes.stream().filter(
                 node -> getMark(node) == mark
         ).collect(Collectors.toList());
@@ -154,5 +158,26 @@ public class Graph<T> {
         }
 
         return pathLength;
+    }
+
+    public void setAllMarks(boolean mark) throws NullPointerException {
+        if (marks == null) {
+            throw new NullPointerException("Nodes must be finalized first.");
+        }
+
+        Arrays.fill(marks, mark);
+    }
+
+    public void setMark(T node, boolean mark) throws IllegalArgumentException, NullPointerException {
+        if (marks == null) {
+            throw new NullPointerException("Nodes must be finalized first.");
+        }
+
+        int nIndex = nodes.indexOf(node);
+        if (nIndex == -1) {
+            throw new IllegalArgumentException("Node is not present in the graph.");
+        }
+
+        marks[nIndex] = mark;
     }
 }
