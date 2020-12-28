@@ -129,4 +129,93 @@ class GraphTest {
 
         assertThrows(IllegalArgumentException.class, () -> graph.getLength(1, 6));
     }
+
+    @Test
+    void getNeighborsSucceeds() {
+        addDefaultNodes();
+        addDefaultConnections();
+
+        Integer[][] neighbors1 = {
+                {2, 3}, {1, 3, 4}, {1, 2, 4, 5}, {2, 3}, {3}
+        };
+
+        for (int i = 1; i <= 5; i++) {
+            assertArrayEquals(neighbors1[i - 1], graph.getNeighbors(i).toArray());
+        }
+    }
+
+    @Test
+    void getNeighborsThrowsBeforeFinalizing() {
+        addDefaultNodes();
+
+        assertThrows(NullPointerException.class, () -> graph.getNeighbors(1));
+    }
+
+    @Test
+    void getNeighborsThrowsOnInvalidNode() {
+        addDefaultNodes();
+        addDefaultConnections();
+
+        assertThrows(IllegalArgumentException.class, () -> graph.getNeighbors(6));
+    }
+
+    @Test
+    void getPathLengthSucceeds() {
+        addDefaultNodes();
+        addDefaultConnections();
+
+        Integer[][] paths = {
+                {1, 2}, {2, 3}, {4, 3},
+                {1, 3, 4}, {5, 3, 4, 2, 1}
+        };
+        int[] lengths = {
+                3, 5, 7,
+                17, 30
+        };
+
+        for (int i = 0; i < paths.length; i++) {
+            assertEquals(lengths[i], graph.getPathLength(paths[i]));
+        }
+    }
+
+    @Test
+    void getPathThrowsBeforeFinalizing() {
+        addDefaultNodes();
+
+        Integer[] path = {1, 2, 3};
+
+        assertThrows(NullPointerException.class, () -> graph.getPathLength(path));
+    }
+
+    @Test
+    void getPathThrowsOnInvalidPathNodeCount() {
+        addDefaultNodes();
+        addDefaultConnections();
+
+        Integer[] path0 = {};
+        Integer[] path1 = {1};
+
+        assertThrows(IllegalArgumentException.class, () -> graph.getPathLength(path0));
+        assertThrows(IllegalArgumentException.class, () -> graph.getPathLength(path1));
+    }
+
+    @Test
+    void getPathThrowsOnInvalidNodes() {
+        addDefaultNodes();
+        addDefaultConnections();
+
+        Integer[] path = {1, 2, 3, 6};
+
+        assertThrows(IllegalArgumentException.class, () -> graph.getPathLength(path));
+    }
+
+    @Test
+    void getPathThrowsOnInvalidConnections() {
+        addDefaultNodes();
+        addDefaultConnections();
+
+        Integer[] path = {1, 5};
+
+        assertThrows(NullPointerException.class, () -> graph.getPathLength(path));
+    }
 }
