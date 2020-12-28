@@ -35,6 +35,10 @@ public class Graph<T> {
             throw new IllegalArgumentException("Node(s) are not present in the graph.");
         }
 
+        if (edges[n1Index][n2Index] != null) {
+            throw new IllegalArgumentException("Nodes are already connected.");
+        }
+
         edges[n1Index][n2Index] = length;
         edges[n2Index][n1Index] = length;
     }
