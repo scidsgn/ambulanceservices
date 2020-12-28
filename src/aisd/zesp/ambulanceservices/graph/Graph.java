@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class Graph<T> {
     private Double[][] edges = null;
     private boolean[] marks = null;
-    private List<T> nodes = new ArrayList<>();
+    private final List<T> nodes = new ArrayList<>();
 
     public void addNode(T node) throws IllegalArgumentException, NullPointerException {
         if (edges != null) {
