@@ -3,6 +3,7 @@ package aisd.zesp.ambulanceservices.graph;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Graph<T> {
     private Double[][] edges = null;
@@ -109,5 +110,49 @@ public class Graph<T> {
 
     public List<T> getNodes() {
         return nodes;
+    }
+
+    public List<T> getNodes(boolean mark) {
+        return nodes.stream().filter(
+                node -> getMark(node) == mark
+        ).collect(Collectors.toList());
+    }
+
+    public double getPathLength(T[] path) {
+        return getPathLength(Arrays.asList(path));
+    }
+
+    public double getPathLength(List<T> path) throws IllegalArgumentException, NullPointerException {
+        if (edges == null) {
+            throw new NullPointerException("Nodes must be finalized first.");
+        }
+        if (path == null) {
+            throw new IllegalArgumentException("Path cannot be null.");
+        }
+        if (path.size() < 2) {
+            throw new IllegalArgumentException("Path must contain at least 2 nodes.");
+        }
+
+        double pathLength = 0;
+
+        for (int i = 1; i < path.size(); i++) {
+            T n1 = path.get(i - 1);
+            T n2 = path.get(i);
+
+            int n1Index = nodes.indexOf(n1);
+            int n2Index = nodes.indexOf(n2);
+            if (n1Index == -1 || n2Index == -1) {
+                throw new IllegalArgumentException("Node(s) are not present in the graph.");
+            }
+
+            Double length = edges[n1Index][n2Index];
+            if (length == null) {
+                throw new NullPointerException("No connection found between nodes.");
+            }
+
+            pathLength += length;
+        }
+
+        return pathLength;
     }
 }
