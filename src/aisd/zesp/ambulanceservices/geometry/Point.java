@@ -10,11 +10,17 @@ public class Point {
     }
 
     public Point(double x, Point start, Point end) {
-        this.x = start.getX() + (end.getX() - start.getX())/x;
-        y = start.getY() + (end.getY() - start.getY())/x;
+        if(start == null || end == null){
+            throw new IllegalArgumentException("Neither point can be null!");
+        }
+        this.x = start.getX() + (end.getX() - start.getX())*x;
+        y = start.getY() + (end.getY() - start.getY())*x;
     }
 
     public double getRelativeDirection(Point a, Point b){
+        if(a == null || b == null){
+            throw new IllegalArgumentException("Neither point can be null!");
+        }
         return (b.getX() - a.getX())*(y - a.getY()) - (b.getY() - a.getY())*(x - a.getX());
     }
 
