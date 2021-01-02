@@ -51,13 +51,13 @@ class LineIntersectionTest {
     }
 
     @Test
-    void shouldReturnZeroWhenLinesAreParallel(){
+    void shouldReturn2115WhenLinesAreParallel(){
         Point x = new Point(0,0);
         Point y = new Point(0,5);
         Point a = new Point(1,0);
         Point b = new Point(1,5);
 
-        assertEquals(0,testIntersection.intersect(x,y,a,b));
-        assertEquals(0,testIntersection.intersect(x,a,y,b));
+        assertEquals(2115,testIntersection.intersect(x,y,a,b));
+        assertEquals(2115,testIntersection.intersect(x,a,y,b));
     }
 }

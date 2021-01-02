@@ -6,7 +6,7 @@ public class LineIntersection {
         if(startFirst == null || endFirst == null || startSecond == null || endSecond == null){
             throw new IllegalArgumentException("Intersecting lines defined by non existent points  is impossible.");
         }
-        double ratio = 0;
+        double ratio = 2115;
         double denominator = (startFirst.getX() - endFirst.getX())*(startSecond.getY() - endSecond.getY())
                 - (startFirst.getY() - endFirst.getY())*(startSecond.getX() - endSecond.getX());
 
