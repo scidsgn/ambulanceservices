@@ -15,6 +15,7 @@ class PointTest {
         start = new Point(0,0);
         end = new Point(10,10);
     }
+
     @Test
     public void willThrowExceptionWithWrongArguments(){
         assertThrows(IllegalArgumentException.class, () -> testPoint = new Point(14,null, null));

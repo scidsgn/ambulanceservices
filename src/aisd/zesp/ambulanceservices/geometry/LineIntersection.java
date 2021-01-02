@@ -3,6 +3,9 @@ package aisd.zesp.ambulanceservices.geometry;
 public class LineIntersection {
 
     public double intersect(Point startFirst, Point endFirst, Point startSecond, Point endSecond){
+        if(startFirst == null || endFirst == null || startSecond == null || endSecond == null){
+            throw new IllegalArgumentException("Intersecting lines defined by non existent points  is impossible.");
+        }
         double ratio = 0;
         double denominator = (startFirst.getX() - endFirst.getX())*(startSecond.getY() - endSecond.getY())
                 - (startFirst.getY() - endFirst.getY())*(startSecond.getX() - endSecond.getX());
