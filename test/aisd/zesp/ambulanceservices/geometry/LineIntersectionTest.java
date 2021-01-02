@@ -44,20 +44,20 @@ class LineIntersectionTest {
     }
 
     @Test
-    void shouldReturnProperRatio(){
-        double expected = 0.5;
+    void shouldReturnProperRatios(){
+        Double[] expected = {0.5, 0.7142857142857143};
 
-        assertEquals(expected, testIntersection.intersect(startFirst,endFirst,startSecond,endSecond));
+        assertArrayEquals(expected, testIntersection.intersect(startFirst,endFirst,startSecond,endSecond));
     }
 
     @Test
-    void shouldReturn2115WhenLinesAreParallel(){
+    void shouldReturnNullWhenLinesAreParallel(){
         Point x = new Point(0,0);
         Point y = new Point(0,5);
         Point a = new Point(1,0);
         Point b = new Point(1,5);
 
-        assertEquals(2115,testIntersection.intersect(x,y,a,b));
-        assertEquals(2115,testIntersection.intersect(x,a,y,b));
+        assertNull(testIntersection.intersect(x,y,a,b));
+        assertNull(testIntersection.intersect(x,a,y,b));
     }
 }

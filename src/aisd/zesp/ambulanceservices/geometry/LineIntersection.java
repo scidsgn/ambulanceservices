@@ -2,26 +2,22 @@ package aisd.zesp.ambulanceservices.geometry;
 
 public class LineIntersection {
 
-    public double intersect(Point startFirst, Point endFirst, Point startSecond, Point endSecond){
+    public Double[] intersect(Point startFirst, Point endFirst, Point startSecond, Point endSecond){
         if(startFirst == null || endFirst == null || startSecond == null || endSecond == null){
             throw new IllegalArgumentException("Intersecting lines defined by non existent points  is impossible.");
         }
-        double ratio = 2115;
+        Double[] ratios = new Double[2];
+
         double denominator = (startFirst.getX() - endFirst.getX())*(startSecond.getY() - endSecond.getY())
                 - (startFirst.getY() - endFirst.getY())*(startSecond.getX() - endSecond.getX());
 
         if(denominator != 0) {
-            double t = getT(startFirst, endFirst, startSecond, endSecond);
-            double u = getU(startFirst, endFirst, startSecond, endSecond);
+            ratios[0] = getT(startFirst, endFirst, startSecond, endSecond);
+            ratios[1] = getU(startFirst, endFirst, startSecond, endSecond);
 
-            if(t >= 0 && t <= 1){
-                ratio = t;
-            }
-            else if(u >= 0 && u <= 1 ){
-                ratio = u;
-            }
+            return ratios;
         }
-        return ratio;
+        return null;
     }
 
     public double getT(Point startFirst, Point endFirst, Point startSecond, Point endSecond){
