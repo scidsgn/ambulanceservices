@@ -21,7 +21,7 @@ public class ConvexHullTest {
     private Point eighth;
     private Point ninth;
 
-    private List<Point> unsortedPoints;
+    private List<Point> points;
     private List<Point> sortedPoints;
     private List<Point> convexHullpoints;
     private List<Point> expectedSortedPoints;
@@ -33,6 +33,7 @@ public class ConvexHullTest {
 
     @BeforeEach
     void setUp() {
+
 
         first = new Point(6, 13);
         second = new Point(-1, 3);
@@ -46,83 +47,20 @@ public class ConvexHullTest {
         sortedPoints = new ArrayList<Point>();
         expectedSortedPoints = new ArrayList<Point>();
         actualsortedPoints = new ArrayList<Point>();
-        unsortedPoints = new ArrayList<Point>();
+        points = new ArrayList<Point>();
         convexHullpoints = new ArrayList<Point>();
         testConvexHull = new ConvexHull();
-
-        unsortedPoints.add(first);
-        unsortedPoints.add(second);
-        unsortedPoints.add(third);
-        unsortedPoints.add(fourth);
-        unsortedPoints.add(fifth);
-        unsortedPoints.add(sixth);
-        unsortedPoints.add(seventh);
-        unsortedPoints.add(eighth);
-
-        convexHullpoints.add(first);
-        convexHullpoints.add(second);
-        convexHullpoints.add(third);
-
         expectedpointsMap = new HashMap<Double, Point>();
         actualpointsMap = new HashMap<Double, Point>();
-    }
 
-
-    @Test
-    void shouldChooseStartPoint() {
-
-        Point actual = testConvexHull.chooseStartPoint(unsortedPoints);
-        assertEquals(fourth, actual);
-    }
-
-    @Test
-    void shouldChooseStartPointWhenXAreTheSame() {
-
-        ninth = new Point(-4, 2);
-        unsortedPoints.add(ninth);
-        Point actual = testConvexHull.chooseStartPoint(unsortedPoints);
-        assertEquals(ninth, actual);
-
-    }
-
-    @Test
-    void shouldCalculateAngles() {
-
-        expectedpointsMap.put(0.2, first);
-        expectedpointsMap.put((-8.0 / 3.0), second);
-        expectedpointsMap.put((3.0 / 13.0), third);
-        expectedpointsMap.put((-8.0 / 11.0), fifth);
-        expectedpointsMap.put((2.0 / 3.0), sixth);
-        expectedpointsMap.put((14.0 / 9.0), seventh);
-        expectedpointsMap.put((9.0 / 1.0), eighth);
-
-        actualpointsMap = testConvexHull.calculateAngles(fourth, unsortedPoints);
-
-        assertEquals(expectedpointsMap, actualpointsMap);
-
-    }
-
-    @Test
-    void shouldSortByAngles() {
-
-        expectedSortedPoints.add(fourth);
-        expectedSortedPoints.add(second);
-        expectedSortedPoints.add(fifth);
-        expectedSortedPoints.add(first);
-        expectedSortedPoints.add(third);
-
-        expectedpointsMap.put(0.2, first);
-        expectedpointsMap.put((-8.0 / 3.0), second);
-        expectedpointsMap.put((3.0 / 13.0), third);
-        expectedpointsMap.put((-8.0 / 11.0), fifth);
-
-        sortedPoints = testConvexHull.sortByAngles(fourth, expectedpointsMap);
-
-        assertEquals(expectedSortedPoints, sortedPoints);
-    }
-
-    @Test
-    void shouldchoosePointToConvexHull() {
+        points.add(first);
+        points.add(second);
+        points.add(third);
+        points.add(fourth);
+        points.add(fifth);
+        points.add(sixth);
+        points.add(seventh);
+        points.add(eighth);
 
         sortedPoints.add(fourth);
         sortedPoints.add(second);
@@ -133,9 +71,68 @@ public class ConvexHullTest {
         sortedPoints.add(seventh);
         sortedPoints.add(eighth);
 
+        convexHullpoints.add(first);
+        convexHullpoints.add(second);
+        convexHullpoints.add(third);
+
+        expectedpointsMap.put(0.2, first);
+        expectedpointsMap.put((-8.0 / 3.0), second);
+        expectedpointsMap.put((3.0 / 13.0), third);
+        expectedpointsMap.put((-8.0 / 11.0), fifth);
+
         expectedSortedPoints.add(fourth);
         expectedSortedPoints.add(second);
         expectedSortedPoints.add(fifth);
+
+
+    }
+
+
+    @Test
+    void shouldChooseStartPoint() {
+
+        Point actual = testConvexHull.chooseStartPoint(points);
+        assertEquals(fourth, actual);
+    }
+
+    @Test
+    void shouldChooseStartPointWhenXAreTheSame() {
+
+        ninth = new Point(-4, 2);
+        points.add(ninth);
+        Point actual = testConvexHull.chooseStartPoint(points);
+        assertEquals(ninth, actual);
+
+    }
+
+    @Test
+    void shouldCalculateAngles() {
+
+        expectedpointsMap.put((2.0 / 3.0), sixth);
+        expectedpointsMap.put((14.0 / 9.0), seventh);
+        expectedpointsMap.put((9.0 / 1.0), eighth);
+
+        actualpointsMap = testConvexHull.calculateAngles(fourth, points);
+
+        assertEquals(expectedpointsMap, actualpointsMap);
+
+    }
+
+    @Test
+    void shouldSortByAngles() {
+
+        expectedSortedPoints.add(first);
+        expectedSortedPoints.add(third);
+
+
+        sortedPoints = testConvexHull.sortByAngles(fourth, expectedpointsMap);
+
+        assertEquals(expectedSortedPoints, sortedPoints);
+    }
+
+    @Test
+    void shouldchoosePointToConvexHull() {
+
         expectedSortedPoints.add(third);
         expectedSortedPoints.add(seventh);
         expectedSortedPoints.add(eighth);
@@ -160,11 +157,8 @@ public class ConvexHullTest {
     @Test
     void shouldCreateConvexHull() {
 
-        actualsortedPoints = testConvexHull.createConvexHull(unsortedPoints);
+        actualsortedPoints = testConvexHull.createConvexHull(points);
 
-        expectedSortedPoints.add(fourth);
-        expectedSortedPoints.add(second);
-        expectedSortedPoints.add(fifth);
         expectedSortedPoints.add(third);
         expectedSortedPoints.add(seventh);
         expectedSortedPoints.add(eighth);
