@@ -33,12 +33,16 @@ public class Point implements Comparable<Point>{
         return x;
     }
 
-    public double getY() {
+    public Double getY() {
         return y;
     }
 
     @Override
     public int compareTo(Point o) {
-        return this.getX().compareTo(o.getX());
+        int com = this.getX().compareTo(o.getX());
+        if( com != 0){
+            return  com;
+        }
+        return this.getY().compareTo(o.getY());
     }
 }

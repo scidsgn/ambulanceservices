@@ -19,6 +19,7 @@ public class ConvexHullTest {
     private Point sixth;
     private Point seventh;
     private Point eighth;
+    private Point ninth;
 
     private List<Point> unsortedPoints;
     private List<Point> sortedPoints;
@@ -72,6 +73,16 @@ public class ConvexHullTest {
 
         Point actual = testConvexHull.chooseStartPoint(unsortedPoints);
         assertEquals(fourth, actual);
+    }
+
+    @Test
+    void shouldChooseStartPointWhenXAreTheSame() {
+
+        ninth = new Point(-4, 2);
+        unsortedPoints.add(ninth);
+        Point actual = testConvexHull.chooseStartPoint(unsortedPoints);
+        assertEquals(ninth, actual);
+
     }
 
     @Test
