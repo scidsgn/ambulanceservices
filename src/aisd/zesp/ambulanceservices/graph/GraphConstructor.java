@@ -11,7 +11,66 @@ public class GraphConstructor {
 
     private final LineIntersection intersect = new LineIntersection();
 
-    private void cutLines(GraphConstructorLine cutter, List<GraphConstructorCut> cuts) {}
+    private void constructCutter(GraphConstructorLine cutter, List<Point> points, List<Double> positions) {
+        double[] sortedPositions = positions.stream().mapToDouble(x -> x).toArray();
+        Arrays.sort(sortedPositions);
+
+        double startPosition = 0.0;
+        Point startPoint = cutter.getStart();
+
+        for (int i = 0; i < points.size(); i++) {
+            Point point = points.get(i);
+            double position = positions.get(i);
+
+            lines.add(new GraphConstructorLine(startPoint, point, cutter.getLength() * (position - startPosition)));
+
+            startPosition = position;
+            startPoint = point;
+        }
+
+        lines.add(new GraphConstructorLine(startPoint, cutter.getEnd(), cutter.getLength() * (1 - startPosition)));
+
+        points.add(cutter.getStart());
+        points.add(cutter.getEnd());
+    }
+
+    private void cutLines(GraphConstructorLine cutter, List<GraphConstructorCut> cuts) {
+        List<Double> cutterPositions = new ArrayList<>();
+        List<Point> cutterPoints = new ArrayList<>();
+
+        for (GraphConstructorCut cut : cuts) {
+            GraphConstructorLine line = cut.getLine();
+
+            double cutPosition = cut.getLinePosition();
+            double cutterPosition = cut.getCutterPosition();
+
+            if (cutPosition == 0.0) {
+                cutterPoints.add(line.getStart());
+                cutterPositions.add(cutterPosition);
+            } else if (cutPosition == 1.0) {
+                cutterPoints.add(line.getEnd());
+                cutterPositions.add(cutterPosition);
+            } else {
+                Point intersection;
+
+                if (!cutterPositions.contains(cutterPosition)) {
+                    intersection = new Point(cutPosition, line.getStart(), line.getEnd());
+                    points.add(intersection);
+                    cutterPoints.add(intersection);
+
+                    cutterPositions.add(cutterPosition);
+                } else {
+                    intersection = cutterPoints.get(cutterPositions.indexOf(cutterPosition));
+                }
+
+                lines.remove(cut.getLine());
+                lines.add(new GraphConstructorLine(line.getStart(), intersection, line.getLength() * cutPosition));
+                lines.add(new GraphConstructorLine(intersection, line.getEnd(), line.getLength() * (1 - cutPosition)));
+            }
+        }
+
+        constructCutter(cutter, cutterPoints, cutterPositions);
+    }
 
     private List<GraphConstructorCut> findIntersections(GraphConstructorLine cutter) {
         ArrayList<GraphConstructorCut> cuts = new ArrayList<>();
@@ -38,5 +97,9 @@ public class GraphConstructor {
         List<GraphConstructorCut> cuts = findIntersections(cutter);
 
         cutLines(cutter, cuts);
+    }
+
+    public Set<Point> getPoints() {
+        return points;
     }
 }
