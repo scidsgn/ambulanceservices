@@ -23,4 +23,20 @@ public class GraphConstructorLine {
     public Point getStart() {
         return start;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof GraphConstructorLine)) {
+            return false;
+        }
+
+        Point oStart = ((GraphConstructorLine) obj).getStart();
+        Point oEnd = ((GraphConstructorLine) obj).getEnd();
+        double oLength = ((GraphConstructorLine) obj).getLength();
+
+        boolean pointsEqual = (start.equals(oStart) && end.equals(oEnd)) ||
+                              (start.equals(oEnd) && end.equals(oStart));
+
+        return pointsEqual && length == oLength;
+    }
 }

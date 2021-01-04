@@ -1,5 +1,7 @@
 package aisd.zesp.ambulanceservices.geometry;
 
+import java.util.Objects;
+
 public class Point implements Comparable<Point>{
     private double x;
     private double y;
@@ -44,5 +46,14 @@ public class Point implements Comparable<Point>{
             return  com;
         }
         return this.getY().compareTo(o.getY());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Point)) {
+            return false;
+        }
+
+        return x == ((Point) obj).getX() && y == ((Point) obj).getY();
     }
 }
