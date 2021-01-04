@@ -40,27 +40,40 @@ class GraphConstructorTest {
         gconst.addLine(new Point(0, 0), new Point(0, 2), 2);
         gconst.addLine(new Point(2, -1), new Point(2, 3), 4);
 
-        Set<Point> points = gconst.getPoints();
-
-        assertEquals(4, points.size());
         assertTrue(compareLines(expected, gconst.getLines()));
     }
 
     @Test
-    void addsIntersectingSegments() {
+    void addsSingleIntersectionSegments() {
         List<GraphConstructorLine> expected = new ArrayList<>();
 
         expected.add(new GraphConstructorLine(new Point(0, 0), new Point(0, 1), 1));
         expected.add(new GraphConstructorLine(new Point(0, 1), new Point(0, 2), 1));
-        expected.add(new GraphConstructorLine(new Point(-1, 1), new Point(0, 1), 1));
-        expected.add(new GraphConstructorLine(new Point(0, 1), new Point(2, 1), 2));
+        expected.add(new GraphConstructorLine(new Point(-1, 1), new Point(0, 1), 2));
+        expected.add(new GraphConstructorLine(new Point(0, 1), new Point(2, 1), 4));
 
         gconst.addLine(new Point(0, 0), new Point(0, 2), 2);
-        gconst.addLine(new Point(-1, 1), new Point(2, 1), 3);
+        gconst.addLine(new Point(-1, 1), new Point(2, 1), 6);
 
-        Set<Point> points = gconst.getPoints();
+        assertTrue(compareLines(expected, gconst.getLines()));
+    }
 
-        assertEquals(5, points.size());
+    @Test
+    void addsMultipleIntersectionSegments() {
+        List<GraphConstructorLine> expected = new ArrayList<>();
+
+        expected.add(new GraphConstructorLine(new Point(0, 0), new Point(0, 1), 1));
+        expected.add(new GraphConstructorLine(new Point(0, 1), new Point(0, 2), 1));
+        expected.add(new GraphConstructorLine(new Point(-1, 1), new Point(0, 1), 2));
+        expected.add(new GraphConstructorLine(new Point(0, 1), new Point(1, 1), 2));
+        expected.add(new GraphConstructorLine(new Point(1, 1), new Point(2, 1), 2));
+        expected.add(new GraphConstructorLine(new Point(0, 0), new Point(1, 1), 2));
+        expected.add(new GraphConstructorLine(new Point(1, 1), new Point(2, 2), 2));
+
+        gconst.addLine(new Point(0, 0), new Point(0, 2), 2);
+        gconst.addLine(new Point(-1, 1), new Point(2, 1), 6);
+        gconst.addLine(new Point(0, 0), new Point(2, 2), 4);
+
         assertTrue(compareLines(expected, gconst.getLines()));
     }
 }
