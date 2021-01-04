@@ -19,8 +19,8 @@ public class GraphConstructor {
         Point startPoint = cutter.getStart();
 
         for (int i = 0; i < points.size(); i++) {
-            Point point = points.get(i);
-            double position = positions.get(i);
+            double position = sortedPositions[i];
+            Point point = points.get(positions.indexOf(position));
 
             lines.add(new GraphConstructorLine(startPoint, point, cutter.getLength() * (position - startPosition)));
 
