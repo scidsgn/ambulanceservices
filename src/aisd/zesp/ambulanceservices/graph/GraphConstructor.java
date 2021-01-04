@@ -11,16 +11,16 @@ public class GraphConstructor {
 
     private final LineIntersection intersect = new LineIntersection();
 
-    private void constructCutter(GraphConstructorLine cutter, List<Point> points, List<Double> positions) {
+    private void constructCutter(GraphConstructorLine cutter, List<Point> cutPoints, List<Double> positions) {
         double[] sortedPositions = positions.stream().mapToDouble(x -> x).toArray();
         Arrays.sort(sortedPositions);
 
         double startPosition = 0.0;
         Point startPoint = cutter.getStart();
 
-        for (int i = 0; i < points.size(); i++) {
+        for (int i = 0; i < cutPoints.size(); i++) {
             double position = sortedPositions[i];
-            Point point = points.get(positions.indexOf(position));
+            Point point = cutPoints.get(positions.indexOf(position));
 
             lines.add(new GraphConstructorLine(startPoint, point, cutter.getLength() * (position - startPosition)));
 
@@ -28,10 +28,9 @@ public class GraphConstructor {
             startPoint = point;
         }
 
-        lines.add(new GraphConstructorLine(startPoint, cutter.getEnd(), cutter.getLength() * (1 - startPosition)));
-
         points.add(cutter.getStart());
         points.add(cutter.getEnd());
+        lines.add(new GraphConstructorLine(startPoint, cutter.getEnd(), cutter.getLength() * (1 - startPosition)));
     }
 
     private void cutLines(GraphConstructorLine cutter, List<GraphConstructorCut> cuts) {
@@ -81,8 +80,9 @@ public class GraphConstructor {
             );
 
             if (
+                    bezierRatios != null &&
                     bezierRatios[0] >= 0 && bezierRatios[0] <= 1 &&
-                    bezierRatios[1] >= 1 && bezierRatios[1] <= 1
+                    bezierRatios[1] >= 0 && bezierRatios[1] <= 1
             ) {
                 GraphConstructorCut cut = new GraphConstructorCut(line, bezierRatios[0], bezierRatios[1]);
                 cuts.add(cut);
@@ -96,10 +96,20 @@ public class GraphConstructor {
         GraphConstructorLine cutter = new GraphConstructorLine(start, end, length);
         List<GraphConstructorCut> cuts = findIntersections(cutter);
 
-        cutLines(cutter, cuts);
+        if (cuts.size() == 0) {
+            lines.add(cutter);
+            points.add(cutter.getStart());
+            points.add(cutter.getEnd());
+        } else {
+            cutLines(cutter, cuts);
+        }
     }
 
     public Set<Point> getPoints() {
         return points;
+    }
+
+    public List<GraphConstructorLine> getLines() {
+        return lines;
     }
 }
