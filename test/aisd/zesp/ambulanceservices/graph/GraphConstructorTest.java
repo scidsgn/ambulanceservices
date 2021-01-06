@@ -31,7 +31,7 @@ class GraphConstructorTest {
     }
 
     @Test
-    void addsParallelSegments() {
+    void addLineSucceedsOnParallelSegments() {
         List<GraphConstructorLine> expected = new ArrayList<>();
 
         expected.add(new GraphConstructorLine(new Point(0, 0), new Point(0, 2), 2));
@@ -44,7 +44,7 @@ class GraphConstructorTest {
     }
 
     @Test
-    void addsSingleIntersectionSegments() {
+    void addLineSucceedsOnSingleIntersectionSegments() {
         List<GraphConstructorLine> expected = new ArrayList<>();
 
         expected.add(new GraphConstructorLine(new Point(0, 0), new Point(0, 1), 1));
@@ -59,7 +59,7 @@ class GraphConstructorTest {
     }
 
     @Test
-    void addsMultipleIntersectionSegments() {
+    void addLineSucceedsOnMultipleIntersectionSegments() {
         List<GraphConstructorLine> expected = new ArrayList<>();
 
         expected.add(new GraphConstructorLine(new Point(0, 0), new Point(0, 1), 1));
