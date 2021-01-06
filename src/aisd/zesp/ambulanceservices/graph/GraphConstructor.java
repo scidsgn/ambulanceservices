@@ -92,7 +92,14 @@ public class GraphConstructor {
         return cuts;
     }
 
-    public void addLine(Point start, Point end, double length) {
+    public void addLine(Point start, Point end, double length) throws IllegalArgumentException, NullPointerException {
+        if (start == null || end == null) {
+            throw new NullPointerException("Points cannot be null.");
+        }
+        if (length <= 0) {
+            throw new IllegalArgumentException("Line length must be larger than zero.");
+        }
+
         GraphConstructorLine cutter = new GraphConstructorLine(start, end, length);
         List<GraphConstructorCut> cuts = findIntersections(cutter);
 
@@ -103,6 +110,25 @@ public class GraphConstructor {
         } else {
             cutLines(cutter, cuts);
         }
+    }
+
+    public Graph<Point> constructGraph() throws NullPointerException {
+        if (points.size() == 0) {
+            throw new NullPointerException("No lines were added to the construction.");
+        }
+
+        Graph<Point> graph = new Graph<>();
+
+        for (Point point : points) {
+            graph.addNode(point);
+        }
+        graph.finalizeNodes();
+
+        for (GraphConstructorLine line : lines) {
+            graph.connectNodes(line.getStart(), line.getEnd(), line.getLength());
+        }
+
+        return graph;
     }
 
     public Set<Point> getPoints() {

@@ -76,4 +76,45 @@ class GraphConstructorTest {
 
         assertTrue(compareLines(expected, gconst.getLines()));
     }
+
+    @Test
+    void addLineThrowsOnNullPoint() {
+        assertThrows(
+                NullPointerException.class,
+                () -> gconst.addLine(null, new Point(0, 2), 2)
+        );
+        assertThrows(
+                NullPointerException.class,
+                () -> gconst.addLine(new Point(0, 2), null, 2)
+        );
+    }
+
+    @Test
+    void addLineThrowsOnInvalidLength() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> gconst.addLine(new Point(0, 1), new Point(0, 2), 0)
+        );
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> gconst.addLine(new Point(0, 1), new Point(0, 2), -3.64)
+        );
+    }
+
+    @Test
+    void constructGraphSucceeds() {
+        Point p1 = new Point(0, 0);
+        Point p2 = new Point(0, 1);
+        Point p3 = new Point(1, 1);
+
+        gconst.addLine(p1, p2, 10);
+        gconst.addLine(p2, p3, 3);
+        gconst.addLine(p1, p3, 20);
+
+        Graph<Point> graph = gconst.constructGraph();
+
+        assertEquals(10, graph.getLength(p1, p2));
+        assertEquals(3, graph.getLength(p2, p3));
+        assertEquals(20, graph.getLength(p3, p1));
+    }
 }
