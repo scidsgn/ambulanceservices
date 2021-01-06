@@ -3,10 +3,10 @@ package aisd.zesp.ambulanceservices.main;
 import aisd.zesp.ambulanceservices.geometry.Point;
 
 public class Landmark extends Point {
-    private int id;
-    private String name;
+    private final int id;
+    private final String name;
 
-    public Landmark(int id, double x, double y, String name) {
+    public Landmark(int id, String name, double x, double y ) {
         super(x, y);
         this.id = id;
         this.name = name;

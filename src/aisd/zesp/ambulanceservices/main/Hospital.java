@@ -3,11 +3,11 @@ package aisd.zesp.ambulanceservices.main;
 import aisd.zesp.ambulanceservices.geometry.Point;
 
 public class Hospital extends Point {
-    private int id;
-    private String name;
+    private final int id;
+    private final String name;
     private int vacantBeds;
 
-    public Hospital(int id, double x, double y, String name, int vacantBeds) {
+    public Hospital(int id, String name, double x, double y,  int vacantBeds) {
         super(x, y);
         this.id = id;
         this.name = name;

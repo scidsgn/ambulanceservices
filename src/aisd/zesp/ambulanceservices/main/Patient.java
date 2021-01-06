@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Patient extends Point {
-    private int id;
+    private final int id;
     private String name;
 
     public Patient(int id, double x, double y) {
