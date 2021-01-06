@@ -4,6 +4,11 @@ import aisd.zesp.ambulanceservices.main.*;
 
 public class Parser {
     public void parseHospital(State state, String[] buffer){
+        if(buffer[0].length() > 6 || buffer[2].length() > 6 || buffer[3].length() > 6 || buffer[4].length() > 6){
+            String message = "Wprowadzono zbyt duże liczby!";
+            System.out.println(message);
+            System.exit(1);
+        }
         int id = Integer.parseInt(buffer[0]);
         if (state.getHospitalById(id) != null ) {
             String message = "Powtarza się szpital z indeksem " + state.getHospitalById(id);
@@ -16,6 +21,11 @@ public class Parser {
     }
 
     public void parseLandmark(State state, String[] buffer){
+        if(buffer[0].length() > 6 || buffer[2].length() > 6 || buffer[3].length() > 6){
+            String message = "Wprowadzono zbyt duże liczby!";
+            System.out.println(message);
+            System.exit(1);
+        }
         int id = Integer.parseInt(buffer[0]);
         if (state.getLandmarkById(id) != null ) {
             String message = "Powtarza się obiekt z indeksem " + state.getLandmarkById(id);
@@ -41,6 +51,11 @@ public class Parser {
     }
 
     public void parsePatient(State state, String[] buffer){
+        if(buffer[0].length() > 6 || buffer[1].length() > 6 || buffer[2].length() > 6){
+            String message = "Wprowadzono zbyt duże liczby!";
+            System.out.println(message);
+            System.exit(1);
+        }
         int id = Integer.parseInt(buffer[0]);
         if (state.getPatientById(id) != null ) {
             String message = "Powtarza się pacjent z indeksem " + state.getHospitalById(id);
