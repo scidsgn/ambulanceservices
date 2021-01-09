@@ -9,6 +9,7 @@ import java.util.Random;
 public class Patient extends Point {
     private final int id;
     private String name;
+    private PatientState patientState = PatientState.WAITING;
 
     public Patient(int id, double x, double y) {
         super(x, y);
@@ -22,6 +23,14 @@ public class Patient extends Point {
 
     public String getName() {
         return name;
+    }
+
+    public PatientState getPatientState() {
+        return patientState;
+    }
+
+    public void setPatientState(PatientState patientState) {
+        this.patientState = patientState;
     }
 
     private void generateName() {
