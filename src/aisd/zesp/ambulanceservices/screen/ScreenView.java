@@ -7,6 +7,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 
 import javafx.scene.layout.*;
@@ -27,6 +29,8 @@ public class ScreenView extends GridPane {
     private Stage primaryStage;
     private ProgramAlgorithm programAlgorithm;
     private final Reader reader = new Reader();
+
+    private MapCanvas canvas;
 
     public ScreenView(Stage primaryStage, ProgramAlgorithm programAlgorithm) {
         this.primaryStage = primaryStage;
@@ -59,6 +63,7 @@ public class ScreenView extends GridPane {
                     State state = reader.load(file.getAbsolutePath());
                     state.finalizeConnections();
                     programAlgorithm.setState(state);
+                    canvas.setState(state);
                 }
         );
 
@@ -101,6 +106,9 @@ public class ScreenView extends GridPane {
         vbox.setPrefHeight(50);
         vbox.setPrefWidth(1000);
         VBox.setVgrow(vbox, Priority.ALWAYS);
+
+        canvas = new MapCanvas(400, 500);
+        vbox.getChildren().add(canvas);
 
 
         VBox vbox2 = new VBox(0);
@@ -173,5 +181,7 @@ public class ScreenView extends GridPane {
         primaryStage.setTitle("Ambulance services");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        canvas.draw();
     }
 }

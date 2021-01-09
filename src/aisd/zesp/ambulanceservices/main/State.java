@@ -30,6 +30,10 @@ public class State {
         nextHospitalList = new ArrayList<>();
     }
 
+    public Graph<Point> getConnectionsGraph() {
+        return connectionsGraph;
+    }
+
     public List<Hospital> getHospitalList() {
         return hospitalList;
     }
