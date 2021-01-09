@@ -8,9 +8,11 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    private final ProgramAlgorithm programAlgorithm = new ProgramAlgorithm();
+
     @Override
-    public void start(Stage stage) throws Exception{
-        ScreenView screenView = new ScreenView(stage);
+    public void start(Stage stage) {
+        ScreenView screenView = new ScreenView(stage, programAlgorithm);
         screenView.draw();
         Scene scene = new Scene(screenView);
         stage.setScene(scene);

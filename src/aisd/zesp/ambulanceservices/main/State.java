@@ -1,18 +1,45 @@
 package aisd.zesp.ambulanceservices.main;
 
+import aisd.zesp.ambulanceservices.geometry.Point;
+import aisd.zesp.ambulanceservices.graph.DijkstraAlgorithm;
+import aisd.zesp.ambulanceservices.graph.Graph;
+import aisd.zesp.ambulanceservices.graph.GraphConstructor;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class State {
     private final List<Hospital> hospitalList;
     private final List<Patient> patientList;
     private final List<Landmark> landmarkList;
-    private int connectionNumber = 0;
+
+    private final Set<Integer> connectionIds;
+    private final GraphConstructor graphConstructor;
+    private Graph<Point> connectionsGraph;
+    private List<Hospital> nextHospitalList;
 
     public State() {
         hospitalList = new ArrayList<>();
         patientList = new ArrayList<>();
         landmarkList = new ArrayList<>();
+
+        graphConstructor = new GraphConstructor();
+        connectionIds = new HashSet<>();
+        nextHospitalList = new ArrayList<>();
+    }
+
+    public List<Hospital> getHospitalList() {
+        return hospitalList;
+    }
+
+    public List<Patient> getPatientList() {
+        return patientList;
+    }
+
+    public List<Landmark> getLandmarkList() {
+        return landmarkList;
     }
 
     public Hospital getHospitalById(int id) {
@@ -67,7 +94,7 @@ public class State {
         return null;
     }
 
-    public void addLandmark(Landmark landmark) {
+    public void addLandmark(Landmark landmark) throws IllegalArgumentException, NullPointerException {
         if  (landmark == null) {
             throw new NullPointerException("Landmark cannot be null.");
         }
@@ -79,12 +106,56 @@ public class State {
     }
 
     public void addConnection(int id, Hospital fh, Hospital sh, double length) {
-        if(connectionNumber > id) {
-            throw new IllegalArgumentException("There already is connection with ID " + id);
+        if (connectionIds.contains(id)) {
+            throw new IllegalArgumentException("Connection with that ID already added.");
+        }
+        if  (fh == null || sh == null) {
+            throw new NullPointerException("Hospital cannot be null.");
+        }
+        if (length <= 0) {
+            throw new IllegalArgumentException("Length must be greater than zero.");
         }
 
-        connectionNumber++;
+        graphConstructor.addLine(fh, sh, length);
     }
 
+    public void finalizeConnections() {
+        connectionsGraph = graphConstructor.constructGraph();
 
+        DijkstraAlgorithm<Point> algo = new DijkstraAlgorithm<>(connectionsGraph);
+
+        for (int i = 0; i < hospitalList.size(); i++) {
+            Hospital startHospital = hospitalList.get(i);
+
+            algo.execute(startHospital);
+
+            double minPath = Double.POSITIVE_INFINITY;
+            Hospital minHospital = null;
+
+            for (int j = 0; j < hospitalList.size(); j++) {
+                if (j == i) {
+                    continue;
+                }
+                Hospital targetHospital = hospitalList.get(j);
+                List<Point> path = algo.getPath(targetHospital);
+                double pathLength = connectionsGraph.getPathLength(path);
+
+                if (pathLength < minPath) {
+                    minPath = pathLength;
+                    minHospital = targetHospital;
+                }
+            }
+
+            nextHospitalList.add(minHospital);
+        }
+    }
+
+    public Hospital getNextHospital(Hospital hospital) throws IllegalArgumentException {
+        int index = hospitalList.indexOf(hospital);
+        if (index == -1) {
+            throw new IllegalArgumentException("Hospital not present in the list.");
+        }
+
+        return nextHospitalList.get(index);
+    }
 }

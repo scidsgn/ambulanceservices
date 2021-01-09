@@ -1,5 +1,7 @@
 package aisd.zesp.ambulanceservices.screen;
 
+import aisd.zesp.ambulanceservices.main.*;
+import aisd.zesp.ambulanceservices.reading.Reader;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -22,11 +24,13 @@ import java.io.FileInputStream;
 
 public class ScreenView extends GridPane {
 
-    Stage primaryStage;
+    private Stage primaryStage;
+    private ProgramAlgorithm programAlgorithm;
+    private final Reader reader = new Reader();
 
-    public ScreenView(Stage primaryStage) {
+    public ScreenView(Stage primaryStage, ProgramAlgorithm programAlgorithm) {
         this.primaryStage = primaryStage;
-
+        this.programAlgorithm = programAlgorithm;
     }
 
     public void draw() {
@@ -43,26 +47,34 @@ public class ScreenView extends GridPane {
         loadMap.setFont(Font.font("verdana", FontWeight.BLACK, FontPosture.REGULAR, 12));
 
         loadMap.setOnAction(
-                new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(final ActionEvent e) {
-                        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt Files", "*.txt"));
-                        File file = fileChooser.showOpenDialog(primaryStage);
-
+                e -> {
+                    if (programAlgorithm.getState() != null) {
+                        // WYPISANIE ŻEBY NIE ŁADOWAĆ 2 RAZY MAPY
+                        return;
                     }
+
+                    fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt Files", "*.txt"));
+                    File file = fileChooser.showOpenDialog(primaryStage);
+
+                    State state = reader.load(file.getAbsolutePath());
+                    state.finalizeConnections();
+                    programAlgorithm.setState(state);
                 }
         );
 
         Button loadPatientsList = new Button("Wczytaj listę pacjentów");
         loadPatientsList.setFont(Font.font("verdana", FontWeight.BLACK, FontPosture.REGULAR, 12));
         loadPatientsList.setOnAction(
-                new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(final ActionEvent e) {
-                        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt Files", "*.txt"));
-                        File file = fileChooser.showOpenDialog(primaryStage);
-                        // fileChooser.setInitialDirectory(new File("data"));
+                e -> {
+                    if (programAlgorithm.getState() == null) {
+                        // WYPISANIE ŻEBY NAJPIERW ZAŁADOWAĆ MAPĘ
+                        return;
                     }
+
+                    fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt Files", "*.txt"));
+                    File file = fileChooser.showOpenDialog(primaryStage);
+
+                    reader.loadPatients(programAlgorithm.getState(), file.getAbsolutePath());
                 }
         );
 
