@@ -6,7 +6,7 @@ public class Alerts {
 
     public static void showAlert(String errorText) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Informacja o błędzie");
+        alert.setTitle("Error message");
         alert.setHeaderText(null);
         alert.setContentText(errorText);
         alert.showAndWait();

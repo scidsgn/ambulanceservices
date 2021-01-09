@@ -59,8 +59,9 @@ public class GrahamAlgorithm {
             Point point = sortedPoints.get(i);
             int last = convexHullPoints.size() - 1;
 
-            if (!point.isLeft(convexHullPoints.get(last - 1), convexHullPoints.get(last))) {
+            while (!point.isLeft(convexHullPoints.get(last - 1), convexHullPoints.get(last))) {
                 convexHullPoints.remove(last);
+                last--;
             }
 
             convexHullPoints.add(sortedPoints.get(i));
