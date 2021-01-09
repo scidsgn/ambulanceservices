@@ -14,6 +14,7 @@ public class Reader {
         State state = new State();
 
         String buffer;
+        int lineNumber = 0;
         int commentAmount = -1;
         int sepCount;
         int sepAllowed = 4;
@@ -23,6 +24,7 @@ public class Reader {
             FileReader fileReader = new FileReader(file);
             BufferedReader reader = new BufferedReader(fileReader);
             while ((buffer = reader.readLine()) != null) {
+                lineNumber++;
                 sepCount = 0;
                 if (buffer.trim().indexOf('#') == 0) {
                     commentAmount++;
@@ -30,7 +32,7 @@ public class Reader {
                         sepAllowed = 5;
                     }
                     else {
-                        sepAllowed = 4;
+                        sepAllowed = 3;
                     }
                     continue;
                 }
@@ -40,8 +42,7 @@ public class Reader {
                     }
                 }
                 if (sepCount != sepAllowed) {
-                    System.out.println("Niepoprawna ilość separatorów");
-                    System.exit(1);
+                    throw new IllegalArgumentException("Wrong number of separators at line " + lineNumber);
                 }
                 String[] bufferArray = buffer.split("\\s+\\|\\s+", 6);
 
@@ -55,13 +56,16 @@ public class Reader {
             fileReader.close();
 
         } catch (IOException e) {
-            System.out.println("Nie można znaleźć lub otworzyć pliku");
-            System.exit(1);
+           throw new IllegalArgumentException("File has to be accessible!");
         }
         return state;
     }
 
     public void loadPatients(State state, String fileName){
+        if  (state == null) {
+            throw new NullPointerException("State cannot be null.");
+        }
+
         String buffer;
         int sepCount;
         int sepAllowed = 2;
@@ -73,22 +77,23 @@ public class Reader {
 
             while((buffer = reader.readLine()) != null) {
                 sepCount = 0;
+                if (buffer.trim().indexOf('#') == 0) {
+                    continue;
+                }
                 for (int i = 0; i < buffer.length(); i++) {
                     if (buffer.charAt(i) == '|') {
                         sepCount++;
                     }
                 }
                 if (sepCount != sepAllowed) {
-                    System.out.println("Niepoprawna ilość separatorów");
-                    System.exit(1);
+                    throw new IllegalArgumentException("Too many separators in file");
                 }
                 String[] bufferArray = buffer.split("\\s+\\|\\s+", 3);
 
                 parser.parsePatient(state, bufferArray);
             }
         } catch (IOException e){
-            System.out.println("Nie można znaleźć lub otworzyć pliku");
-            System.exit(1);
+            throw  new IllegalArgumentException("File has to be accessible!");
         }
     }
 }

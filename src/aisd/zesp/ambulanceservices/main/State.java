@@ -6,11 +6,13 @@ import java.util.List;
 public class State {
     private final List<Hospital> hospitalList;
     private final List<Patient> patientList;
+    private final List<Landmark> landmarkList;
     private int connectionNumber = 0;
 
     public State() {
         hospitalList = new ArrayList<>();
         patientList = new ArrayList<>();
+        landmarkList = new ArrayList<>();
     }
 
     public Hospital getHospitalById(int id) {
@@ -56,20 +58,29 @@ public class State {
     }
 
     public Landmark getLandmarkById(int id) {
-        Landmark landmark = null;
+        for (Landmark landmark : landmarkList) {
+            if(landmark.getId() == id){
+                return landmark;
+            }
+        }
 
-        return landmark;
+        return null;
     }
 
     public void addLandmark(Landmark landmark) {
+        if  (landmark == null) {
+            throw new NullPointerException("Landmark cannot be null.");
+        }
+        if (getLandmarkById(landmark.getId()) != null) {
+            throw new IllegalArgumentException("Landmark with that ID already added.");
+        }
 
+        landmarkList.add(landmark);
     }
 
     public void addConnection(int id, Hospital fh, Hospital sh, double length) {
         if(connectionNumber > id) {
-            String message = "Powtarza się połączenie z indeksem " + id;
-            System.out.println(message);
-            System.exit(1);
+            throw new IllegalArgumentException("There already is connection with ID " + id);
         }
 
         connectionNumber++;
