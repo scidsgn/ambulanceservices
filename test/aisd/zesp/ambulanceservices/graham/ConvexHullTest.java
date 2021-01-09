@@ -11,6 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ConvexHullTest {
+    /*
     private Point first;
     private Point second;
     private Point third;
@@ -166,6 +167,7 @@ public class ConvexHullTest {
         assertEquals(expectedSortedPoints, actualsortedPoints);
 
         }
+        */
 }
 
 

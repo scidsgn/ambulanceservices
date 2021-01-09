@@ -181,7 +181,6 @@ public class State {
 
         points.addAll(landmarkList);
         points.addAll(hospitalList);
-        //convexHull.createConvexHull(points);
 
         convexHull = algo.createConvexHull(points);
     }

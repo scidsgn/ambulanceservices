@@ -62,6 +62,7 @@ public class ScreenView extends GridPane {
 
                     State state = reader.load(file.getAbsolutePath());
                     state.finalizeConnections();
+                    state.finalizeConvexHull();
                     programAlgorithm.setState(state);
                     canvas.setState(state);
                 }
