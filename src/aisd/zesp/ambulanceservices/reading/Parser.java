@@ -3,8 +3,10 @@ package aisd.zesp.ambulanceservices.reading;
 import aisd.zesp.ambulanceservices.main.*;
 
 public class Parser {
+    private int allowedLength = 6;
+    
     public void parseHospital(State state, String[] buffer){
-        if(buffer[0].length() > 6 || buffer[2].length() > 6 || buffer[3].length() > 6 || buffer[4].length() > 6){
+        if(buffer[0].length() > allowedLength || buffer[2].length() > allowedLength || buffer[3].length() > allowedLength || buffer[4].length() > allowedLength){
             throw new IllegalArgumentException("The numbers are ridiculously big!");
         }
         int id = Integer.parseInt(buffer[0]);
@@ -17,7 +19,7 @@ public class Parser {
     }
 
     public void parseLandmark(State state, String[] buffer){
-        if(buffer[0].length() > 6 || buffer[2].length() > 6 || buffer[3].length() > 6){
+        if(buffer[0].length() > allowedLength || buffer[2].length() > allowedLength || buffer[3].length() > allowedLength){
             throw new IllegalArgumentException("The numbers are ridiculously big!");
         }
         int id = Integer.parseInt(buffer[0]);
@@ -41,7 +43,7 @@ public class Parser {
     }
 
     public void parsePatient(State state, String[] buffer){
-        if(buffer[0].length() > 6 || buffer[1].length() > 6 || buffer[2].length() > 6){
+        if(buffer[0].length() > allowedLength || buffer[1].length() > allowedLength || buffer[2].length() > allowedLength){
             throw new IllegalArgumentException("The numbers are ridiculously big!");
         }
         int id = Integer.parseInt(buffer[0]);
