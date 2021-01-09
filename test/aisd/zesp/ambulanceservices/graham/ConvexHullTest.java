@@ -29,7 +29,7 @@ public class ConvexHullTest {
 
     private HashMap actualpointsMap;
     private HashMap expectedpointsMap;
-    private ConvexHull testConvexHull;
+    private GrahamAlgorithm testConvexHull;
 
     @BeforeEach
     void setUp() {
@@ -49,7 +49,7 @@ public class ConvexHullTest {
         actualsortedPoints = new ArrayList<Point>();
         points = new ArrayList<Point>();
         convexHullpoints = new ArrayList<Point>();
-        testConvexHull = new ConvexHull();
+        testConvexHull = new GrahamAlgorithm();
         expectedpointsMap = new HashMap<Double, Point>();
         actualpointsMap = new HashMap<Double, Point>();
 
