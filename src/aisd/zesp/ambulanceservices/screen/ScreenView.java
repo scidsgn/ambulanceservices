@@ -45,7 +45,9 @@ public class ScreenView extends GridPane {
 
 
         FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("data"));
         fileChooser.setTitle("Wybierz plik z rozszerzeniem *.txt");
+
 
         Button loadMap = new Button("Wczytaj mapę");
         loadMap.setFont(Font.font("verdana", FontWeight.BLACK, FontPosture.REGULAR, 12));
@@ -57,8 +59,9 @@ public class ScreenView extends GridPane {
                         return;
                     }
 
-                    fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt Files", "*.txt"));
+                   fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt Files", "*.txt"));
                     File file = fileChooser.showOpenDialog(primaryStage);
+
 
                     State state = reader.load(file.getAbsolutePath());
                     state.finalizeConnections();
@@ -77,8 +80,9 @@ public class ScreenView extends GridPane {
                         return;
                     }
 
-                    fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt Files", "*.txt"));
+                   fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt Files", "*.txt"));
                     File file = fileChooser.showOpenDialog(primaryStage);
+
 
                     reader.loadPatients(programAlgorithm.getState(), file.getAbsolutePath());
                 }
