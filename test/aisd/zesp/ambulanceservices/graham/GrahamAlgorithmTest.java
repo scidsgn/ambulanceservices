@@ -160,8 +160,8 @@ public class GrahamAlgorithmTest {
         points2.add(seventh);
         points2.add(eighth);
 
-        ConvexHull testConvexHull2 = testGrahamAlgorithm.createConvexHull(points);
-        List<Point> actualConvexHullPoints = testConvexHull2.getHullPoints();
+        ConvexHull testConvexHull = testGrahamAlgorithm.createConvexHull(points);
+        List<Point> actualConvexHullPoints = testConvexHull.getHullPoints();
 
         assertEquals(points2.size(), actualConvexHullPoints.size());
         for (int i = 0; i < points2.size(); i++) {
@@ -169,32 +169,6 @@ public class GrahamAlgorithmTest {
         }
     }
 
-/*
-
-    @Test
-    void shouldCreateConvexHull() {
-
-        points2 = new ArrayList<Point>();
-
-        points2.add(fourth);
-        points2.add(second);
-        points2.add(fifth);
-        points2.add(third);
-        points2.add(seventh);
-        points2.add(eighth);
-
-        expectedSortedPoints2 = new ConvexHull(points2);
-
-        testConvexHull2 = testConvexHull.createConvexHull(points);
-
-
-
-        assertEquals(testConvexHull2, expectedSortedPoints2);
-
-    }
-
-
- */
 
 
 }

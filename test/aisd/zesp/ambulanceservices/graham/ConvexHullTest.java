@@ -13,6 +13,7 @@ public class ConvexHullTest {
 
     private Point pointInCovexHull;
     private Point pointOutCovexHull;
+    private Point pointOnTheBorder;
 
     private Point first;
     private Point second;
@@ -26,6 +27,7 @@ public class ConvexHullTest {
 
         pointInCovexHull = new Point(0, 0);
         pointOutCovexHull = new Point(6, 12);
+        pointOnTheBorder = new Point(6, -1);
 
 
         first = new Point(-1, -1);
@@ -53,6 +55,10 @@ public class ConvexHullTest {
         assertFalse(testConvexHull.isPointInHull(pointOutCovexHull));
     }
 
+    @Test
+    void shouldReturnTrueIfPointIsOnTheBorder() {
+        assertTrue(testConvexHull.isPointInHull(pointOnTheBorder));
+    }
 
 }
 
