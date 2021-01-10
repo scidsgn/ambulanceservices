@@ -1,16 +1,12 @@
 package aisd.zesp.ambulanceservices.screen;
 
-import aisd.zesp.ambulanceservices.main.*;
+import aisd.zesp.ambulanceservices.main.ProgramAlgorithm;
+import aisd.zesp.ambulanceservices.main.State;
 import aisd.zesp.ambulanceservices.reading.Reader;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -21,13 +17,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.FileInputStream;
 
 
 public class ScreenView extends GridPane {
 
-    private Stage primaryStage;
-    private ProgramAlgorithm programAlgorithm;
+    private final Stage primaryStage;
+    private final ProgramAlgorithm programAlgorithm;
     private final Reader reader = new Reader();
 
     private MapCanvas canvas;
@@ -59,15 +54,23 @@ public class ScreenView extends GridPane {
                         return;
                     }
 
-                   fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt Files", "*.txt"));
+                    fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt Files", "*.txt"));
                     File file = fileChooser.showOpenDialog(primaryStage);
 
+                    String errorMessage = null;
+                    try {
+                        State state = reader.load(file.getAbsolutePath());
+                        state.finalizeConnections();
+                        state.finalizeConvexHull();
+                        programAlgorithm.setState(state);
+                        canvas.setState(state);
+                    } catch (IllegalArgumentException ex) {
+                        errorMessage = ex.getMessage();
+                    } finally {
+                        Alerts.showAlert(errorMessage);
+                    }
 
-                    State state = reader.load(file.getAbsolutePath());
-                    state.finalizeConnections();
-                    state.finalizeConvexHull();
-                    programAlgorithm.setState(state);
-                    canvas.setState(state);
+
                 }
         );
 

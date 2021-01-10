@@ -1,9 +1,6 @@
 package aisd.zesp.ambulanceservices.reading;
 
 import aisd.zesp.ambulanceservices.main.State;
-import aisd.zesp.ambulanceservices.screen.Alerts;
-
-
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -45,7 +42,6 @@ public class Reader {
                     }
                 }
                 if (sepCount != sepAllowed) {
-                    Alerts.showAlert("Wrong number of separators at line");
                     throw new IllegalArgumentException("Wrong number of separators at line " + lineNumber);
                 }
                 String[] bufferArray = buffer.split("\\s+\\|\\s+", 6);
@@ -65,7 +61,6 @@ public class Reader {
             fileReader.close();
 
         } catch (IOException e) {
-            Alerts.showAlert("File has to be accessible!");
            throw new IllegalArgumentException("File has to be accessible!");
         }
         return state;
@@ -73,7 +68,6 @@ public class Reader {
 
     public void loadPatients(State state, String fileName){
         if  (state == null) {
-            Alerts.showAlert("State cannot be null.");
             throw new NullPointerException("State cannot be null.");
         }
 
@@ -97,7 +91,6 @@ public class Reader {
                     }
                 }
                 if (sepCount != sepAllowed) {
-                    Alerts.showAlert("Too many separators in file");
                     throw new IllegalArgumentException("Too many separators in file");
                 }
                 String[] bufferArray = buffer.split("\\s+\\|\\s+", 3);
@@ -105,7 +98,6 @@ public class Reader {
                 parser.parsePatient(state, bufferArray);
             }
         } catch (IOException e){
-            Alerts.showAlert("File has to be accessible!");
             throw  new IllegalArgumentException("File has to be accessible!");
         }
     }

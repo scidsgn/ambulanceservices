@@ -12,10 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ReaderTest {
     private Reader reader;
-    private Hospital testHospital;
-    private Landmark testLandmark;
     private State testState;
-    private Patient testPatient;
 
     @BeforeEach
     void setUp() {
@@ -41,9 +38,9 @@ class ReaderTest {
 
     @Test
     void doesLoadChangeState() {
-        testState = reader.load("data.txt");
-        testHospital = new Hospital(1, "Szpital Wojewódzki nr 997", 10, 10, 100);
-        testLandmark = new Landmark(1, "Pomnik Wikipedii", -1, 50);
+        testState = reader.load("data/data.txt");
+        Hospital testHospital = new Hospital(1, "Szpital Wojewódzki nr 997", 10, 10, 100);
+        Landmark testLandmark = new Landmark(1, "Pomnik Wikipedii", -1, 50);
 
         assertEquals(testState.getHospitalById(1).getId(), testHospital.getId());
         assertEquals(testState.getHospitalById(1).getName(), testHospital.getName());
@@ -59,13 +56,27 @@ class ReaderTest {
 
     @Test
     void doesLoadPatientChangeState() {
-        testState = reader.load("data.txt");
-        testPatient = new Patient(1,20, 20);
+        testState = reader.load("data/data.txt");
+        Patient testPatient = new Patient(1, 20, 20);
 
-        reader.loadPatients(testState,"patients.txt");
+        reader.loadPatients(testState,"data/patients.txt");
 
-        assertEquals(testState.getPatientById(1).getId(),testPatient.getId());
-        assertEquals(testState.getPatientById(1).getX(),testPatient.getX());
-        assertEquals(testState.getPatientById(1).getY(),testPatient.getY());
+        assertEquals(testState.getPatientById(1).getId(), testPatient.getId());
+        assertEquals(testState.getPatientById(1).getX(), testPatient.getX());
+        assertEquals(testState.getPatientById(1).getY(), testPatient.getY());
+    }
+
+    @Test
+    void loadWillNotParseTwice() {
+        assertThrows(IllegalArgumentException.class, () -> testState = reader.load("data/invalidHospitalData.txt"));
+        assertThrows(IllegalArgumentException.class, () -> testState = reader.load("data/invalidLandmarkData.txt"));
+        assertThrows(IllegalArgumentException.class, () -> testState = reader.load("data/invalidConnectionData.txt"));
+    }
+
+    @Test
+    void loadPatientsWillNotParseTwice() {
+        testState = reader.load("data/data.txt");
+
+        assertThrows(IllegalArgumentException.class, () -> reader.loadPatients(testState, "data/invalidPatients.txt"));
     }
 }
