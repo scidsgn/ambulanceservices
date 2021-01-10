@@ -11,6 +11,10 @@ public class ConvexHull {
         hullPoints = points;
     }
 
+    public List<Point> getHullPoints() {
+        return hullPoints;
+    }
+
     public boolean isPointInHull(Point point) {
         for (int i = 0; i < hullPoints.size(); i++) {
             Point start = hullPoints.get(i);

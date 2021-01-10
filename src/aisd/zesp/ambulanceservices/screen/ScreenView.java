@@ -83,8 +83,8 @@ public class ScreenView extends GridPane {
                    fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt Files", "*.txt"));
                     File file = fileChooser.showOpenDialog(primaryStage);
 
-
                     reader.loadPatients(programAlgorithm.getState(), file.getAbsolutePath());
+                    canvas.draw();
                 }
         );
 
@@ -112,7 +112,7 @@ public class ScreenView extends GridPane {
         vbox.setPrefWidth(1000);
         VBox.setVgrow(vbox, Priority.ALWAYS);
 
-        canvas = new MapCanvas(400, 500);
+        canvas = new MapCanvas(999, 755);
         vbox.getChildren().add(canvas);
 
 
