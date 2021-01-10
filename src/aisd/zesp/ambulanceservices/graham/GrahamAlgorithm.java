@@ -74,7 +74,6 @@ public class GrahamAlgorithm {
 
             convexHullPoints.add(sortedPoints.get(i));
         }
-        System.out.println("tu" + convexHullPoints);
 
         return convexHullPoints;
     }
