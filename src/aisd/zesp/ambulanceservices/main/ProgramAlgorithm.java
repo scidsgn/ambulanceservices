@@ -7,21 +7,34 @@ import java.util.List;
 
 public class ProgramAlgorithm {
     private State state = null;
+
     private Patient currentPatient;
     private List<Hospital> visitedHospitals;
     private Hospital currentHospital;
+
+    public Patient getCurrentPatient() {
+        return currentPatient;
+    }
+
+    public Hospital getCurrentHospital() {
+        return currentHospital;
+    }
 
     private void selectPatient(Patient patient) {
         currentPatient = patient;
         visitedHospitals = new ArrayList<>();
         currentHospital = null;
+
+        System.out.println("PACJENT: " + currentPatient.getName());
     }
 
     private boolean checkPatientInBounds() {
         if (state.getConvexHull().isPointInHull(currentPatient)) {
+            System.out.println("wewnątrz otoczki");
             return true;
         }
 
+        System.out.println("poza otoczką");
         currentPatient.setPatientState(PatientState.OUTOFBOUNDS);
 
         return false;
@@ -38,6 +51,7 @@ public class ProgramAlgorithm {
 
             if (visitedHospitals.contains(nextHospital)) {
                 currentPatient.setPatientState(PatientState.ABANDONED);
+                System.out.println("porzucony");
 
                 return false;
             }
@@ -47,6 +61,7 @@ public class ProgramAlgorithm {
         }
 
         currentPatient.setPatientState(PatientState.RIDING);
+        System.out.println("szpital: " + currentHospital.getName());
 
         return true;
     }
@@ -55,8 +70,10 @@ public class ProgramAlgorithm {
         if (currentHospital.getVacantBeds() > 0) {
             currentHospital.subtractOneBed();
             currentPatient.setPatientState(PatientState.ACCEPTED);
+            System.out.println("zaakceptowany");
         } else {
             currentPatient.setPatientState(PatientState.REJECTED);
+            System.out.println("odrzucony");
         }
     }
 

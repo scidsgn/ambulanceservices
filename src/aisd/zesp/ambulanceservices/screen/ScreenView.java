@@ -57,20 +57,15 @@ public class ScreenView extends GridPane {
                     fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt Files", "*.txt"));
                     File file = fileChooser.showOpenDialog(primaryStage);
 
-                    String errorMessage = null;
                     try {
                         State state = reader.load(file.getAbsolutePath());
                         state.finalizeConnections();
                         state.finalizeConvexHull();
                         programAlgorithm.setState(state);
-                        canvas.setState(state);
+                        canvas.draw();
                     } catch (IllegalArgumentException ex) {
-                        errorMessage = ex.getMessage();
-                    } finally {
-                        Alerts.showAlert(errorMessage);
+                        Alerts.showAlert(ex.getMessage());
                     }
-
-
                 }
         );
 
@@ -91,13 +86,22 @@ public class ScreenView extends GridPane {
                 }
         );
 
+        Button simulationStepButton = new Button("dev krok symulacji");
+        simulationStepButton.setFont(Font.font("verdana", FontWeight.BLACK, FontPosture.REGULAR, 12));
+        simulationStepButton.setOnAction(
+                e -> {
+                    programAlgorithm.nextStep();
+                    canvas.draw();
+                }
+        );
+
         loadMap.setTranslateX(5);
 
 
         HBox hbox = new HBox(10);
         hbox.setAlignment(Pos.CENTER_LEFT);
 
-        hbox.getChildren().addAll(loadMap, loadPatientsList);
+        hbox.getChildren().addAll(loadMap, loadPatientsList, simulationStepButton);
 
 
         VBox vbox = new VBox(0);
@@ -115,7 +119,7 @@ public class ScreenView extends GridPane {
         vbox.setPrefWidth(1000);
         VBox.setVgrow(vbox, Priority.ALWAYS);
 
-        canvas = new MapCanvas(999, 755);
+        canvas = new MapCanvas(999, 755, programAlgorithm);
         vbox.getChildren().add(canvas);
 
 
