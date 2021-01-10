@@ -28,7 +28,7 @@ public class Point implements Comparable<Point>{
     }
 
     public boolean isLeft(Point start, Point end){
-        return getRelativeDirection(start, end) > 0;
+        return getRelativeDirection(start, end) >= 0;
     }
 
     public Double getX() {
