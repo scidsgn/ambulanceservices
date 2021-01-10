@@ -53,10 +53,10 @@ public class Reader {
                 if(commentAmount == 0){
                     parser.parseHospital(state, bufferArray);
                 }
-                else if(commentAmount ==1){
+                else if(commentAmount == 1){
                     parser.parseLandmark(state, bufferArray);
                 }
-                else if(commentAmount == -1){
+                else if(commentAmount == 2){
                     parser.parseConnection(state, bufferArray);
                 }
 
