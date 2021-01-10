@@ -17,18 +17,61 @@ public class ProgramAlgorithm {
         currentHospital = null;
     }
 
-    private void goToFirstHospital() {
-        // todo
+    private boolean checkPatientInBounds() {
+        if (state.getConvexHull().isPointInHull(currentPatient)) {
+            return true;
+        }
+
+        currentPatient.setPatientState(PatientState.OUTOFBOUNDS);
+
+        return false;
     }
 
-    private void goToNextHospital() {
-        Hospital nextHospital = state.getNextHospital(currentHospital);
+    private boolean goToHospital() {
+        if (currentHospital == null) {
+            Hospital hospital = state.findNearestHospital(currentPatient);
 
-        if (nextHospital.getVacantBeds() > 0) {
+            visitedHospitals.add(hospital);
+            currentHospital = hospital;
+        } else {
+            Hospital nextHospital = state.getNextHospital(currentHospital);
+
+            if (visitedHospitals.contains(nextHospital)) {
+                currentPatient.setPatientState(PatientState.ABANDONED);
+
+                return false;
+            }
+
             visitedHospitals.add(nextHospital);
             currentHospital = nextHospital;
+        }
+
+        currentPatient.setPatientState(PatientState.RIDING);
+
+        return true;
+    }
+
+    private void checkHospitalCapacity() {
+        if (currentHospital.getVacantBeds() > 0) {
+            currentHospital.subtractOneBed();
+            currentPatient.setPatientState(PatientState.ACCEPTED);
         } else {
-            currentPatient.setPatientState(PatientState.ABANDONED);
+            currentPatient.setPatientState(PatientState.REJECTED);
+        }
+    }
+
+    public void nextStep() {
+        PatientState currentState = (currentPatient == null) ? PatientState.ABANDONED : currentPatient.getPatientState();
+        if (currentState == PatientState.ACCEPTED || currentState == PatientState.ABANDONED || currentState == PatientState.OUTOFBOUNDS) {
+            selectPatient(state.getNextPatient());
+        } else if (currentState == PatientState.WAITING) {
+            if (checkPatientInBounds()) {
+                goToHospital();
+            }
+        } else if (currentState == PatientState.REJECTED) {
+            goToHospital();
+        } else if (currentState == PatientState.RIDING) {
+            checkHospitalCapacity();
         }
     }
 

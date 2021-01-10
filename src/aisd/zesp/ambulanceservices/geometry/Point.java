@@ -39,6 +39,14 @@ public class Point implements Comparable<Point>{
         return y;
     }
 
+    public double getDistance(Point point) throws NullPointerException {
+        if (point == null) {
+            throw new NullPointerException("Point cannot be null.");
+        }
+
+        return Math.sqrt(Math.pow(x - point.getX(), 2) + Math.pow(y - point.getY(), 2));
+    }
+
     @Override
     public int compareTo(Point o) {
         int com = this.getX().compareTo(o.getX());

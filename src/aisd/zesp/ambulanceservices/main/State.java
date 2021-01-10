@@ -33,6 +33,10 @@ public class State {
         nextHospitalList = new ArrayList<>();
     }
 
+    public ConvexHull getConvexHull() {
+        return convexHull;
+    }
+
     public Graph<Point> getConnectionsGraph() {
         return connectionsGraph;
     }
@@ -183,5 +187,21 @@ public class State {
         points.addAll(hospitalList);
 
         convexHull = algo.createConvexHull(points);
+    }
+
+    public Hospital findNearestHospital(Point point) {
+        double minDist = Double.POSITIVE_INFINITY;
+        Hospital minHospital = null;
+
+        for (Hospital hospital : hospitalList) {
+            double distance = point.getDistance(hospital);
+
+            if (distance < minDist) {
+                minDist = distance;
+                minHospital = hospital;
+            }
+        }
+
+        return minHospital;
     }
 }
