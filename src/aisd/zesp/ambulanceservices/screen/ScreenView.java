@@ -78,11 +78,17 @@ public class ScreenView extends GridPane {
                         return;
                     }
 
-                   fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt Files", "*.txt"));
+                    fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt Files", "*.txt"));
                     File file = fileChooser.showOpenDialog(primaryStage);
 
-                    reader.loadPatients(programAlgorithm.getState(), file.getAbsolutePath());
-                    canvas.draw();
+                    String errorMessage = null;
+                    try {
+                        reader.loadPatients(programAlgorithm.getState(), file.getAbsolutePath());
+                        canvas.draw();
+                    } catch (IllegalArgumentException ex) {
+                        errorMessage = ex.getMessage();
+                        Alerts.showAlert(errorMessage);
+                    }
                 }
         );
 
