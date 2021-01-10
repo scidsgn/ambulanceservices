@@ -11,7 +11,7 @@ public class GrahamAlgorithm {
         Map<Double, Point> pointsMap = calculateAngles(startPoint, points);
         List<Point> sortedPoints = sortByAngles(startPoint, pointsMap);
 
-        return new ConvexHull(choosePointsForConvexHull(sortedPoints));
+         return new ConvexHull(choosePointsForConvexHull(sortedPoints));
     }
 
     public Point chooseStartPoint(List<Point> points) {
@@ -22,11 +22,19 @@ public class GrahamAlgorithm {
 
     public Map<Double, Point> calculateAngles(Point startPoint, List<Point> points) {
         Map<Double, Point> pointsMap = new HashMap<>();
+        double angle;
 
         for (Point point : points) {
             if (point != startPoint) {
-                double angle = (point.getY() - startPoint.getY()) / (point.getX() - startPoint.getX());
-                pointsMap.put(angle, point);
+                angle = (point.getY() - startPoint.getY()) / (point.getX() - startPoint.getX());
+
+                if(pointsMap.containsKey(angle)){
+                    if( Math.abs(pointsMap.get(angle).getY() - startPoint.getY()) < Math.abs(point.getY() - startPoint.getY()) ){
+                        pointsMap.put(angle, point);
+                    }
+                }else {
+                    pointsMap.put(angle, point);
+                }
             }
         }
 
