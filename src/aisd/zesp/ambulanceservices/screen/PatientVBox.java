@@ -39,17 +39,10 @@ public class PatientVBox extends VBox {
 
             patientState = p.getPatientState();
 
-            Image img = new Image(new File("icons/icon_patientwaiting.png").toURI().toString());
-            ImageView view = new ImageView(img);
-
-            Image imgAbandon = new Image(new File("icons/icon_patientabandon.png").toURI().toString());
-            ImageView viewAbandon = new ImageView(imgAbandon);
-
-            Image imgRide = new Image(new File("icons/icon_patientride.png").toURI().toString());
-            ImageView viewRide = new ImageView(imgRide);
-
-            Image imgOk = new Image(new File("icons/icon_patientok.png").toURI().toString());
-            ImageView viewOk = new ImageView(imgOk);
+            ImageView view = new ImageView(AppIcons.patientWaiting);
+            ImageView viewAbandon = new ImageView(AppIcons.patientAbandoned);
+            ImageView viewRide = new ImageView(AppIcons.patientRiding);
+            ImageView viewOk = new ImageView(AppIcons.patientOK);
 
 
             if (patientState == WAITING) {

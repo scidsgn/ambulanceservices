@@ -36,13 +36,8 @@ public class HospitalVBox extends VBox {
 
             vacantBeds = h.getVacantBeds();
 
-
-            Image imgHospital = new Image(new File("icons/icon_hospital.png").toURI().toString());
-
-            ImageView viewHospital = new ImageView(imgHospital);
-
-            Image imgFullHospital = new Image(new File("icons/icon_hospitalfull.png").toURI().toString());
-            ImageView viewFullHospital = new ImageView(imgFullHospital);
+            ImageView viewHospital = new ImageView(AppIcons.hospital);
+            ImageView viewFullHospital = new ImageView(AppIcons.hospitalFull);
 
 
             Label label = new Label(h.getName() + "    " + vacantBeds + "    " + "S" + h.getId());

@@ -55,7 +55,6 @@ public class Patient extends Point {
         surNames.add("Kovidek");
         surNames.add("Kowalski");
         surNames.add("Pałerpojnt");
-        surNames.add("Sasino");
         surNames.add("Martini");
         surNames.add("Eliminacjagaussa");
         surNames.add("Syntezatormowyivonawwersjidemonstracyjnej");

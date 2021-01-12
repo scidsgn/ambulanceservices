@@ -41,7 +41,6 @@ public class ScreenView extends GridPane {
         patientVBox = new PatientVBox(programAlgorithm);
 
         HBox root = new HBox(0);
-        root.setPadding(new Insets(10));
         root.setPrefHeight(800);
         root.setAlignment(Pos.CENTER);
 
