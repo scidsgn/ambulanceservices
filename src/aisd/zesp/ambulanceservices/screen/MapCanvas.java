@@ -5,12 +5,18 @@ import aisd.zesp.ambulanceservices.graph.Graph;
 import aisd.zesp.ambulanceservices.main.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 import java.util.List;
 
 public class MapCanvas extends Canvas {
     private final ProgramAlgorithm programAlgorithm;
+
+    private final Color convexHullFill = Color.color(12/255., 11/255., 20/255.);
+    private final Color convexHullStroke = Color.color(39/255., 46/255., 59/255.);
+    private final Color graphEdgeStroke = Color.color(127/255., 127/255., 127/255.);
+    private final Color landmarkTextFill = Color.color(0/255., 133/255., 245/255.);
 
     public MapCanvas(int width, int height, ProgramAlgorithm programAlgorithm) {
         super(width, height);
@@ -35,8 +41,11 @@ public class MapCanvas extends Canvas {
         }
         g.closePath();
 
-        g.setStroke(Color.DARKGREY);
-        g.setLineDashes(10, 10);
+        g.setFill(convexHullFill);
+        g.fill();
+
+        g.setStroke(convexHullStroke);
+        g.setLineWidth(2);
         g.stroke();
     }
 
@@ -47,7 +56,7 @@ public class MapCanvas extends Canvas {
         g.beginPath();
         g.setFill(Color.DARKGREY);
         for (int i = 0; i < graphNodes.size(); i++) {
-            for (int j = i; j < graphNodes.size(); j++) {
+            for (int j = i + 1; j < graphNodes.size(); j++) {
                 Point p1 = graphNodes.get(i);
                 Point p2 = graphNodes.get(j);
                 Double length = graph.getLength(p1, p2);
@@ -65,9 +74,8 @@ public class MapCanvas extends Canvas {
             }
         }
 
-        g.setStroke(Color.LIGHTGRAY);
-        g.setLineDashes(1);
-        g.setLineWidth(2);
+        g.setStroke(graphEdgeStroke);
+        g.setLineWidth(4);
         g.stroke();
     }
 
@@ -75,9 +83,12 @@ public class MapCanvas extends Canvas {
         for (Hospital h : programAlgorithm.getState().getHospitalList()) {
             Point screenPoint = worldToCanvas(h);
 
-            g.setFill(Color.BLUE);
-            g.fillRect(screenPoint.getX() - 5, screenPoint.getY() - 5, 11, 11);
-            g.fillText("S" + h.getId() + " (" + h.getVacantBeds() + ")", screenPoint.getX() - 20, screenPoint.getY() - 15);
+            g.setFill(Color.BLACK);
+            g.fillRect(screenPoint.getX() - 9, screenPoint.getY() - 9, 18, 18);
+            g.drawImage(AppIcons.hospital, screenPoint.getX() - 8, screenPoint.getY() - 8);
+
+            g.setFill(Color.WHITE);
+            g.fillText("S" + h.getId(), screenPoint.getX() + 16, screenPoint.getY() + 4);
         }
     }
 
@@ -85,8 +96,12 @@ public class MapCanvas extends Canvas {
         for (Landmark l : programAlgorithm.getState().getLandmarkList()) {
             Point screenPoint = worldToCanvas(l);
 
-            g.setFill(Color.DARKGREEN);
-            g.fillRect(screenPoint.getX() - 1, screenPoint.getY() - 1, 3, 3);
+            g.setFill(Color.BLACK);
+            g.fillRect(screenPoint.getX() - 9, screenPoint.getY() - 9, 18, 18);
+            g.drawImage(AppIcons.monument, screenPoint.getX() - 8, screenPoint.getY() - 8);
+
+            g.setFill(landmarkTextFill);
+            g.fillText("X" + l.getId(), screenPoint.getX() + 16, screenPoint.getY() + 4);
         }
     }
 
@@ -94,13 +109,22 @@ public class MapCanvas extends Canvas {
         PatientState patientState = patient.getPatientState();
         Point screenPoint = worldToCanvas(patient);
 
+        Image img = AppIcons.patientWaiting;
+
         if (patientState == PatientState.ABANDONED || patientState == PatientState.ACCEPTED) {
             return;
-        } else if (patientState == PatientState.OUTOFBOUNDS || patientState == PatientState.REJECTED) {
+        } else if (patientState == PatientState.OUTOFBOUNDS) {
+            img = AppIcons.patientAbandoned;
+            g.setFill(Color.RED);
+        } else if (patientState == PatientState.REJECTED) {
+            screenPoint = worldToCanvas(programAlgorithm.getCurrentHospital());
+            screenPoint.setY(screenPoint.getY() + 20);
+
             g.setFill(Color.RED);
         } else if (patient == programAlgorithm.getCurrentPatient()) {
             if (patientState != PatientState.WAITING) {
                 screenPoint = worldToCanvas(programAlgorithm.getCurrentHospital());
+                screenPoint.setY(screenPoint.getY() + 20);
             }
 
             g.setFill(Color.YELLOW);
@@ -108,8 +132,12 @@ public class MapCanvas extends Canvas {
             g.setFill(Color.WHITE);
         }
 
-        g.fillRect(screenPoint.getX() - 3, screenPoint.getY() - 3, 7, 7);
-        g.fillText(patient.getName(), screenPoint.getX() + 10, screenPoint.getY() + 10);
+        g.setFill(Color.BLACK);
+        g.fillRect(screenPoint.getX() - 9, screenPoint.getY() - 9, 18, 18);
+        g.drawImage(img, screenPoint.getX() - 8, screenPoint.getY() - 8);
+
+        g.setFill(Color.WHITE);
+        g.fillText("P" + patient.getId(), screenPoint.getX() + 16, screenPoint.getY() + 4);
     }
 
     private void drawPatients(GraphicsContext g) {

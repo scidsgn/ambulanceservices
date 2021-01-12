@@ -49,7 +49,7 @@ public class ProgramAlgorithm {
         } else {
             Hospital nextHospital = state.getNextHospital(currentHospital, visitedHospitals);
 
-            if (visitedHospitals.contains(nextHospital)) {
+            if (nextHospital == null) {
                 currentPatient.setPatientState(PatientState.ABANDONED);
                 System.out.println("porzucony");
 

@@ -40,7 +40,7 @@ public class HospitalVBox extends VBox {
             ImageView viewFullHospital = new ImageView(AppIcons.hospitalFull);
 
 
-            Label label = new Label(h.getName() + "    " + vacantBeds + "    " + "S" + h.getId());
+            Label label = new Label("S" + h.getId() + "     " + h.getName() + "    " + vacantBeds + "    " + "S" + h.getId());
 
 
             if (vacantBeds != 0) {

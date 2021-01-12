@@ -39,6 +39,14 @@ public class Point implements Comparable<Point>{
         return y;
     }
 
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
     public double getDistance(Point point) throws NullPointerException {
         if (point == null) {
             throw new NullPointerException("Point cannot be null.");
