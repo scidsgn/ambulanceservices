@@ -47,7 +47,7 @@ public class ProgramAlgorithm {
             visitedHospitals.add(hospital);
             currentHospital = hospital;
         } else {
-            Hospital nextHospital = state.getNextHospital(currentHospital);
+            Hospital nextHospital = state.getNextHospital(currentHospital, visitedHospitals);
 
             if (visitedHospitals.contains(nextHospital)) {
                 currentPatient.setPatientState(PatientState.ABANDONED);

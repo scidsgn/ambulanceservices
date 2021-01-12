@@ -7,10 +7,7 @@ import aisd.zesp.ambulanceservices.graph.DijkstraAlgorithm;
 import aisd.zesp.ambulanceservices.graph.Graph;
 import aisd.zesp.ambulanceservices.graph.GraphConstructor;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class State {
     private final List<Hospital> hospitalList;
@@ -21,6 +18,7 @@ public class State {
     private final GraphConstructor graphConstructor;
     private Graph<Point> connectionsGraph;
     private final List<Hospital> nextHospitalList;
+    private final List<List<List<Point>>> nextHospitalPaths;
     private ConvexHull convexHull;
 
     public State() {
@@ -31,6 +29,8 @@ public class State {
         graphConstructor = new GraphConstructor();
         connectionIds = new HashSet<>();
         nextHospitalList = new ArrayList<>();
+
+        nextHospitalPaths = new ArrayList<>();
     }
 
     public ConvexHull getConvexHull() {
@@ -136,12 +136,10 @@ public class State {
         DijkstraAlgorithm<Point> algo = new DijkstraAlgorithm<>(connectionsGraph);
 
         for (int i = 0; i < hospitalList.size(); i++) {
+            List<List<Point>> paths = new ArrayList<>();
             Hospital startHospital = hospitalList.get(i);
 
             algo.execute(startHospital);
-
-            double minPath = Double.POSITIVE_INFINITY;
-            Hospital minHospital = null;
 
             for (int j = 0; j < hospitalList.size(); j++) {
                 if (j == i) {
@@ -149,25 +147,38 @@ public class State {
                 }
                 Hospital targetHospital = hospitalList.get(j);
                 List<Point> path = algo.getPath(targetHospital);
-                double pathLength = connectionsGraph.getPathLength(path);
 
-                if (pathLength < minPath) {
-                    minPath = pathLength;
-                    minHospital = targetHospital;
+                if (path != null) {
+                    paths.add(path);
                 }
             }
 
-            nextHospitalList.add(minHospital);
+            paths.sort(Comparator.comparingDouble(p -> connectionsGraph.getPathLength(p)));
+
+            for (List<Point> path : paths) {
+                Hospital h = (Hospital)path.get(0);
+                System.out.println("S" + startHospital.getId() + " -> " + "S" + h.getId());
+            }
+
+            nextHospitalPaths.add(paths);
         }
     }
 
-    public Hospital getNextHospital(Hospital hospital) throws IllegalArgumentException {
+    public Hospital getNextHospital(Hospital hospital, List<Hospital> excluded) throws IllegalArgumentException {
         int index = hospitalList.indexOf(hospital);
         if (index == -1) {
             throw new IllegalArgumentException("Hospital not present in the list.");
         }
 
-        return nextHospitalList.get(index);
+        for (List<Point> path : nextHospitalPaths.get(index)) {
+            Hospital target = (Hospital) path.get(0);
+
+            if (!excluded.contains(target)) {
+                return target;
+            }
+        }
+
+        return null;
     }
 
     public Patient getNextPatient() {
