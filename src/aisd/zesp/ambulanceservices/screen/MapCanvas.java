@@ -23,8 +23,12 @@ public class MapCanvas extends Canvas {
         this.programAlgorithm = programAlgorithm;
     }
 
-    private Point worldToCanvas(Point point) {
+    public Point worldToCanvas(Point point) {
         return new Point(100 + point.getX() * 2, 100 + point.getY() * 2);
+    }
+
+    public Point canvasToWorld(Point point) {
+        return new Point((point.getX() - 100) / 2.0, (point.getY() - 100) / 2.0);
     }
 
     private void drawConvexHull(GraphicsContext g) {
@@ -105,7 +109,7 @@ public class MapCanvas extends Canvas {
         }
     }
 
-    public void drawPatient(GraphicsContext g, Patient patient) {
+    private void drawPatient(GraphicsContext g, Patient patient) {
         PatientState patientState = patient.getPatientState();
         Point screenPoint = worldToCanvas(patient);
 

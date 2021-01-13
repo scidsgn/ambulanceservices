@@ -215,9 +215,18 @@ public class State {
         return minHospital;
     }
 
+    private int generateNewPatientID() {
+        int id = patientList.size() + 1;
+
+        while (getPatientById(id) != null) {
+            id += 1;
+        }
+
+        return id;
+    }
+
     public Patient addPatientFromCanvas(double x, double y) {
-        int id = patientList == null ? patientList.get(patientList.size() - 1).getId() + 1: 1;
-        Patient patient = new Patient(id, x, y);
+        Patient patient = new Patient(generateNewPatientID(), x, y);
             System.out.println(x);
             System.out.println(y);
         patientList.add(patient);

@@ -1,5 +1,6 @@
 package aisd.zesp.ambulanceservices.screen;
 
+import aisd.zesp.ambulanceservices.geometry.Point;
 import aisd.zesp.ambulanceservices.main.Patient;
 import aisd.zesp.ambulanceservices.main.ProgramAlgorithm;
 import aisd.zesp.ambulanceservices.main.State;
@@ -246,8 +247,13 @@ public class ScreenView extends GridPane {
         public void handle(MouseEvent e) {
             if (programAlgorithm.getState() != null) {
                 GraphicsContext g = canvas.getGraphicsContext2D();
-                Patient patient = state.addPatientFromCanvas(e.getSceneX(), e.getSceneY());
-                canvas.drawPatient(g, patient);
+                Point canvasCoords = new Point(e.getSceneX(), e.getSceneY());
+                Point worldCoords = canvas.canvasToWorld(canvasCoords);
+
+                state.addPatientFromCanvas(worldCoords.getX(), worldCoords.getY());
+
+                patientVBox.showPatient();
+                canvas.draw();
             }
         }
     };
