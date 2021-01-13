@@ -1,13 +1,17 @@
 package aisd.zesp.ambulanceservices.screen;
 
+import aisd.zesp.ambulanceservices.main.Patient;
 import aisd.zesp.ambulanceservices.main.ProgramAlgorithm;
 import aisd.zesp.ambulanceservices.main.State;
 import aisd.zesp.ambulanceservices.reading.Reader;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -25,6 +29,7 @@ public class ScreenView extends GridPane {
     private final Stage primaryStage;
     private final ProgramAlgorithm programAlgorithm;
     private final Reader reader = new Reader();
+    private State state;
 
     private MapCanvas canvas;
     private HospitalVBox hospitalVBox;
@@ -68,7 +73,7 @@ public class ScreenView extends GridPane {
                     File file = fileChooser.showOpenDialog(primaryStage);
 
                     try {
-                        State state = reader.load(file.getAbsolutePath());
+                        state = reader.load(file.getAbsolutePath());
                         state.finalizeConnections();
                         state.finalizeConvexHull();
                         programAlgorithm.setState(state);
@@ -143,6 +148,8 @@ public class ScreenView extends GridPane {
 
         canvas = new MapCanvas(999, 755, programAlgorithm);
         vbox.getChildren().add(canvas);
+
+        canvas.setOnMouseClicked(eventHandler);
 
 
         VBox vbox2 = new VBox(0);
@@ -233,4 +240,15 @@ public class ScreenView extends GridPane {
 
         canvas.draw();
     }
+
+    EventHandler<MouseEvent> eventHandler = new EventHandler<>() {
+        @Override
+        public void handle(MouseEvent e) {
+            if (programAlgorithm.getState() != null) {
+                GraphicsContext g = canvas.getGraphicsContext2D();
+                Patient patient = state.addPatientFromCanvas(e.getX(), e.getY());
+                canvas.drawPatient(g, patient);
+            }
+        }
+    };
 }

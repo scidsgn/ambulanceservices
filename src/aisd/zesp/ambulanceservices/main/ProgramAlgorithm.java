@@ -1,8 +1,5 @@
 package aisd.zesp.ambulanceservices.main;
 
-import aisd.zesp.ambulanceservices.graham.ConvexHull;
-import aisd.zesp.ambulanceservices.screen.ScreenView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +23,6 @@ public class ProgramAlgorithm {
         currentPatient = patient;
         visitedHospitals = new ArrayList<>();
         currentHospital = null;
-
 
         System.out.println("PACJENT: " + currentPatient.getName());
     }

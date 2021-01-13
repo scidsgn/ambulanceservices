@@ -80,7 +80,6 @@ public class State {
         if (getPatientById(patient.getId()) != null) {
             throw new IllegalArgumentException("Patient with that ID already added.");
         }
-
         patientList.add(patient);
     }
 
@@ -214,5 +213,13 @@ public class State {
         }
 
         return minHospital;
+    }
+
+    public Patient addPatientFromCanvas(double x, double y) {
+        int id = patientList.get(patientList.size() - 1).getId() + 1;
+        Patient patient = new Patient(id, x, y);
+
+        patientList.add(patient);
+        return patient;
     }
 }

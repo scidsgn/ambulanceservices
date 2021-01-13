@@ -105,7 +105,7 @@ public class MapCanvas extends Canvas {
         }
     }
 
-    private void drawPatient(GraphicsContext g, Patient patient) {
+    public void drawPatient(GraphicsContext g, Patient patient) {
         PatientState patientState = patient.getPatientState();
         Point screenPoint = worldToCanvas(patient);
 
