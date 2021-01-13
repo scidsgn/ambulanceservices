@@ -246,7 +246,7 @@ public class ScreenView extends GridPane {
         public void handle(MouseEvent e) {
             if (programAlgorithm.getState() != null) {
                 GraphicsContext g = canvas.getGraphicsContext2D();
-                Patient patient = state.addPatientFromCanvas(e.getX(), e.getY());
+                Patient patient = state.addPatientFromCanvas(e.getSceneX(), e.getSceneY());
                 canvas.drawPatient(g, patient);
             }
         }

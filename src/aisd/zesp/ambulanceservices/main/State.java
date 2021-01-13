@@ -216,9 +216,10 @@ public class State {
     }
 
     public Patient addPatientFromCanvas(double x, double y) {
-        int id = patientList.get(patientList.size() - 1).getId() + 1;
+        int id = patientList == null ? patientList.get(patientList.size() - 1).getId() + 1: 1;
         Patient patient = new Patient(id, x, y);
-
+            System.out.println(x);
+            System.out.println(y);
         patientList.add(patient);
         return patient;
     }
