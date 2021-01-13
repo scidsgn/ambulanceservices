@@ -10,6 +10,9 @@ public class Patient extends Point {
     private final int id;
     private String name;
     private PatientState patientState = PatientState.WAITING;
+    private Hospital patientHospital = null;
+    private Hospital nearestHospital = null;
+
 
     public Patient(int id, double x, double y) {
         super(x, y);
@@ -67,5 +70,23 @@ public class Patient extends Point {
         String firstName = firstNames.get(random.nextInt(firstNames.size() - 1));
         String surName = surNames.get(random.nextInt(surNames.size() - 1));
         name = firstName + " " + surName;
+    }
+
+
+
+    public Hospital getPatientHospital() {
+        return patientHospital;
+    }
+
+    public void setPatientHospital(Hospital currentHospital) {
+            this.patientHospital = currentHospital;
+    }
+
+    public Hospital getNearestHospital() {
+        return nearestHospital;
+    }
+
+    public void setNearestHospital(Hospital currentHospital) {
+        this.nearestHospital = currentHospital;
     }
 }

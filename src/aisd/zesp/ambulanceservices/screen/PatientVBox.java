@@ -3,7 +3,6 @@ package aisd.zesp.ambulanceservices.screen;
 
 import aisd.zesp.ambulanceservices.main.*;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -11,7 +10,6 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import java.io.File;
 
 import static aisd.zesp.ambulanceservices.main.PatientState.*;
 
@@ -39,6 +37,7 @@ public class PatientVBox extends VBox {
 
             patientState = p.getPatientState();
 
+
             ImageView view = new ImageView(AppIcons.patientWaiting);
             ImageView viewAbandon = new ImageView(AppIcons.patientAbandoned);
             ImageView viewRide = new ImageView(AppIcons.patientRiding);
@@ -57,10 +56,9 @@ public class PatientVBox extends VBox {
                 state = "Porzucony";
                 view = viewAbandon;
             } else if (patientState == ACCEPTED) {
-                state = "Hospitalowany w szpitalu";
+                state = "Hospitalowany w szpitalu S " + p.getPatientHospital().getId();
                 view = viewOk;
             }
-
             Label label = new Label(p.getName() + "    " + state + "    " + "P" + p.getId());
 
             label.setGraphic(view);

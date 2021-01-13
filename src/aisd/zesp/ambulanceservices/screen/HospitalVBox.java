@@ -4,7 +4,6 @@ package aisd.zesp.ambulanceservices.screen;
 import aisd.zesp.ambulanceservices.main.Hospital;
 import aisd.zesp.ambulanceservices.main.ProgramAlgorithm;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -12,7 +11,6 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import java.io.File;
 
 public class HospitalVBox extends VBox {
 

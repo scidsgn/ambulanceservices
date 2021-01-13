@@ -1,6 +1,7 @@
 package aisd.zesp.ambulanceservices.main;
 
 import aisd.zesp.ambulanceservices.graham.ConvexHull;
+import aisd.zesp.ambulanceservices.screen.ScreenView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ public class ProgramAlgorithm {
     private Patient currentPatient;
     private List<Hospital> visitedHospitals;
     private Hospital currentHospital;
+
 
     public Patient getCurrentPatient() {
         return currentPatient;
@@ -25,6 +27,7 @@ public class ProgramAlgorithm {
         visitedHospitals = new ArrayList<>();
         currentHospital = null;
 
+
         System.out.println("PACJENT: " + currentPatient.getName());
     }
 
@@ -37,6 +40,7 @@ public class ProgramAlgorithm {
         System.out.println("poza otoczką");
         currentPatient.setPatientState(PatientState.OUTOFBOUNDS);
 
+
         return false;
     }
 
@@ -46,11 +50,13 @@ public class ProgramAlgorithm {
 
             visitedHospitals.add(hospital);
             currentHospital = hospital;
+            currentPatient.setNearestHospital(currentHospital);
         } else {
             Hospital nextHospital = state.getNextHospital(currentHospital, visitedHospitals);
 
             if (nextHospital == null) {
                 currentPatient.setPatientState(PatientState.ABANDONED);
+
                 System.out.println("porzucony");
 
                 return false;
@@ -58,6 +64,7 @@ public class ProgramAlgorithm {
 
             visitedHospitals.add(nextHospital);
             currentHospital = nextHospital;
+            currentPatient.setNearestHospital(currentHospital);
         }
 
         currentPatient.setPatientState(PatientState.RIDING);
@@ -70,9 +77,13 @@ public class ProgramAlgorithm {
         if (currentHospital.getVacantBeds() > 0) {
             currentHospital.subtractOneBed();
             currentPatient.setPatientState(PatientState.ACCEPTED);
+            currentPatient.setPatientHospital(currentHospital);
+
+
             System.out.println("zaakceptowany");
         } else {
             currentPatient.setPatientState(PatientState.REJECTED);
+
             System.out.println("odrzucony");
         }
     }

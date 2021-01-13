@@ -29,16 +29,20 @@ public class ScreenView extends GridPane {
     private MapCanvas canvas;
     private HospitalVBox hospitalVBox;
     private PatientVBox patientVBox;
+    private InformationVBox informationVBox;
 
     public ScreenView(Stage primaryStage, ProgramAlgorithm programAlgorithm) {
         this.primaryStage = primaryStage;
         this.programAlgorithm = programAlgorithm;
     }
 
+
     public void draw() {
 
         hospitalVBox = new HospitalVBox(programAlgorithm);
         patientVBox = new PatientVBox(programAlgorithm);
+        informationVBox = new InformationVBox(programAlgorithm);
+
 
         HBox root = new HBox(0);
         root.setPrefHeight(800);
@@ -108,6 +112,8 @@ public class ScreenView extends GridPane {
                     canvas.draw();
                     hospitalVBox.showHospital();
                     patientVBox.showPatient();
+                    informationVBox.showInformation();
+
                 }
         );
 
@@ -142,15 +148,16 @@ public class ScreenView extends GridPane {
         VBox vbox2 = new VBox(0);
         vbox2.setAlignment(Pos.CENTER_RIGHT);
 
-        VBox vbox3 = new VBox(0);
-        vbox3.setBackground(new Background(new BackgroundFill(Color.DARKGRAY,
+
+        informationVBox.setBackground(new Background(new BackgroundFill(Color.DARKGRAY,
                 CornerRadii.EMPTY,
                 Insets.EMPTY)));
-        vbox3.setPrefWidth(620);
-        vbox3.setPrefHeight(300);
-        vbox3.setStyle("-fx-border-style: solid;"
-                + "-fx-border-width: 1;"
+        informationVBox.setPrefWidth(620);
+        informationVBox.setPrefHeight(300);
+        informationVBox.setStyle("-fx-border-style: solid;"
+                + "-fx-border-width: 2;"
                 + "-fx-border-color: black");
+
 
         hospitalVBox.setBackground(new Background(new BackgroundFill(Color.DIMGRAY,
                 CornerRadii.EMPTY,
@@ -158,7 +165,7 @@ public class ScreenView extends GridPane {
         hospitalVBox.setPrefWidth(620);
         hospitalVBox.setPrefHeight(300);
         hospitalVBox.setStyle("-fx-border-style: solid;"
-                + "-fx-border-width: 1;"
+                + "-fx-border-width: 0;"
                 + "-fx-border-color: black");
 
 
@@ -168,7 +175,7 @@ public class ScreenView extends GridPane {
         patientVBox.setPrefWidth(620);
         patientVBox.setPrefHeight(300);
         patientVBox.setStyle("-fx-border-style: solid;"
-                + "-fx-border-width: 1;"
+                + "-fx-border-width: 0;"
                 + "-fx-border-color: black");
 
 
@@ -177,9 +184,6 @@ public class ScreenView extends GridPane {
 
         start.setTranslateX(5);
         start.setTranslateY(3);
-        Text tx1 = new Text("Symulacja tutaj ");
-        tx1.setLayoutY(30);
-        tx1.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.ITALIC, 20));
 
 
         Text tx2 = new Text(" Szpitale");
@@ -188,14 +192,15 @@ public class ScreenView extends GridPane {
         Text tx3 = new Text(" Pacjenci");
         tx3.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.ITALIC, 12));
 
-        VBox.setVgrow(vbox3, Priority.ALWAYS);
+        VBox.setVgrow(informationVBox, Priority.ALWAYS);
         VBox.setVgrow(hospitalVBox, Priority.ALWAYS);
         VBox.setVgrow(patientVBox, Priority.ALWAYS);
 
 
-        vbox3.getChildren().addAll(tx1);
-
         ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setBackground(new Background(new BackgroundFill(Color.BLACK,
+                CornerRadii.EMPTY,
+                Insets.EMPTY)));
         hospitalVBox.getChildren().addAll(tx2);
         scrollPane.setContent(hospitalVBox);
 
@@ -206,12 +211,15 @@ public class ScreenView extends GridPane {
         ScrollPane scrollPane2 = new ScrollPane();
         patientVBox.getChildren().addAll(tx3);
         scrollPane2.setContent(patientVBox);
+        scrollPane2.setBackground(new Background(new BackgroundFill(Color.BLACK,
+                CornerRadii.EMPTY,
+                Insets.EMPTY)));
 
         scrollPane2.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane2.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
 
-        vbox2.getChildren().addAll(vbox3, scrollPane, scrollPane2);
+        vbox2.getChildren().addAll(informationVBox, scrollPane, scrollPane2);
 
         root.getChildren().addAll(vbox, vbox2);
         Scene scene = new Scene(root, 1540, 900);
