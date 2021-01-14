@@ -84,10 +84,14 @@ public class ProgramAlgorithm {
         }
     }
 
-    public void nextStep() {
+    public int nextStep() {
         PatientState currentState = (currentPatient == null) ? PatientState.ABANDONED : currentPatient.getPatientState();
         if (currentState == PatientState.ACCEPTED || currentState == PatientState.ABANDONED || currentState == PatientState.OUTOFBOUNDS) {
-            selectPatient(state.getNextPatient());
+            Patient patient = state.getNextPatient();
+            if(patient == null){
+                return 1;
+            }
+            selectPatient(patient);
         } else if (currentState == PatientState.WAITING) {
             if (checkPatientInBounds()) {
                 goToHospital();
@@ -97,6 +101,7 @@ public class ProgramAlgorithm {
         } else if (currentState == PatientState.RIDING) {
             checkHospitalCapacity();
         }
+        return 0;
     }
 
     public State getState() {

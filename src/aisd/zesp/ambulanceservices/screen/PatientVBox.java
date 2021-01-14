@@ -2,9 +2,14 @@ package aisd.zesp.ambulanceservices.screen;
 
 
 import aisd.zesp.ambulanceservices.main.*;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -62,6 +67,11 @@ public class PatientVBox extends VBox {
             Label label = new Label(p.getName() + "    " + state + "    " + "P" + p.getId());
 
             label.setGraphic(view);
+
+            setBackground(new Background(new BackgroundFill(Color.DIMGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+            setPrefWidth(620);
+            setPrefHeight(300);
+            setStyle("-fx-border-style: solid;" + "-fx-border-width: 0;" + "-fx-border-color: black");
 
             this.getChildren().addAll(label);
         }

@@ -3,9 +3,14 @@ package aisd.zesp.ambulanceservices.screen;
 
 import aisd.zesp.ambulanceservices.main.Hospital;
 import aisd.zesp.ambulanceservices.main.ProgramAlgorithm;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -48,6 +53,7 @@ public class HospitalVBox extends VBox {
             }
 
             this.getChildren().addAll(label);
+
 
         }
     }

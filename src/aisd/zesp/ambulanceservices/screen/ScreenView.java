@@ -5,6 +5,9 @@ import aisd.zesp.ambulanceservices.main.Patient;
 import aisd.zesp.ambulanceservices.main.ProgramAlgorithm;
 import aisd.zesp.ambulanceservices.main.State;
 import aisd.zesp.ambulanceservices.reading.Reader;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -22,6 +26,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 
@@ -33,10 +38,13 @@ public class ScreenView extends GridPane {
     private final Reader reader = new Reader();
     private State state;
 
+    private Timeline timeline;
+
     private MapCanvas canvas;
     private HospitalVBox hospitalVBox;
     private PatientVBox patientVBox;
     private InformationVBox informationVBox;
+    private Button start;
 
     public ScreenView(Stage primaryStage, ProgramAlgorithm programAlgorithm) {
         this.primaryStage = primaryStage;
@@ -46,6 +54,10 @@ public class ScreenView extends GridPane {
 
     public void draw() {
 
+        this.timeline = new Timeline(new KeyFrame(Duration.millis(1500), this::handleNextStep));
+        this.timeline.setCycleCount(Timeline.INDEFINITE);
+
+
         hospitalVBox = new HospitalVBox(programAlgorithm);
         patientVBox = new PatientVBox(programAlgorithm);
         informationVBox = new InformationVBox(programAlgorithm);
@@ -54,6 +66,20 @@ public class ScreenView extends GridPane {
         HBox root = new HBox(0);
         root.setPrefHeight(800);
         root.setAlignment(Pos.CENTER);
+
+
+        start = new Button("");
+        start.setOnAction(this::handleStart);
+        ImageView viewPlay = new ImageView(AppIcons.play);
+        start.setGraphic(viewPlay);
+        start.setPrefSize(30, 30);
+        start.setTranslateX(5);
+
+        Button next = new Button("");
+        next.setOnAction(this::handleNextStep);
+        ImageView view = new ImageView(AppIcons.hospital);
+        next.setGraphic(view);
+        next.setPrefSize(30, 30);
 
 
         FileChooser fileChooser = new FileChooser();
@@ -67,7 +93,7 @@ public class ScreenView extends GridPane {
         loadMap.setOnAction(
                 e -> {
                     if (programAlgorithm.getState() != null) {
-                        // WYPISANIE ŻEBY NIE ŁADOWAĆ 2 RAZY MAPY
+                        Alerts.showAlert("Mapa jest już załadowana");
                         return;
                     }
 
@@ -92,7 +118,8 @@ public class ScreenView extends GridPane {
         loadPatientsList.setOnAction(
                 e -> {
                     if (programAlgorithm.getState() == null) {
-                        // WYPISANIE ŻEBY NAJPIERW ZAŁADOWAĆ MAPĘ
+                        Alerts.showAlert("Najpierw należy załadowac mapę państwa");
+
                         return;
                     }
 
@@ -111,18 +138,6 @@ public class ScreenView extends GridPane {
                 }
         );
 
-        Button simulationStepButton = new Button("dev krok symulacji");
-        simulationStepButton.setFont(Font.font("verdana", FontWeight.BLACK, FontPosture.REGULAR, 12));
-        simulationStepButton.setOnAction(
-                e -> {
-                    programAlgorithm.nextStep();
-                    canvas.draw();
-                    hospitalVBox.showHospital();
-                    patientVBox.showPatient();
-                    informationVBox.showInformation();
-
-                }
-        );
 
         loadMap.setTranslateX(5);
 
@@ -130,7 +145,7 @@ public class ScreenView extends GridPane {
         HBox hbox = new HBox(10);
         hbox.setAlignment(Pos.CENTER_LEFT);
 
-        hbox.getChildren().addAll(loadMap, loadPatientsList, simulationStepButton);
+        hbox.getChildren().addAll(loadMap, loadPatientsList);
 
 
         VBox vbox = new VBox(0);
@@ -158,14 +173,31 @@ public class ScreenView extends GridPane {
         vbox2.setAlignment(Pos.CENTER_RIGHT);
 
 
+        VBox vbox3 = new VBox(20);
+
+
+        vbox3.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        vbox3.setPrefWidth(620);
+        vbox3.setPrefHeight(300);
+        vbox3.setStyle("-fx-border-style: solid;" + "-fx-border-width: 1;" + "-fx-border-color: black");
+
+        HBox hbox2 = new HBox(10);
+        hbox2.setAlignment(Pos.TOP_LEFT);
+
+        hbox2.getChildren().addAll(start, next);
+        vbox3.getChildren().addAll(hbox2, informationVBox);
+
+
         informationVBox.setBackground(new Background(new BackgroundFill(Color.DARKGRAY,
                 CornerRadii.EMPTY,
                 Insets.EMPTY)));
         informationVBox.setPrefWidth(620);
         informationVBox.setPrefHeight(300);
         informationVBox.setStyle("-fx-border-style: solid;"
-                + "-fx-border-width: 2;"
+                + "-fx-border-width: 0;"
                 + "-fx-border-color: black");
+
+
 
 
         hospitalVBox.setBackground(new Background(new BackgroundFill(Color.DIMGRAY,
@@ -174,7 +206,7 @@ public class ScreenView extends GridPane {
         hospitalVBox.setPrefWidth(620);
         hospitalVBox.setPrefHeight(300);
         hospitalVBox.setStyle("-fx-border-style: solid;"
-                + "-fx-border-width: 0;"
+                + "-fx-border-width: 0.5;"
                 + "-fx-border-color: black");
 
 
@@ -184,15 +216,10 @@ public class ScreenView extends GridPane {
         patientVBox.setPrefWidth(620);
         patientVBox.setPrefHeight(300);
         patientVBox.setStyle("-fx-border-style: solid;"
-                + "-fx-border-width: 0;"
+                + "-fx-border-width: 0.5;"
                 + "-fx-border-color: black");
 
 
-        Button start = new Button("Start");
-        start.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 12));
-
-        start.setTranslateX(5);
-        start.setTranslateY(3);
 
 
         Text tx2 = new Text(" Szpitale");
@@ -207,9 +234,7 @@ public class ScreenView extends GridPane {
 
 
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setBackground(new Background(new BackgroundFill(Color.BLACK,
-                CornerRadii.EMPTY,
-                Insets.EMPTY)));
+        scrollPane.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         hospitalVBox.getChildren().addAll(tx2);
         scrollPane.setContent(hospitalVBox);
 
@@ -220,15 +245,13 @@ public class ScreenView extends GridPane {
         ScrollPane scrollPane2 = new ScrollPane();
         patientVBox.getChildren().addAll(tx3);
         scrollPane2.setContent(patientVBox);
-        scrollPane2.setBackground(new Background(new BackgroundFill(Color.BLACK,
-                CornerRadii.EMPTY,
-                Insets.EMPTY)));
+        scrollPane2.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
         scrollPane2.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane2.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
 
-        vbox2.getChildren().addAll(informationVBox, scrollPane, scrollPane2);
+        vbox2.getChildren().addAll(vbox3, scrollPane, scrollPane2);
 
         root.getChildren().addAll(vbox, vbox2);
         Scene scene = new Scene(root, 1540, 900);
@@ -241,6 +264,38 @@ public class ScreenView extends GridPane {
         primaryStage.show();
 
         canvas.draw();
+    }
+
+
+    private void handleStop(ActionEvent actionEvent) {
+        this.timeline.stop();
+        start.setOnAction(this::handleStart);
+        ImageView viewStart = new ImageView(AppIcons.play);
+        start.setGraphic(viewStart);
+    }
+
+    private void handleStart(ActionEvent actionEvent) {
+
+        ImageView viewStop = new ImageView(AppIcons.pause);
+        start.setGraphic(viewStop);
+        this.timeline.play();
+        start.setOnAction(this::handleStop);
+
+    }
+
+
+    private void handleNextStep(ActionEvent actionEvent) {
+
+        programAlgorithm.nextStep();
+        if (programAlgorithm.nextStep() == 1) {
+            start.setOnAction(this::handleStop);
+        }
+        canvas.draw();
+        hospitalVBox.showHospital();
+        patientVBox.showPatient();
+        informationVBox.showInformation();
+
+
     }
 
     EventHandler<MouseEvent> eventHandler = new EventHandler<>() {
