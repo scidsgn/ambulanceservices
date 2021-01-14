@@ -6,6 +6,7 @@ import aisd.zesp.ambulanceservices.main.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 
 import java.util.List;
@@ -18,17 +19,69 @@ public class MapCanvas extends Canvas {
     private final Color graphEdgeStroke = Color.color(127/255., 127/255., 127/255.);
     private final Color landmarkTextFill = Color.color(0/255., 133/255., 245/255.);
 
+    private Point viewOffset = new Point(0, 0);
+    private double viewScale = 1.0;
+    private Point lastScenePoint;
+
     public MapCanvas(int width, int height, ProgramAlgorithm programAlgorithm) {
         super(width, height);
         this.programAlgorithm = programAlgorithm;
+
+        setupEvents();
+    }
+    
+    private void setupEvents() {
+        this.setOnMousePressed(mouseEvent -> {
+            if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                lastScenePoint = new Point(mouseEvent.getSceneX(), mouseEvent.getSceneY());
+            }
+        });
+        this.setOnMouseDragged(mouseEvent -> {
+            if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                Point point = new Point(mouseEvent.getSceneX(), mouseEvent.getSceneY());
+
+                translate(point.getX() - lastScenePoint.getX(), point.getY() - lastScenePoint.getY());
+
+                lastScenePoint = point;
+            }
+        });
+        this.setOnScroll(scrollEvent -> {
+            Point canvasPoint = new Point(scrollEvent.getSceneX(), scrollEvent.getSceneY());
+
+            scale(Math.pow(1.2, Math.signum(scrollEvent.getDeltaY())), canvasToWorld(canvasPoint));
+        });
+    }
+
+    private void scale(double factor, Point scaleOrigin) {
+        double newScale = viewScale * factor;
+
+        viewOffset.setX(viewOffset.getX() + viewScale * scaleOrigin.getX() - newScale * scaleOrigin.getX());
+        viewOffset.setY(viewOffset.getY() + viewScale * scaleOrigin.getY() - newScale * scaleOrigin.getY());
+
+        viewScale = newScale;
+
+        draw();
+    }
+
+    private void translate(double dX, double dY) {
+        viewOffset.setX(viewOffset.getX() + dX);
+        viewOffset.setY(viewOffset.getY() + dY);
+
+        draw();
     }
 
     public Point worldToCanvas(Point point) {
-        return new Point(100 + point.getX() * 2, 100 + point.getY() * 2);
+        return new Point(
+                point.getX() * viewScale + viewOffset.getX(),
+                point.getY() * viewScale + viewOffset.getY()
+        );
     }
 
     public Point canvasToWorld(Point point) {
-        return new Point((point.getX() - 100) / 2.0, (point.getY() - 100) / 2.0);
+        return new Point(
+                (point.getX() - viewOffset.getX()) / viewScale,
+                (point.getY() - viewOffset.getY()) / viewScale
+        );
     }
 
     private void drawConvexHull(GraphicsContext g) {

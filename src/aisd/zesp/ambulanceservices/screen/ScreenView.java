@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -245,7 +246,7 @@ public class ScreenView extends GridPane {
     EventHandler<MouseEvent> eventHandler = new EventHandler<>() {
         @Override
         public void handle(MouseEvent e) {
-            if (programAlgorithm.getState() != null) {
+            if (programAlgorithm.getState() != null && e.getButton() == MouseButton.PRIMARY) {
                 GraphicsContext g = canvas.getGraphicsContext2D();
                 Point canvasCoords = new Point(e.getSceneX(), e.getSceneY());
                 Point worldCoords = canvas.canvasToWorld(canvasCoords);
