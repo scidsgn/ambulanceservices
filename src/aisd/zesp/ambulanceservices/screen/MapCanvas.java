@@ -46,7 +46,7 @@ public class MapCanvas extends Canvas {
             }
         });
         this.setOnScroll(scrollEvent -> {
-            Point canvasPoint = new Point(scrollEvent.getSceneX(), scrollEvent.getSceneY());
+            Point canvasPoint = new Point(scrollEvent.getSceneX(), scrollEvent.getSceneY() - getLayoutY());
 
             scale(Math.pow(1.2, Math.signum(scrollEvent.getDeltaY())), canvasToWorld(canvasPoint));
         });

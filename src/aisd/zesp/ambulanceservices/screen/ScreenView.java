@@ -248,7 +248,7 @@ public class ScreenView extends GridPane {
         public void handle(MouseEvent e) {
             if (programAlgorithm.getState() != null && e.getButton() == MouseButton.PRIMARY) {
                 GraphicsContext g = canvas.getGraphicsContext2D();
-                Point canvasCoords = new Point(e.getSceneX(), e.getSceneY());
+                Point canvasCoords = new Point(e.getSceneX(), e.getSceneY() - canvas.getLayoutY());
                 Point worldCoords = canvas.canvasToWorld(canvasCoords);
 
                 state.addPatientFromCanvas(worldCoords.getX(), worldCoords.getY());
