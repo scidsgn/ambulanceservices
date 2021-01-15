@@ -14,4 +14,5 @@ public class AppIcons {
     static final Image patientWaiting = new Image(new File("resources/icons/icon_patientwaiting.png").toURI().toString());
     static final Image pause = new Image(new File("resources/icons/icon_pause.png").toURI().toString());
     static final Image play = new Image(new File("resources/icons/icon_play.png").toURI().toString());
+    static final Image step = new Image(new File("resources/icons/icon_step.png").toURI().toString());
 }

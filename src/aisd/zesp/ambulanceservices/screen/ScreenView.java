@@ -77,7 +77,7 @@ public class ScreenView extends GridPane {
 
         Button next = new Button("");
         next.setOnAction(this::handleNextStep);
-        ImageView view = new ImageView(AppIcons.hospital);
+        ImageView view = new ImageView(AppIcons.step);
         next.setGraphic(view);
         next.setPrefSize(30, 30);
 
