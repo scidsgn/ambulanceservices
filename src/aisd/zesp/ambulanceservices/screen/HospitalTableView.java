@@ -2,20 +2,19 @@ package aisd.zesp.ambulanceservices.screen;
 
 import aisd.zesp.ambulanceservices.main.Hospital;
 import aisd.zesp.ambulanceservices.main.ProgramAlgorithm;
-import aisd.zesp.ambulanceservices.screen.AppIcons;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
-
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 
@@ -23,7 +22,7 @@ import javafx.scene.text.*;
 public class HospitalTableView extends VBox {
 
 
-    private TableView<LHospital> table = new TableView<LHospital>();
+    private final TableView<LHospital> table = new TableView<>();
 
     private final Color patientAndHospitalVBoxesBackground = Color.color(24 / 255., 24 / 255., 24 / 255.);
     private final ObservableList<LHospital> data = FXCollections.observableArrayList();
@@ -50,7 +49,7 @@ public class HospitalTableView extends VBox {
 
 
         TableColumn imageViewCol = new TableColumn("znak");
-        imageViewCol.setMaxWidth(35);
+        imageViewCol.setMaxWidth(55);
         imageViewCol.setStyle("-fx-background-color: #242424 ;"
                 + "-fx-border-color: #242424 ");
         imageViewCol.setCellValueFactory(
@@ -58,7 +57,7 @@ public class HospitalTableView extends VBox {
 
 
         TableColumn nameCol = new TableColumn("Imię i nazwisko");
-        nameCol.setMinWidth(160);
+        nameCol.setMinWidth(210);
         nameCol.setStyle("-fx-background-color: #242424 ;"
                 + "-fx-border-color: #242424 ");
         nameCol.setCellValueFactory(
@@ -66,7 +65,7 @@ public class HospitalTableView extends VBox {
 
 
         TableColumn stateCol = new TableColumn("Stan pacjenta");
-        stateCol.setMinWidth(160);
+        stateCol.setMinWidth(210);
         stateCol.setStyle("-fx-background-color: #242424 ;"
                 + "-fx-border-color: #242424 ");
         stateCol.setCellValueFactory(
