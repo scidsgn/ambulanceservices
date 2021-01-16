@@ -181,7 +181,7 @@ public class MapCanvas extends Canvas {
 
             g.setFill(Color.BLACK);
             g.fillRect(screenPoint.getX() - 9, screenPoint.getY() - 9, 18, 18);
-            g.drawImage(AppIcons.hospital, screenPoint.getX() - 8, screenPoint.getY() - 8);
+            g.drawImage(AppAssets.hospital, screenPoint.getX() - 8, screenPoint.getY() - 8);
 
             g.setFill(Color.WHITE);
             g.fillText("S" + h.getId(), screenPoint.getX() + 16, screenPoint.getY() + 4);
@@ -194,7 +194,7 @@ public class MapCanvas extends Canvas {
 
             g.setFill(Color.BLACK);
             g.fillRect(screenPoint.getX() - 9, screenPoint.getY() - 9, 18, 18);
-            g.drawImage(AppIcons.monument, screenPoint.getX() - 8, screenPoint.getY() - 8);
+            g.drawImage(AppAssets.monument, screenPoint.getX() - 8, screenPoint.getY() - 8);
 
             g.setFill(landmarkTextFill);
             g.fillText("X" + l.getId(), screenPoint.getX() + 16, screenPoint.getY() + 4);
@@ -205,12 +205,12 @@ public class MapCanvas extends Canvas {
         PatientState patientState = patient.getPatientState();
         Point screenPoint = worldToCanvas(patient);
 
-        Image img = AppIcons.patientWaiting;
+        Image img = AppAssets.patientWaiting;
 
         if (patientState == PatientState.ABANDONED || patientState == PatientState.ACCEPTED) {
             return;
         } else if (patientState == PatientState.OUTOFBOUNDS) {
-            img = AppIcons.patientAbandoned;
+            img = AppAssets.patientAbandoned;
             g.setFill(Color.RED);
         } else if (patientState == PatientState.REJECTED) {
             screenPoint = worldToCanvas(programAlgorithm.getCurrentHospital());

@@ -1,10 +1,11 @@
 package aisd.zesp.ambulanceservices.screen;
 
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
 
 import java.io.File;
 
-public class AppIcons {
+public class AppAssets {
     public static final Image hospital = new Image(new File("resources/icons/icon_hospital.png").toURI().toString());
     public static final Image hospitalFull = new Image(new File("resources/icons/icon_hospitalfull.png").toURI().toString());
     public static final Image monument = new Image(new File("resources/icons/icon_monument.png").toURI().toString());
@@ -15,4 +16,6 @@ public class AppIcons {
     public static final Image pause = new Image(new File("resources/icons/icon_pause.png").toURI().toString());
     public static final Image play = new Image(new File("resources/icons/icon_play.png").toURI().toString());
     public static final Image step = new Image(new File("resources/icons/icon_step.png").toURI().toString());
+
+    public static final Font inter = Font.loadFont(new File("resources/fonts/Inter-Regular.ttf").toURI().toString(), 11);
 }

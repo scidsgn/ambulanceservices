@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.control.Control;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -49,33 +50,25 @@ public class HospitalTableView extends VBox {
 
 
         TableColumn imageViewCol = new TableColumn("znak");
-        imageViewCol.setMaxWidth(55);
-        imageViewCol.setStyle("-fx-background-color: #242424 ;"
-                + "-fx-border-color: #242424 ");
+        imageViewCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
         imageViewCol.setCellValueFactory(
                 new PropertyValueFactory<LHospital, String>("imageView"));
 
 
         TableColumn nameCol = new TableColumn("Imię i nazwisko");
-        nameCol.setMinWidth(210);
-        nameCol.setStyle("-fx-background-color: #242424 ;"
-                + "-fx-border-color: #242424 ");
+        nameCol.prefWidthProperty().bind(table.widthProperty().multiply(0.5).subtract(3));
         nameCol.setCellValueFactory(
                 new PropertyValueFactory<LHospital, String>("name"));
 
 
-        TableColumn stateCol = new TableColumn("Stan pacjenta");
-        stateCol.setMinWidth(210);
-        stateCol.setStyle("-fx-background-color: #242424 ;"
-                + "-fx-border-color: #242424 ");
+        TableColumn stateCol = new TableColumn("Liczba wolnych łóżek");
+        stateCol.prefWidthProperty().bind(table.widthProperty().multiply(0.2));
         stateCol.setCellValueFactory(
                 new PropertyValueFactory<LHospital, String>("vacantBeds"));
 
 
         TableColumn idCol = new TableColumn("Id");
-        idCol.setMinWidth(45);
-        idCol.setStyle("-fx-background-color: #242424 ;"
-                + "-fx-border-color: #242424 ");
+        idCol.prefWidthProperty().bind(table.widthProperty().multiply(0.2));
         idCol.setCellValueFactory(
                 new PropertyValueFactory<LHospital, String>("id"));
 
@@ -109,8 +102,8 @@ public class HospitalTableView extends VBox {
 
             vacantBeds = h.getVacantBeds();
 
-            ImageView viewHospital = new ImageView(AppIcons.hospital);
-            ImageView viewFullHospital = new ImageView(AppIcons.hospitalFull);
+            ImageView viewHospital = new ImageView(AppAssets.hospital);
+            ImageView viewFullHospital = new ImageView(AppAssets.hospitalFull);
             ImageView view = viewHospital;
 
 

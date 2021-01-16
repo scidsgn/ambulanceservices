@@ -4,7 +4,10 @@ package aisd.zesp.ambulanceservices.main;
 import aisd.zesp.ambulanceservices.screen.ScreenView;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 public class Main extends Application {
 
@@ -15,7 +18,8 @@ public class Main extends Application {
         ScreenView screenView = new ScreenView(stage, programAlgorithm);
         screenView.draw();
         Scene scene = new Scene(screenView);
-        scene.getStylesheets().add("resources/stylesheets.css");
+
+        scene.getStylesheets().add(new File("resources/stylesheet.css").toURI().toString());
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();

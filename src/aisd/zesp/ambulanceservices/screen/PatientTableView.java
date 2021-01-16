@@ -4,7 +4,6 @@ package aisd.zesp.ambulanceservices.screen;
 import aisd.zesp.ambulanceservices.main.Patient;
 import aisd.zesp.ambulanceservices.main.PatientState;
 import aisd.zesp.ambulanceservices.main.ProgramAlgorithm;
-import aisd.zesp.ambulanceservices.screen.AppIcons;
 
 import static aisd.zesp.ambulanceservices.main.PatientState.*;
 import static aisd.zesp.ambulanceservices.main.PatientState.ACCEPTED;
@@ -114,10 +113,10 @@ public class PatientTableView extends VBox {
             String state = null;
 
 
-            ImageView view = new ImageView(AppIcons.patientWaiting);
-            ImageView viewAbandon = new ImageView(AppIcons.patientAbandoned);
-            ImageView viewRide = new ImageView(AppIcons.patientRiding);
-            ImageView viewOk = new ImageView(AppIcons.patientOK);
+            ImageView view = new ImageView(AppAssets.patientWaiting);
+            ImageView viewAbandon = new ImageView(AppAssets.patientAbandoned);
+            ImageView viewRide = new ImageView(AppAssets.patientRiding);
+            ImageView viewOk = new ImageView(AppAssets.patientOK);
 
 
             if (patientState == WAITING) {

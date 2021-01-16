@@ -18,9 +18,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -76,22 +73,16 @@ public class ScreenView extends GridPane {
 
         start = new Button("");
         start.setOnAction(this::handleStart);
-        ImageView viewPlay = new ImageView(AppIcons.play);
+        ImageView viewPlay = new ImageView(AppAssets.play);
         start.setGraphic(viewPlay);
         start.setPrefSize(40, 40);
-        start.setBackground(new Background(new BackgroundFill(buttonBackground,
-                CornerRadii.EMPTY,
-                Insets.EMPTY)));
         start.setTranslateX(5);
 
         Button next = new Button("");
         next.setOnAction(this::handleNextStep);
-        ImageView view = new ImageView(AppIcons.step);
+        ImageView view = new ImageView(AppAssets.step);
         next.setGraphic(view);
         next.setPrefSize(40, 40);
-        next.setBackground(new Background(new BackgroundFill(buttonBackground,
-                CornerRadii.EMPTY,
-                Insets.EMPTY)));
 
 
         FileChooser fileChooser = new FileChooser();
@@ -100,10 +91,6 @@ public class ScreenView extends GridPane {
 
 
         Button loadMap = new Button("Wczytaj mapę");
-        loadMap.setFont(Font.font("verdana", FontWeight.BLACK, FontPosture.REGULAR, 12));
-        loadMap.setBackground(new Background(new BackgroundFill(buttonBackground,
-                CornerRadii.EMPTY,
-                Insets.EMPTY)));
 
         loadMap.setOnAction(
                 e -> {
@@ -130,10 +117,6 @@ public class ScreenView extends GridPane {
         );
 
         Button loadPatientsList = new Button("Wczytaj listę pacjentów");
-        loadPatientsList.setFont(Font.font("verdana", FontWeight.BLACK, FontPosture.REGULAR, 12));
-        loadPatientsList.setBackground(new Background(new BackgroundFill(buttonBackground,
-                CornerRadii.EMPTY,
-                Insets.EMPTY)));
         loadPatientsList.setOnAction(
                 e -> {
                     if (programAlgorithm.getState() == null) {
@@ -271,13 +254,13 @@ public class ScreenView extends GridPane {
     private void handleStop(ActionEvent actionEvent) {
         this.timeline.stop();
         start.setOnAction(this::handleStart);
-        ImageView viewStart = new ImageView(AppIcons.play);
+        ImageView viewStart = new ImageView(AppAssets.play);
         start.setGraphic(viewStart);
     }
 
     private void handleStart(ActionEvent actionEvent) {
 
-        ImageView viewStop = new ImageView(AppIcons.pause);
+        ImageView viewStop = new ImageView(AppAssets.pause);
         start.setGraphic(viewStop);
         this.timeline.play();
         start.setOnAction(this::handleStop);

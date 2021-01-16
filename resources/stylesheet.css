@@ -1,0 +1,56 @@
+@font-face {
+    font-family: "Inter";
+    src: url('fonts/Inter-Regular.ttf');
+}
+
+.root {
+    -fx-text-fill: white;
+
+    -fx-font-family: "Inter";
+}
+
+.button {
+    -fx-background-color: rgb(46, 46, 46);
+    -fx-text-fill: white;
+
+    -fx-font-family: "Inter";
+    -fx-font-size: 11pt;
+
+    -fx-padding: 4px 16px;
+}
+
+.button:hover {
+    -fx-background-color: rgb(60, 60, 60);
+}
+
+.button:pressed {
+    -fx-background-color: rgb(30, 30, 30);
+}
+
+#informationMain {
+    -fx-font-family: "Inter";
+    -fx-font-size: 24pt;
+}
+
+#informationSub {
+    -fx-font-family: "Inter";
+    -fx-font-size: 11pt;
+}
+
+.table-view {
+    -fx-background-color: rgb(40, 40, 40);
+
+    -fx-pannable: false;
+}
+
+
+.table-view .table-cell {
+    -fx-background-color: rgb(40, 40, 40);
+    -fx-text-fill: white;
+
+    -fx-font-family: "Inter";
+    -fx-font-size: 11pt;
+
+    -fx-border-color: transparent;
+    -fx-border-width: 0px;
+}
