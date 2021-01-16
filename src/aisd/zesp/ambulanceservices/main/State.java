@@ -17,7 +17,6 @@ public class State {
     private final Set<Integer> connectionIds;
     private final GraphConstructor graphConstructor;
     private Graph<Point> connectionsGraph;
-    private final List<Hospital> nextHospitalList;
     private final List<List<List<Point>>> nextHospitalPaths;
     private ConvexHull convexHull;
 
@@ -28,7 +27,7 @@ public class State {
 
         graphConstructor = new GraphConstructor();
         connectionIds = new HashSet<>();
-        nextHospitalList = new ArrayList<>();
+        List<Hospital> nextHospitalList = new ArrayList<>();
 
         nextHospitalPaths = new ArrayList<>();
     }
@@ -74,7 +73,7 @@ public class State {
     }
 
     public void addPatient(Patient patient) {
-        if  (patient == null) {
+        if (patient == null) {
             throw new NullPointerException("Patient cannot be null.");
         }
         if (getPatientById(patient.getId()) != null) {
@@ -84,7 +83,7 @@ public class State {
     }
 
     public void addHospital(Hospital hospital) throws IllegalArgumentException, NullPointerException {
-        if  (hospital == null) {
+        if (hospital == null) {
             throw new NullPointerException("Hospital cannot be null.");
         }
         if (getHospitalById(hospital.getId()) != null) {
@@ -96,7 +95,7 @@ public class State {
 
     public Landmark getLandmarkById(int id) {
         for (Landmark landmark : landmarkList) {
-            if(landmark.getId() == id){
+            if (landmark.getId() == id) {
                 return landmark;
             }
         }
@@ -105,7 +104,7 @@ public class State {
     }
 
     public void addLandmark(Landmark landmark) throws IllegalArgumentException, NullPointerException {
-        if  (landmark == null) {
+        if (landmark == null) {
             throw new NullPointerException("Landmark cannot be null.");
         }
         if (getLandmarkById(landmark.getId()) != null) {
@@ -119,7 +118,7 @@ public class State {
         if (connectionIds.contains(id)) {
             throw new IllegalArgumentException("Connection with that ID already added.");
         }
-        if  (fh == null || sh == null) {
+        if (fh == null || sh == null) {
             throw new NullPointerException("Hospital cannot be null.");
         }
         if (length <= 0) {
@@ -155,8 +154,7 @@ public class State {
             paths.sort(Comparator.comparingDouble(p -> connectionsGraph.getPathLength(p)));
 
             for (List<Point> path : paths) {
-                Hospital h = (Hospital)path.get(0);
-                System.out.println("S" + startHospital.getId() + " -> " + "S" + h.getId());
+                Hospital h = (Hospital) path.get(0);
             }
 
             nextHospitalPaths.add(paths);
@@ -191,7 +189,7 @@ public class State {
 
     public void finalizeConvexHull() {
         GrahamAlgorithm algo = new GrahamAlgorithm();
-        List <Point> points = new ArrayList<>();
+        List<Point> points = new ArrayList<>();
 
         points.addAll(landmarkList);
         points.addAll(hospitalList);
@@ -227,8 +225,6 @@ public class State {
 
     public void addPatientFromCanvas(double x, double y) {
         Patient patient = new Patient(generateNewPatientID(), x, y);
-            System.out.println(x);
-            System.out.println(y);
         patientList.add(patient);
     }
 }

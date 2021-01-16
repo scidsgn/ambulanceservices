@@ -6,12 +6,12 @@ import java.util.*;
 import java.lang.Double;
 
 public class GrahamAlgorithm {
-    public ConvexHull createConvexHull(List<Point> points){
+    public ConvexHull createConvexHull(List<Point> points) {
         Point startPoint = chooseStartPoint(points);
         Map<Double, Point> pointsMap = calculateAngles(startPoint, points);
         List<Point> sortedPoints = sortByAngles(startPoint, pointsMap);
 
-         return new ConvexHull(choosePointsForConvexHull(sortedPoints));
+        return new ConvexHull(choosePointsForConvexHull(sortedPoints));
     }
 
     public Point chooseStartPoint(List<Point> points) {
@@ -28,11 +28,11 @@ public class GrahamAlgorithm {
             if (point != startPoint) {
                 angle = (point.getY() - startPoint.getY()) / (point.getX() - startPoint.getX());
 
-                if(pointsMap.containsKey(angle)){
-                    if( Math.abs(pointsMap.get(angle).getY() - startPoint.getY()) < Math.abs(point.getY() - startPoint.getY()) ){
+                if (pointsMap.containsKey(angle)) {
+                    if (Math.abs(pointsMap.get(angle).getY() - startPoint.getY()) < Math.abs(point.getY() - startPoint.getY())) {
                         pointsMap.put(angle, point);
                     }
-                }else {
+                } else {
                     pointsMap.put(angle, point);
                 }
             }

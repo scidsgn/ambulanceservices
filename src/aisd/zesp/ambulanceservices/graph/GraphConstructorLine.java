@@ -3,8 +3,8 @@ package aisd.zesp.ambulanceservices.graph;
 import aisd.zesp.ambulanceservices.geometry.Point;
 
 public class GraphConstructorLine {
-    private Point start, end;
-    private double length;
+    private final Point start, end;
+    private final double length;
 
     public GraphConstructorLine(Point start, Point end, double length) {
         this.start = start;

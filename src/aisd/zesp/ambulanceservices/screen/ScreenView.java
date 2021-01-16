@@ -1,7 +1,6 @@
 package aisd.zesp.ambulanceservices.screen;
 
 import aisd.zesp.ambulanceservices.geometry.Point;
-import aisd.zesp.ambulanceservices.main.Patient;
 import aisd.zesp.ambulanceservices.main.PatientState;
 import aisd.zesp.ambulanceservices.main.ProgramAlgorithm;
 import aisd.zesp.ambulanceservices.main.State;
@@ -48,16 +47,16 @@ public class ScreenView extends GridPane {
     private InformationVBox informationVBox;
     private Button start;
 
-    private final Color informationVBoxBackground = Color.color(79/255., 79/255., 79/255.);
-    private final Color Background = Color.color(40/255., 40/255., 40/255.);
-    private final Color patientAndHospitalVBoxesBackground = Color.color(24/255., 24/255., 24/255.);
-    private final Color buttonBackground = Color.color(46/255., 46/255., 46/255.);
+    private final Color informationVBoxBackground = Color.color(79 / 255., 79 / 255., 79 / 255.);
+    private final Color Background = Color.color(40 / 255., 40 / 255., 40 / 255.);
+    private final Color patientAndHospitalVBoxesBackground = Color.color(24 / 255., 24 / 255., 24 / 255.);
+    private final Color buttonBackground = Color.color(46 / 255., 46 / 255., 46 / 255.);
 
-    private final Color ridingBackground = Color.color(29/255., 107/255., 150/255.);
-    private final Color waitingBackground = Color.color(79/255., 79/255., 79/255.);
-    private final Color rejectedBackground = Color.color(93/255., 60/255., 124/255.);
-    private final Color acceptedBackground = Color.color(48/255., 136/255., 60/255.);
-    private final Color abandonedBackground = Color.color(14/255., 15/255., 15/255.);
+    private final Color ridingBackground = Color.color(29 / 255., 107 / 255., 150 / 255.);
+    private final Color waitingBackground = Color.color(79 / 255., 79 / 255., 79 / 255.);
+    private final Color rejectedBackground = Color.color(93 / 255., 60 / 255., 124 / 255.);
+    private final Color acceptedBackground = Color.color(48 / 255., 136 / 255., 60 / 255.);
+    private final Color abandonedBackground = Color.color(14 / 255., 15 / 255., 15 / 255.);
 
     public ScreenView(Stage primaryStage, ProgramAlgorithm programAlgorithm) {
         this.primaryStage = primaryStage;
@@ -138,7 +137,7 @@ public class ScreenView extends GridPane {
                         programAlgorithm.setState(state);
                         canvas.draw();
                         hospitalTableView.refreshHospitalslist();
-                       // hospitalVBox.showHospital();
+                        // hospitalVBox.showHospital();
                     } catch (IllegalArgumentException ex) {
                         Alerts.showAlert(ex.getMessage());
                     }
@@ -162,7 +161,7 @@ public class ScreenView extends GridPane {
                         reader.loadPatients(programAlgorithm.getState(), file.getAbsolutePath());
                         canvas.draw();
                         patientTableView.refreshPatientslist();
-                       // patientVBox.showPatient();
+                        // patientVBox.showPatient();
                     } catch (IllegalArgumentException ex) {
                         errorMessage = ex.getMessage();
                         Alerts.showAlert(errorMessage);
@@ -224,14 +223,11 @@ public class ScreenView extends GridPane {
         vbox3.getChildren().addAll(transportButtonsHBox, informationVBox);
 
 
-
         informationVBox.setPrefWidth(620);
         informationVBox.setPrefHeight(300);
         informationVBox.setStyle("-fx-border-style: solid;"
                 + "-fx-border-width: 0;"
                 + "-fx-border-color: black");
-
-
 
 
         patientTableView.setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground,
@@ -253,12 +249,9 @@ public class ScreenView extends GridPane {
                 + "-fx-border-color: black");
 
 
-
-
         VBox.setVgrow(informationVBox, Priority.ALWAYS);
         VBox.setVgrow(hospitalTableView, Priority.ALWAYS);
-        VBox.setVgrow( patientTableView, Priority.ALWAYS);
-
+        VBox.setVgrow(patientTableView, Priority.ALWAYS);
 
 
         vbox2.getChildren().addAll(vbox3, hospitalTableView, patientTableView);
@@ -298,7 +291,7 @@ public class ScreenView extends GridPane {
 
     private void handleNextStep(ActionEvent actionEvent) {
 
-        int flag =  programAlgorithm.nextStep();
+        int flag = programAlgorithm.nextStep();
         if (flag == 1) {
             start.setOnAction(this::handleStop);
         }

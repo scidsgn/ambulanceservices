@@ -38,8 +38,8 @@ public class Patient extends Point {
 
     private void generateName() {
         Random random = new Random();
-        List <String> firstNames = new ArrayList<>();
-        List <String> surNames = new ArrayList<>();
+        List<String> firstNames = new ArrayList<>();
+        List<String> surNames = new ArrayList<>();
 
         firstNames.add("Lady");
         firstNames.add("Olga");
@@ -73,13 +73,12 @@ public class Patient extends Point {
     }
 
 
-
     public Hospital getPatientHospital() {
         return patientHospital;
     }
 
     public void setPatientHospital(Hospital currentHospital) {
-            this.patientHospital = currentHospital;
+        this.patientHospital = currentHospital;
     }
 
     public Hospital getNearestHospital() {

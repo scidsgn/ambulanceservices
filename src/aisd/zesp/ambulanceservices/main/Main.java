@@ -4,7 +4,6 @@ package aisd.zesp.ambulanceservices.main;
 import aisd.zesp.ambulanceservices.screen.ScreenView;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.File;

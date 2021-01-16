@@ -23,20 +23,13 @@ public class ProgramAlgorithm {
         currentPatient = patient;
         visitedHospitals = new ArrayList<>();
         currentHospital = null;
-
-        System.out.println("PACJENT: " + currentPatient.getName());
     }
 
     private boolean checkPatientInBounds() {
         if (state.getConvexHull().isPointInHull(currentPatient)) {
-            System.out.println("wewnątrz otoczki");
             return true;
         }
-
-        System.out.println("poza otoczką");
         currentPatient.setPatientState(PatientState.OUTOFBOUNDS);
-
-
         return false;
     }
 
@@ -53,8 +46,6 @@ public class ProgramAlgorithm {
             if (nextHospital == null) {
                 currentPatient.setPatientState(PatientState.ABANDONED);
 
-                System.out.println("porzucony");
-
                 return false;
             }
 
@@ -64,7 +55,6 @@ public class ProgramAlgorithm {
         }
 
         currentPatient.setPatientState(PatientState.RIDING);
-        System.out.println("szpital: " + currentHospital.getName());
 
         return true;
     }
@@ -75,12 +65,8 @@ public class ProgramAlgorithm {
             currentPatient.setPatientState(PatientState.ACCEPTED);
             currentPatient.setPatientHospital(currentHospital);
 
-
-            System.out.println("zaakceptowany");
         } else {
             currentPatient.setPatientState(PatientState.REJECTED);
-
-            System.out.println("odrzucony");
         }
     }
 
@@ -88,7 +74,7 @@ public class ProgramAlgorithm {
         PatientState currentState = (currentPatient == null) ? PatientState.ABANDONED : currentPatient.getPatientState();
         if (currentState == PatientState.ACCEPTED || currentState == PatientState.ABANDONED || currentState == PatientState.OUTOFBOUNDS) {
             Patient patient = state.getNextPatient();
-            if(patient == null){
+            if (patient == null) {
                 return 1;
             }
             selectPatient(patient);

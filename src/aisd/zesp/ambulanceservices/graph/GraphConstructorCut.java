@@ -1,8 +1,8 @@
 package aisd.zesp.ambulanceservices.graph;
 
 public class GraphConstructorCut {
-    private GraphConstructorLine line;
-    private double cutterPosition, linePosition;
+    private final GraphConstructorLine line;
+    private final double cutterPosition, linePosition;
 
     public GraphConstructorCut(GraphConstructorLine line, double linePosition, double cutterPosition) {
         this.line = line;

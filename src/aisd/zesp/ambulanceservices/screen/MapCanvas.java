@@ -20,7 +20,7 @@ public class MapCanvas extends Canvas {
     private final Color graphEdgeStroke = Color.color(127/255., 127/255., 127/255.);
     private final Color landmarkTextFill = Color.color(0/255., 133/255., 245/255.);
 
-    private Point viewOffset = new Point(0, 0);
+    private final Point viewOffset = new Point(0, 0);
     private double viewScale = 1.0;
     private Point lastScenePoint;
 

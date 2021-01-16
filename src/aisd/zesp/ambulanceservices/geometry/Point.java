@@ -1,8 +1,6 @@
 package aisd.zesp.ambulanceservices.geometry;
 
-import java.util.Objects;
-
-public class Point implements Comparable<Point>{
+public class Point implements Comparable<Point> {
     private double x;
     private double y;
 
@@ -12,7 +10,7 @@ public class Point implements Comparable<Point>{
     }
 
     public Point(double x, Point start, Point end) {
-        if(start == null || end == null){
+        if (start == null || end == null) {
             throw new IllegalArgumentException("Neither point can be null!");
         }
         this.x = start.getX() + (end.getX() - start.getX()) * x;
@@ -20,14 +18,14 @@ public class Point implements Comparable<Point>{
     }
 
 
-    public double getRelativeDirection(Point a, Point b){
-        if(a == null || b == null){
+    public double getRelativeDirection(Point a, Point b) {
+        if (a == null || b == null) {
             throw new IllegalArgumentException("Neither point can be null!");
         }
         return (b.getX() - a.getX()) * (y - a.getY()) - (b.getY() - a.getY()) * (x - a.getX());
     }
 
-    public boolean isLeft(Point start, Point end){
+    public boolean isLeft(Point start, Point end) {
         return getRelativeDirection(start, end) >= 0;
     }
 
@@ -58,8 +56,8 @@ public class Point implements Comparable<Point>{
     @Override
     public int compareTo(Point o) {
         int com = this.getX().compareTo(o.getX());
-        if( com != 0){
-            return  com;
+        if (com != 0) {
+            return com;
         }
         return this.getY().compareTo(o.getY());
     }

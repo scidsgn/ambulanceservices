@@ -29,7 +29,7 @@ public class PatientVBox extends VBox {
     public void showPatient() {
 
 
-        PatientState patientState = WAITING;
+        PatientState patientState;
         String state = null;
 
         getChildren().clear();

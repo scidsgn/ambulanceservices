@@ -6,7 +6,7 @@ public class Landmark extends Point {
     private final int id;
     private final String name;
 
-    public Landmark(int id, String name, double x, double y ) {
+    public Landmark(int id, String name, double x, double y) {
         super(x, y);
         this.id = id;
         this.name = name;
