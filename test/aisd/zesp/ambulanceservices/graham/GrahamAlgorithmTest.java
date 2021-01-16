@@ -95,14 +95,14 @@ public class GrahamAlgorithmTest {
 
 
     @Test
-    void shouldChooseStartPoint() {
+    void chooseStartPointSucceeds() {
 
         Point actual = testGrahamAlgorithm.chooseStartPoint(points);
         assertEquals(fourth, actual);
     }
 
     @Test
-    void shouldChooseStartPointWhenXAreTheSame() {
+    void chooseStartPointSucceedsOnSameXCoords() {
 
         ninth = new Point(-4, 2);
         points.add(ninth);
@@ -111,9 +111,8 @@ public class GrahamAlgorithmTest {
 
     }
 
-
     @Test
-    void shouldCalculateAngles() {
+    void calculateAnglesSucceeds() {
 
         expectedpointsMap.put((2.0 / 3.0), sixth);
         expectedpointsMap.put((14.0 / 9.0), seventh);
@@ -126,7 +125,7 @@ public class GrahamAlgorithmTest {
     }
 
     @Test
-    void shouldSortByAngles() {
+    void sortByAnglesSucceds() {
 
         expectedSortedPoints.add(first);
         expectedSortedPoints.add(third);
@@ -138,7 +137,7 @@ public class GrahamAlgorithmTest {
     }
 
     @Test
-    void shouldchoosePointToConvexHull() {
+    void choosePointsForConvexHullSucceeds() {
 
         expectedSortedPoints.add(third);
         expectedSortedPoints.add(seventh);
@@ -150,7 +149,7 @@ public class GrahamAlgorithmTest {
     }
 
     @Test
-    void shouldCreateConvexHull() {
+    void createConvexHullSucceeds() {
         points2 = new ArrayList<Point>();
 
         points2.add(fourth);

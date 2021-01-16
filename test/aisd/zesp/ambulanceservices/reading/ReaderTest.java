@@ -20,61 +20,61 @@ class ReaderTest {
     }
 
     @Test
-    void shouldNotAllowWrongPathWithLoad() {
-        assertThrows(IllegalArgumentException.class, () -> reader.load("HURR DURR ERROR"));
+    void loadThrowsOnInvalidFile() {
+        assertThrows(IllegalArgumentException.class, () -> reader.load("invalid.txt"));
     }
 
     @Test
-    void shouldNotAllowWrongPathWithLoadPatients() {
+    void loadPatientsThrowsOnInvalidFile() {
         State state = new State();
 
-        assertThrows(IllegalArgumentException.class, () -> reader.loadPatients(state,"HURR DURR ERROR"));
+        assertThrows(IllegalArgumentException.class, () -> reader.loadPatients(state,"invalid.txt"));
     }
 
     @Test
-    void stateCannotBeNull() {
+    void loadPatientsThrowsOnNullState() {
         assertThrows(NullPointerException.class, () -> reader.loadPatients(null, "data.txt"));
     }
 
     @Test
-    void doesLoadChangeState() {
+    void loadSucceeds() {
         testState = reader.load("data/data.txt");
-        Hospital testHospital = new Hospital(1, "Szpital Wojewódzki nr 997", 10, 10, 100);
+        Hospital testHospital = new Hospital(1, "Szpital Wojewódzki nr 997", 10, 10, 1);
         Landmark testLandmark = new Landmark(1, "Pomnik Wikipedii", -1, 50);
 
-        assertEquals(testState.getHospitalById(1).getId(), testHospital.getId());
-        assertEquals(testState.getHospitalById(1).getName(), testHospital.getName());
-        assertEquals(testState.getHospitalById(1).getX(), testHospital.getX());
-        assertEquals(testState.getHospitalById(1).getY(), testHospital.getY());
-        assertEquals(testState.getHospitalById(1).getVacantBeds(), testHospital.getVacantBeds());
+        assertEquals(testHospital.getId(), testState.getHospitalById(1).getId());
+        assertEquals(testHospital.getName(), testState.getHospitalById(1).getName());
+        assertEquals(testHospital.getX(), testState.getHospitalById(1).getX());
+        assertEquals(testHospital.getY(), testState.getHospitalById(1).getY());
+        assertEquals(testHospital.getVacantBeds(), testState.getHospitalById(1).getVacantBeds());
 
-        assertEquals(testState.getLandmarkById(1).getId(), testLandmark.getId());
-        assertEquals(testState.getLandmarkById(1).getName(), testLandmark.getName());
-        assertEquals(testState.getLandmarkById(1).getX(), testLandmark.getX());
-        assertEquals(testState.getLandmarkById(1).getY(), testLandmark.getY());
+        assertEquals(testLandmark.getId(), testState.getLandmarkById(1).getId());
+        assertEquals(testLandmark.getName(), testState.getLandmarkById(1).getName());
+        assertEquals(testLandmark.getX(), testState.getLandmarkById(1).getX());
+        assertEquals(testLandmark.getY(), testState.getLandmarkById(1).getY());
     }
 
     @Test
-    void doesLoadPatientChangeState() {
+    void loadPatientsSucceeds() {
         testState = reader.load("data/data.txt");
         Patient testPatient = new Patient(1, 20, 20);
 
         reader.loadPatients(testState,"data/patients.txt");
 
-        assertEquals(testState.getPatientById(1).getId(), testPatient.getId());
-        assertEquals(testState.getPatientById(1).getX(), testPatient.getX());
-        assertEquals(testState.getPatientById(1).getY(), testPatient.getY());
+        assertEquals(testPatient.getId(), testState.getPatientById(1).getId());
+        assertEquals(testPatient.getX(), testState.getPatientById(1).getX());
+        assertEquals(testPatient.getY(), testState.getPatientById(1).getY());
     }
 
     @Test
-    void loadWillNotParseTwice() {
+    void loadThrowsOnSecondAttempt() {
         assertThrows(IllegalArgumentException.class, () -> testState = reader.load("data/invalidHospitalData.txt"));
         assertThrows(IllegalArgumentException.class, () -> testState = reader.load("data/invalidLandmarkData.txt"));
         assertThrows(IllegalArgumentException.class, () -> testState = reader.load("data/invalidConnectionData.txt"));
     }
 
     @Test
-    void loadPatientsWillNotParseTwice() {
+    void loadPatientsThrowsOnSecondAttempt() {
         testState = reader.load("data/data.txt");
 
         assertThrows(IllegalArgumentException.class, () -> reader.loadPatients(testState, "data/invalidPatients.txt"));

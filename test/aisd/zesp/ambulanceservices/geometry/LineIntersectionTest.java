@@ -22,36 +22,37 @@ class LineIntersectionTest {
 
         testIntersection = new LineIntersection();
     }
+
     @Test
-    void shouldNotAllowNullPoints() {
+    void intersectThrowsOnNullPoints() {
         assertThrows(IllegalArgumentException.class, () ->
                 testIntersection.intersect(null, null, endSecond, endFirst)
         );
     }
 
     @Test
-    void shouldCalculateT() {
+    void getTSucceeds() {
         double expected = 0.5;
 
         assertEquals(expected, testIntersection.getT(startFirst,endFirst,startSecond,endSecond));
     }
 
     @Test
-    void shouldCalculateU() {
+    void getUSucceeds() {
         double expected = 0.7142857142857143;
 
         assertEquals(expected, testIntersection.getU(startFirst,endFirst,startSecond,endSecond));
     }
 
     @Test
-    void shouldReturnProperRatios(){
+    void intersectSucceeds(){
         Double[] expected = {0.5, 0.7142857142857143};
 
         assertArrayEquals(expected, testIntersection.intersect(startFirst,endFirst,startSecond,endSecond));
     }
 
     @Test
-    void shouldReturnNullWhenLinesAreParallel(){
+    void intersectSucceedsOnParallelLines(){
         Point x = new Point(0,0);
         Point y = new Point(0,5);
         Point a = new Point(1,0);

@@ -46,17 +46,17 @@ public class ConvexHullTest {
     }
 
     @Test
-    void shouldReturnTrueIfPointIsInConvexHull() {
+    void isPointInHullSucceedsOnInsidePoint() {
         assertTrue(testConvexHull.isPointInHull(pointInCovexHull));
     }
 
     @Test
-    void shouldReturnFalseIfPointIsNotInConvexHull() {
+    void isPointInHullSucceedsOnOutsidePoint() {
         assertFalse(testConvexHull.isPointInHull(pointOutCovexHull));
     }
 
     @Test
-    void shouldReturnTrueIfPointIsOnTheBorder() {
+    void isPointInHullSucceedsOnBorderPoint() {
         assertTrue(testConvexHull.isPointInHull(pointOnTheBorder));
     }
 

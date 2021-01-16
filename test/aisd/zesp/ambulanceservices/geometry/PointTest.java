@@ -17,12 +17,7 @@ class PointTest {
     }
 
     @Test
-    public void willThrowExceptionWithWrongArguments(){
-        assertThrows(IllegalArgumentException.class, () -> testPoint = new Point(14,null, null));
-    }
-
-    @Test
-    public void checkCoordinatesWithFirstConstructor(){
+    public void twoArgumentConstructorSucceeds(){
         testPoint = new Point(21.15,20.20);
 
         assertEquals(21.15,testPoint.getX());
@@ -30,7 +25,7 @@ class PointTest {
     }
 
     @Test
-    public void checkCoordinatesWithSecondConstructor(){
+    public void threeArgumentConstructorSucceeds(){
         testPoint = new Point(0.5, start, end);
 
         assertEquals(5,testPoint.getX());
@@ -38,14 +33,20 @@ class PointTest {
     }
 
     @Test
-    public void directionWithWrongPointsThrowsException(){
+    public void threeArgumentConstructorSucceedsThrowsOnNullPoints(){
+        assertThrows(IllegalArgumentException.class, () -> testPoint = new Point(14,null, null));
+    }
+
+
+    @Test
+    public void getRelativeDirectionThrowsOnNullPoint(){
         testPoint = new Point(1,2);
 
         assertThrows(IllegalArgumentException.class, () -> testPoint.getRelativeDirection(null, end));
     }
 
     @Test
-    public void directionCheck(){
+    public void getRelativeDirectionSucceeds(){
         testPoint = new Point(1,2);
 
         double actual = testPoint.getRelativeDirection(start, end);
@@ -53,16 +54,11 @@ class PointTest {
     }
 
     @Test
-    public void shouldBeLeft() {
-        testPoint = new Point(1.1,1.45);
+    public void isLeftSucceeds() {
+        Point p1 = new Point(1.1,1.45);
+        Point p2 = new Point(1.1,0.99);
 
-        assertTrue( testPoint.isLeft(start, end));
-    }
-
-    @Test
-    public void shouldBeRight() {
-        testPoint = new Point(1.1,0.99);
-
-        assertFalse(testPoint.isLeft(start, end));
+        assertTrue(p1.isLeft(start, end));
+        assertFalse(p2.isLeft(start, end));
     }
 }

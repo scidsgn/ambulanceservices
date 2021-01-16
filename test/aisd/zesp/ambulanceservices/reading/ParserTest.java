@@ -17,7 +17,7 @@ class ParserTest {
     }
 
     @Test
-    void hugeNumbersTest() {
+    void parseFunctionsThrowOnLargeNumbers() {
         String[] buffer = new String[]{"1234567890", "1234567890", "1234567890", "1234567890", "1234567890", "2115"};
 
         assertThrows(IllegalArgumentException.class, () -> parser.parseHospital(state, buffer));
@@ -27,7 +27,7 @@ class ParserTest {
     }
 
     @Test
-    void willNotParseWithNullState() {
+    void parseFunctionsThrowOnNullStrings() {
         String[] buffer = new String[]{"2115", "Masno", "BOR Crew", "SB Maffija"};
 
         assertThrows(IllegalArgumentException.class, () -> parser.parseHospital(null, buffer));
