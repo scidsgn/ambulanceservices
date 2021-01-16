@@ -15,6 +15,7 @@ public class Main extends Application {
         ScreenView screenView = new ScreenView(stage, programAlgorithm);
         screenView.draw();
         Scene scene = new Scene(screenView);
+        scene.getStylesheets().add("resources/stylesheets.css");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
