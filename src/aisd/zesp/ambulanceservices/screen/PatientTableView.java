@@ -55,14 +55,14 @@ public class PatientTableView extends VBox {
 
 
         TableColumn imageViewCol = new TableColumn("znak");
-        imageViewCol.setMaxWidth(35);
+        imageViewCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
         imageViewCol.setStyle("-fx-background-color: #242424 ;"
                 + "-fx-border-color: #242424 ");
         imageViewCol.setCellValueFactory(
                 new PropertyValueFactory<LPatient, String>("imageView"));
 
         TableColumn nameCol = new TableColumn("Imię i nazwisko");
-        nameCol.setMinWidth(160);
+        nameCol.prefWidthProperty().bind(table.widthProperty().multiply(0.5).subtract(3));
         nameCol.setStyle("-fx-background-color: #242424 ;"
                 + "-fx-border-color:#242424 ");
         nameCol.setCellValueFactory(
@@ -70,7 +70,7 @@ public class PatientTableView extends VBox {
 
 
         TableColumn stateCol = new TableColumn("Stan pacjenta");
-        stateCol.setMinWidth(160);
+        stateCol.prefWidthProperty().bind(table.widthProperty().multiply(0.3));
         stateCol.setStyle("-fx-background-color: #242424 ;"
                 + "-fx-border-color: #242424 ");
         stateCol.setCellValueFactory(
@@ -78,7 +78,7 @@ public class PatientTableView extends VBox {
 
 
         TableColumn idCol = new TableColumn("Id");
-        idCol.setMinWidth(45);
+        idCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
         idCol.setStyle("-fx-background-color:#242424 ;"
                 + "-fx-border-color:#242424");
         idCol.setCellValueFactory(

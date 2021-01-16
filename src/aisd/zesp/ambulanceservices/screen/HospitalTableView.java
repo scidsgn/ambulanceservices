@@ -55,20 +55,20 @@ public class HospitalTableView extends VBox {
                 new PropertyValueFactory<LHospital, String>("imageView"));
 
 
-        TableColumn nameCol = new TableColumn("Imię i nazwisko");
-        nameCol.prefWidthProperty().bind(table.widthProperty().multiply(0.5).subtract(3));
+        TableColumn nameCol = new TableColumn("Nazwa szpitala");
+        nameCol.prefWidthProperty().bind(table.widthProperty().multiply(0.6).subtract(3));
         nameCol.setCellValueFactory(
                 new PropertyValueFactory<LHospital, String>("name"));
 
 
-        TableColumn stateCol = new TableColumn("Liczba wolnych łóżek");
+        TableColumn stateCol = new TableColumn("Wolne łóżka");
         stateCol.prefWidthProperty().bind(table.widthProperty().multiply(0.2));
         stateCol.setCellValueFactory(
                 new PropertyValueFactory<LHospital, String>("vacantBeds"));
 
 
         TableColumn idCol = new TableColumn("Id");
-        idCol.prefWidthProperty().bind(table.widthProperty().multiply(0.2));
+        idCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
         idCol.setCellValueFactory(
                 new PropertyValueFactory<LHospital, String>("id"));
 

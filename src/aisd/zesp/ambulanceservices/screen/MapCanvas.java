@@ -181,7 +181,7 @@ public class MapCanvas extends Canvas {
 
             g.setFill(Color.BLACK);
             g.fillRect(screenPoint.getX() - 9, screenPoint.getY() - 9, 18, 18);
-            g.drawImage(AppAssets.hospital, screenPoint.getX() - 8, screenPoint.getY() - 8);
+            g.drawImage(h.getVacantBeds() == 0 ? AppAssets.hospitalFull : AppAssets.hospital, screenPoint.getX() - 8, screenPoint.getY() - 8);
 
             g.setFill(Color.WHITE);
             g.fillText("S" + h.getId(), screenPoint.getX() + 16, screenPoint.getY() + 4);
