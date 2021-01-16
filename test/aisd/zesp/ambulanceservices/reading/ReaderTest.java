@@ -17,6 +17,7 @@ class ReaderTest {
     @BeforeEach
     void setUp() {
         reader = new Reader();
+        testState = reader.load("data/data.txt");
     }
 
     @Test
@@ -38,7 +39,6 @@ class ReaderTest {
 
     @Test
     void loadSucceeds() {
-        testState = reader.load("data/data.txt");
         Hospital testHospital = new Hospital(1, "Szpital Wojewódzki nr 997", 10, 10, 1);
         Landmark testLandmark = new Landmark(1, "Pomnik Wikipedii", -1, 50);
 
@@ -56,7 +56,6 @@ class ReaderTest {
 
     @Test
     void loadPatientsSucceeds() {
-        testState = reader.load("data/data.txt");
         Patient testPatient = new Patient(1, 20, 20);
 
         reader.loadPatients(testState,"data/patients.txt");
@@ -75,8 +74,6 @@ class ReaderTest {
 
     @Test
     void loadPatientsThrowsOnSecondAttempt() {
-        testState = reader.load("data/data.txt");
-
         assertThrows(IllegalArgumentException.class, () -> reader.loadPatients(testState, "data/invalidPatients.txt"));
     }
 }

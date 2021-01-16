@@ -34,21 +34,21 @@ class LineIntersectionTest {
     void getTSucceeds() {
         double expected = 0.5;
 
-        assertEquals(expected, testIntersection.getT(startFirst,endFirst,startSecond,endSecond));
+        assertEquals(expected, testIntersection.getT(startFirst, endFirst, startSecond, endSecond));
     }
 
     @Test
     void getUSucceeds() {
         double expected = 0.7142857142857143;
 
-        assertEquals(expected, testIntersection.getU(startFirst,endFirst,startSecond,endSecond));
+        assertEquals(expected, testIntersection.getU(startFirst, endFirst, startSecond, endSecond));
     }
 
     @Test
     void intersectSucceeds(){
         Double[] expected = {0.5, 0.7142857142857143};
 
-        assertArrayEquals(expected, testIntersection.intersect(startFirst,endFirst,startSecond,endSecond));
+        assertArrayEquals(expected, testIntersection.intersect(startFirst, endFirst, startSecond, endSecond));
     }
 
     @Test
@@ -58,7 +58,7 @@ class LineIntersectionTest {
         Point a = new Point(1,0);
         Point b = new Point(1,5);
 
-        assertNull(testIntersection.intersect(x,y,a,b));
-        assertNull(testIntersection.intersect(x,a,y,b));
+        assertNull(testIntersection.intersect(x, y, a, b));
+        assertNull(testIntersection.intersect(x, a, y, b));
     }
 }

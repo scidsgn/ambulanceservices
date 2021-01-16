@@ -15,8 +15,8 @@ public class Point implements Comparable<Point>{
         if(start == null || end == null){
             throw new IllegalArgumentException("Neither point can be null!");
         }
-        this.x = start.getX() + (end.getX() - start.getX())*x;
-        y = start.getY() + (end.getY() - start.getY())*x;
+        this.x = start.getX() + (end.getX() - start.getX()) * x;
+        y = start.getY() + (end.getY() - start.getY()) * x;
     }
 
 
@@ -24,7 +24,7 @@ public class Point implements Comparable<Point>{
         if(a == null || b == null){
             throw new IllegalArgumentException("Neither point can be null!");
         }
-        return (b.getX() - a.getX())*(y - a.getY()) - (b.getY() - a.getY())*(x - a.getX());
+        return (b.getX() - a.getX()) * (y - a.getY()) - (b.getY() - a.getY()) * (x - a.getX());
     }
 
     public boolean isLeft(Point start, Point end){
