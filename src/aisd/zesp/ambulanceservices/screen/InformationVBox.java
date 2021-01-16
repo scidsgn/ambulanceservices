@@ -16,6 +16,11 @@ import static aisd.zesp.ambulanceservices.main.PatientState.*;
 public class InformationVBox extends VBox {
 
     private final ProgramAlgorithm programAlgorithm;
+    private final Color ridingBackground = Color.color(29/255., 107/255., 150/255.);
+    private final Color waitingBackground = Color.color(79/255., 79/255., 79/255.);
+    private final Color rejectedBackground = Color.color(93/255., 60/255., 124/255.);
+    private final Color acceptedBackground = Color.color(48/255., 136/255., 60/255.);
+    private final Color abandonedBackground = Color.color(14/255., 15/255., 15/255.);
 
 
     public InformationVBox(ProgramAlgorithm programAlgorithm) {
@@ -32,20 +37,38 @@ public class InformationVBox extends VBox {
         PatientState patientState = patient.getPatientState();
 
         if (patientState == WAITING) {
+            setBackground(new Background(new BackgroundFill(waitingBackground,
+                    CornerRadii.EMPTY,
+                    Insets.EMPTY)));
             information = "\nPacjent oczekuje \nna karetkę";
         } else if (patientState == RIDING) {
+            setBackground(new Background(new BackgroundFill(ridingBackground,
+                    CornerRadii.EMPTY,
+                    Insets.EMPTY)));
             information = "\nPacjent jedzie \ndo szpitala S " + patient.getNearestHospital().getId();
 
         } else if (patientState == OUTOFBOUNDS) {
+            setBackground(new Background(new BackgroundFill(abandonedBackground,
+                    CornerRadii.EMPTY,
+                    Insets.EMPTY)));
             information = "\nPacjent znajduje się poza\nobsługiwanym obszarem";
 
         } else if (patientState == REJECTED) {
+            setBackground(new Background(new BackgroundFill(rejectedBackground,
+                    CornerRadii.EMPTY,
+                    Insets.EMPTY)));
             information = "\nPacjent nie został \nprzyjęty w szpitalu S " + patient.getNearestHospital().getId();
 
         } else if (patientState == ABANDONED) {
+            setBackground(new Background(new BackgroundFill(abandonedBackground,
+                    CornerRadii.EMPTY,
+                    Insets.EMPTY)));
             information = "\nPacjent został \nporzucony";
 
         } else if (patientState == ACCEPTED) {
+            setBackground(new Background(new BackgroundFill(acceptedBackground,
+                    CornerRadii.EMPTY,
+                    Insets.EMPTY)));
             information = "\nPacjent został \nprzyjęty w szpitalu S" + patient.getPatientHospital().getId();
 
         }
