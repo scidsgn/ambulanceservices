@@ -16,11 +16,6 @@ import static aisd.zesp.ambulanceservices.main.PatientState.*;
 public class InformationVBox extends VBox {
 
     private final ProgramAlgorithm programAlgorithm;
-    private final Color ridingBackground = Color.color(29/255., 107/255., 150/255.);
-    private final Color waitingBackground = Color.color(79/255., 79/255., 79/255.);
-    private final Color rejectedBackground = Color.color(93/255., 60/255., 124/255.);
-    private final Color acceptedBackground = Color.color(48/255., 136/255., 60/255.);
-    private final Color abandonedBackground = Color.color(14/255., 15/255., 15/255.);
 
     private final Text infoMainText = new Text();
     private final Text infoSubText = new Text();
@@ -32,6 +27,8 @@ public class InformationVBox extends VBox {
     }
 
     private void create() {
+        setPadding(new Insets(4, 12, 4, 12));
+
         infoMainText.setId("informationMain");
 
         infoSubText.setId("informationSub");
@@ -40,7 +37,7 @@ public class InformationVBox extends VBox {
         this.getChildren().addAll(infoMainText, infoSubText);
     }
 
-    public void showInformation() {
+    public void showInformation(Color bgColor) {
         String information = "";
 
         Patient patient = programAlgorithm.getCurrentPatient();
@@ -49,45 +46,25 @@ public class InformationVBox extends VBox {
         infoMainText.setFill(Color.WHITE);
         infoSubText.setFill(Color.WHITE);
 
+        setBackground(new Background(new BackgroundFill(bgColor, CornerRadii.EMPTY, Insets.EMPTY)));
+
         if (patientState == WAITING) {
-            setBackground(new Background(new BackgroundFill(waitingBackground,
-                    CornerRadii.EMPTY,
-                    Insets.EMPTY)));
             information = "Pacjent oczekuje na karetkę";
         } else if (patientState == RIDING) {
-            setBackground(new Background(new BackgroundFill(ridingBackground,
-                    CornerRadii.EMPTY,
-                    Insets.EMPTY)));
-            information = "Pacjent jedzie do szpitala S " + patient.getNearestHospital().getId();
-
+            information = "Pacjent jedzie do szpitala S" + patient.getNearestHospital().getId();
         } else if (patientState == OUTOFBOUNDS) {
-            setBackground(new Background(new BackgroundFill(abandonedBackground,
-                    CornerRadii.EMPTY,
-                    Insets.EMPTY)));
             information = "Pacjent znajduje się poza obsługiwanym\nobszarem";
 
             infoMainText.setFill(Color.RED);
             infoSubText.setFill(Color.RED);
-
         } else if (patientState == REJECTED) {
-            setBackground(new Background(new BackgroundFill(rejectedBackground,
-                    CornerRadii.EMPTY,
-                    Insets.EMPTY)));
-            information = "Pacjent nie został przyjęty w szpitalu S " + patient.getNearestHospital().getId();
-
+            information = "Pacjent nie został przyjęty w szpitalu S" + patient.getNearestHospital().getId();
         } else if (patientState == ABANDONED) {
-            setBackground(new Background(new BackgroundFill(abandonedBackground,
-                    CornerRadii.EMPTY,
-                    Insets.EMPTY)));
             information = "Pacjent został porzucony";
 
             infoMainText.setFill(Color.RED);
             infoSubText.setFill(Color.RED);
-
         } else if (patientState == ACCEPTED) {
-            setBackground(new Background(new BackgroundFill(acceptedBackground,
-                    CornerRadii.EMPTY,
-                    Insets.EMPTY)));
             information = "Pacjent został przyjęty w szpitalu S" + patient.getPatientHospital().getId();
         }
 

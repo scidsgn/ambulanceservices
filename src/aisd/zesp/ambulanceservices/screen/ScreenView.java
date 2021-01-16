@@ -1,6 +1,8 @@
 package aisd.zesp.ambulanceservices.screen;
 
 import aisd.zesp.ambulanceservices.geometry.Point;
+import aisd.zesp.ambulanceservices.main.Patient;
+import aisd.zesp.ambulanceservices.main.PatientState;
 import aisd.zesp.ambulanceservices.main.ProgramAlgorithm;
 import aisd.zesp.ambulanceservices.main.State;
 import aisd.zesp.ambulanceservices.reading.Reader;
@@ -24,6 +26,9 @@ import javafx.util.Duration;
 
 import java.io.File;
 
+import static aisd.zesp.ambulanceservices.main.PatientState.*;
+import static aisd.zesp.ambulanceservices.main.PatientState.ACCEPTED;
+
 
 public class ScreenView extends GridPane {
 
@@ -35,6 +40,7 @@ public class ScreenView extends GridPane {
     private Timeline timeline;
 
     private MapCanvas canvas;
+    private HBox transportButtonsHBox;
     private HospitalVBox hospitalVBox;
     private PatientVBox patientVBox;
     private PatientTableView patientTableView;
@@ -47,11 +53,35 @@ public class ScreenView extends GridPane {
     private final Color patientAndHospitalVBoxesBackground = Color.color(24/255., 24/255., 24/255.);
     private final Color buttonBackground = Color.color(46/255., 46/255., 46/255.);
 
+    private final Color ridingBackground = Color.color(29/255., 107/255., 150/255.);
+    private final Color waitingBackground = Color.color(79/255., 79/255., 79/255.);
+    private final Color rejectedBackground = Color.color(93/255., 60/255., 124/255.);
+    private final Color acceptedBackground = Color.color(48/255., 136/255., 60/255.);
+    private final Color abandonedBackground = Color.color(14/255., 15/255., 15/255.);
+
     public ScreenView(Stage primaryStage, ProgramAlgorithm programAlgorithm) {
         this.primaryStage = primaryStage;
         this.programAlgorithm = programAlgorithm;
     }
 
+    public void updateInfoBox() {
+        PatientState patientState = programAlgorithm.getCurrentPatient().getPatientState();
+        Color bgColor = waitingBackground;
+
+        if (patientState == RIDING) {
+            bgColor = ridingBackground;
+        } else if (patientState == OUTOFBOUNDS || patientState == ABANDONED) {
+            bgColor = abandonedBackground;
+        } else if (patientState == REJECTED) {
+            bgColor = rejectedBackground;
+        } else if (patientState == ACCEPTED) {
+            bgColor = acceptedBackground;
+        }
+
+        transportButtonsHBox.setBackground(new Background(new BackgroundFill(bgColor, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        informationVBox.showInformation(bgColor);
+    }
 
     public void draw() {
 
@@ -76,7 +106,6 @@ public class ScreenView extends GridPane {
         ImageView viewPlay = new ImageView(AppAssets.play);
         start.setGraphic(viewPlay);
         start.setPrefSize(40, 40);
-        start.setTranslateX(5);
 
         Button next = new Button("");
         next.setOnAction(this::handleNextStep);
@@ -90,7 +119,7 @@ public class ScreenView extends GridPane {
         fileChooser.setTitle("Wybierz plik z rozszerzeniem *.txt");
 
 
-        Button loadMap = new Button("Wczytaj mapę");
+        Button loadMap = new Button("Otwórz mapę...");
 
         loadMap.setOnAction(
                 e -> {
@@ -116,7 +145,7 @@ public class ScreenView extends GridPane {
                 }
         );
 
-        Button loadPatientsList = new Button("Wczytaj listę pacjentów");
+        Button loadPatientsList = new Button("Dodaj pacjentów...");
         loadPatientsList.setOnAction(
                 e -> {
                     if (programAlgorithm.getState() == null) {
@@ -142,11 +171,9 @@ public class ScreenView extends GridPane {
         );
 
 
-        loadMap.setTranslateX(5);
-
-
-        HBox hbox = new HBox(10);
+        HBox hbox = new HBox(4);
         hbox.setAlignment(Pos.CENTER_LEFT);
+        hbox.setPadding(new Insets(4, 12, 4, 12));
 
         hbox.getChildren().addAll(loadMap, loadPatientsList);
 
@@ -188,12 +215,13 @@ public class ScreenView extends GridPane {
         informationVBox.setBackground(new Background(new BackgroundFill(informationVBoxBackground, CornerRadii.EMPTY, Insets.EMPTY)));
         informationVBox.setMaxHeight(270);
 
-        HBox hbox2 = new HBox(10);
-        hbox2.setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground, CornerRadii.EMPTY, Insets.EMPTY)));
-        hbox2.setAlignment(Pos.TOP_LEFT);
+        transportButtonsHBox = new HBox(4);
+        transportButtonsHBox.setPadding(new Insets(4, 12, 4, 12));
+        transportButtonsHBox.setBackground(new Background(new BackgroundFill(waitingBackground, CornerRadii.EMPTY, Insets.EMPTY)));
+        transportButtonsHBox.setAlignment(Pos.TOP_LEFT);
 
-        hbox2.getChildren().addAll(start, next);
-        vbox3.getChildren().addAll(hbox2, informationVBox);
+        transportButtonsHBox.getChildren().addAll(start, next);
+        vbox3.getChildren().addAll(transportButtonsHBox, informationVBox);
 
 
 
@@ -275,7 +303,7 @@ public class ScreenView extends GridPane {
             start.setOnAction(this::handleStop);
         }
         canvas.draw();
-        informationVBox.showInformation();
+        updateInfoBox();
         patientTableView.refreshPatientslist();
         hospitalTableView.refreshHospitalslist();
 

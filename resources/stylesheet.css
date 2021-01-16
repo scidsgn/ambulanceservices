@@ -14,9 +14,9 @@
     -fx-text-fill: white;
 
     -fx-font-family: "Inter";
-    -fx-font-size: 11pt;
+    -fx-font-size: 10pt;
 
-    -fx-padding: 4px 16px;
+    -fx-padding: 6px 16px;
 }
 
 .button:hover {
