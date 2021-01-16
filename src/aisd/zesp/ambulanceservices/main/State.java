@@ -225,11 +225,10 @@ public class State {
         return id;
     }
 
-    public Patient addPatientFromCanvas(double x, double y) {
+    public void addPatientFromCanvas(double x, double y) {
         Patient patient = new Patient(generateNewPatientID(), x, y);
             System.out.println(x);
             System.out.println(y);
         patientList.add(patient);
-        return patient;
     }
 }

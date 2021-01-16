@@ -1,7 +1,6 @@
 package aisd.zesp.ambulanceservices.screen;
 
 import aisd.zesp.ambulanceservices.geometry.Point;
-import aisd.zesp.ambulanceservices.main.Patient;
 import aisd.zesp.ambulanceservices.main.ProgramAlgorithm;
 import aisd.zesp.ambulanceservices.main.State;
 import aisd.zesp.ambulanceservices.reading.Reader;
@@ -14,7 +13,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -23,7 +21,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -152,7 +149,7 @@ public class ScreenView extends GridPane {
                     try {
                         reader.loadPatients(programAlgorithm.getState(), file.getAbsolutePath());
                         canvas.draw();
-                        patientTableView.refreshPatientslist();;
+                        patientTableView.refreshPatientslist();
                        // patientVBox.showPatient();
                     } catch (IllegalArgumentException ex) {
                         errorMessage = ex.getMessage();
