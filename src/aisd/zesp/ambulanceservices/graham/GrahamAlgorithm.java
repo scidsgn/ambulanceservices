@@ -29,7 +29,7 @@ public class GrahamAlgorithm {
                 angle = (point.getY() - startPoint.getY()) / (point.getX() - startPoint.getX());
 
                 if (pointsMap.containsKey(angle)) {
-                    if (Math.abs(pointsMap.get(angle).getY() - startPoint.getY()) < Math.abs(point.getY() - startPoint.getY())) {
+                    if (Math.abs(pointsMap.get(angle).getY() - startPoint.getY()) <= Math.abs(point.getY() - startPoint.getY())) {
                         pointsMap.put(angle, point);
                     }
                 } else {
