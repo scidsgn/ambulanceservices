@@ -1,13 +1,11 @@
 package aisd.zesp.ambulanceservices.screen;
 
-
 import aisd.zesp.ambulanceservices.main.Patient;
 import aisd.zesp.ambulanceservices.main.PatientState;
 import aisd.zesp.ambulanceservices.main.ProgramAlgorithm;
 
 import static aisd.zesp.ambulanceservices.main.PatientState.*;
 import static aisd.zesp.ambulanceservices.main.PatientState.ACCEPTED;
-import static javafx.application.Application.launch;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -23,15 +21,9 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.*;
-
 
 public class PatientTableView extends VBox {
-
-
-    private TableView<LPatient> table = new TableView<LPatient>();
-
-
+    private TableView<LPatient> table = new TableView<>();
     private final ObservableList<LPatient> data = FXCollections.observableArrayList();
 
     private final Color patientAndHospitalVBoxesBackground = Color.color(24 / 255., 24 / 255., 24 / 255.);
@@ -43,62 +35,48 @@ public class PatientTableView extends VBox {
     }
 
     public void showPatient() {
-
         setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground,
                 CornerRadii.EMPTY,
                 Insets.EMPTY)));
+
         Label txt = new Label("PACJENCI");
 
-        table.setEditable(false);
-
-        TableColumn imageViewCol = new TableColumn("");
+        TableColumn<LPatient, String> imageViewCol = new TableColumn<>("");
         imageViewCol.setMinWidth(24);
         imageViewCol.setMaxWidth(24);
-        imageViewCol.setCellValueFactory(
-                new PropertyValueFactory<LPatient, String>("imageView"));
+        imageViewCol.setCellValueFactory(new PropertyValueFactory<>("imageView"));
 
-        TableColumn nameCol = new TableColumn("Imię i nazwisko");
+        TableColumn<LPatient, String> nameCol = new TableColumn<>("Imię i nazwisko");
         nameCol.prefWidthProperty().bind(table.widthProperty().subtract(24).multiply(0.6).subtract(3));
-        nameCol.setCellValueFactory(
-                new PropertyValueFactory<LPatient, String>("name"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-
-        TableColumn stateCol = new TableColumn("Stan pacjenta");
+        TableColumn<LPatient, String> stateCol = new TableColumn<>("Stan pacjenta");
         stateCol.prefWidthProperty().bind(table.widthProperty().subtract(24).multiply(0.3));
-        stateCol.setCellValueFactory(
-                new PropertyValueFactory<LPatient, String>("state"));
+        stateCol.setCellValueFactory(new PropertyValueFactory<>("state"));
 
-
-        TableColumn idCol = new TableColumn("Id");
+        TableColumn<LPatient, String> idCol = new TableColumn<>("Id");
         idCol.prefWidthProperty().bind(table.widthProperty().subtract(24).multiply(0.1));
-        idCol.setCellValueFactory(
-                new PropertyValueFactory<LPatient, String>("id"));
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         table.setItems(data);
         table.getColumns().addAll(imageViewCol, nameCol, stateCol, idCol);
+        table.setEditable(false);
 
         getChildren().addAll(txt, table);
-
-
     }
 
-    public void refreshPatientslist() {
+    public void refreshPatientsList() {
         table.getItems().clear();
-
         data.clear();
 
-
         for (Patient p : programAlgorithm.getState().getPatientList()) {
-
             PatientState patientState = p.getPatientState();
             String state = null;
-
 
             ImageView view = new ImageView(AppAssets.patientWaiting);
             ImageView viewAbandon = new ImageView(AppAssets.patientAbandoned);
             ImageView viewRide = new ImageView(AppAssets.patientRiding);
             ImageView viewOk = new ImageView(AppAssets.patientOK);
-
 
             if (patientState == WAITING) {
                 state = "Oczekuje na karetkę";
@@ -123,13 +101,11 @@ public class PatientTableView extends VBox {
     }
 
 
-    public class LPatient {
-
+    private static class LPatient {
         private ImageView imageView;
         private final SimpleStringProperty name;
         private final SimpleStringProperty state;
         private final SimpleStringProperty id;
-
 
         private LPatient(ImageView imageView, String name, String state, String id) {
             this.imageView = imageView;
@@ -137,7 +113,6 @@ public class PatientTableView extends VBox {
             this.state = new SimpleStringProperty(state);
             this.id = new SimpleStringProperty(id);
         }
-
 
         public ImageView getImageView() {
             return imageView;
@@ -171,8 +146,5 @@ public class PatientTableView extends VBox {
         public void setId(String id) {
             this.id.set(id);
         }
-
-
     }
-
 }

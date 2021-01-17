@@ -28,9 +28,7 @@ import java.io.File;
 import static aisd.zesp.ambulanceservices.main.PatientState.*;
 import static aisd.zesp.ambulanceservices.main.PatientState.ACCEPTED;
 
-
 public class ScreenView extends GridPane {
-
     private final Stage primaryStage;
     private final ProgramAlgorithm programAlgorithm;
     private final Reader reader = new Reader();
@@ -46,10 +44,7 @@ public class ScreenView extends GridPane {
     private Button startButton, nextButton;
 
     private final Color informationVBoxBackground = Color.color(79 / 255., 79 / 255., 79 / 255.);
-    private final Color Background = Color.color(40 / 255., 40 / 255., 40 / 255.);
     private final Color patientAndHospitalVBoxesBackground = Color.color(24 / 255., 24 / 255., 24 / 255.);
-    private final Color buttonBackground = Color.color(46 / 255., 46 / 255., 46 / 255.);
-
     private final Color ridingBackground = Color.color(29 / 255., 107 / 255., 150 / 255.);
     private final Color waitingBackground = Color.color(79 / 255., 79 / 255., 79 / 255.);
     private final Color rejectedBackground = Color.color(93 / 255., 60 / 255., 124 / 255.);
@@ -76,7 +71,6 @@ public class ScreenView extends GridPane {
         }
 
         transportButtonsHBox.setBackground(new Background(new BackgroundFill(bgColor, CornerRadii.EMPTY, Insets.EMPTY)));
-
         informationVBox.showInformation(bgColor);
     }
 
@@ -91,20 +85,16 @@ public class ScreenView extends GridPane {
     }
 
     public void draw() {
-
         this.timeline = new Timeline(new KeyFrame(Duration.millis(1500), this::handleNextStep));
         this.timeline.setCycleCount(Timeline.INDEFINITE);
-
 
         informationVBox = new InformationVBox(programAlgorithm);
         patientTableView = new PatientTableView(programAlgorithm);
         hospitalTableView = new HospitalTableView(programAlgorithm);
 
-
         HBox root = new HBox(0);
         root.setPrefHeight(800);
         root.setAlignment(Pos.CENTER);
-
 
         startButton = new Button("");
         startButton.setOnAction(this::handleStart);
@@ -120,11 +110,9 @@ public class ScreenView extends GridPane {
         nextButton.setPrefSize(40, 40);
         nextButton.setDisable(true);
 
-
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("data"));
         fileChooser.setTitle("Wybierz plik z rozszerzeniem *.txt");
-
 
         Button loadMap = new Button("Otwórz mapę...");
         Button loadPatientsList = new Button("Dodaj pacjentów...");
@@ -142,7 +130,7 @@ public class ScreenView extends GridPane {
                         programAlgorithm.setState(state);
                         canvas.autoAlignView();
                         canvas.draw();
-                        hospitalTableView.refreshHospitalslist();
+                        hospitalTableView.refreshHospitalsList();
 
                         showInfoMessage("Przed rozpoczęciem dodaj pacjentów");
                         loadPatientsList.setDisable(false);
@@ -162,7 +150,7 @@ public class ScreenView extends GridPane {
                     try {
                         reader.loadPatients(programAlgorithm.getState(), file.getAbsolutePath());
                         canvas.draw();
-                        patientTableView.refreshPatientslist();
+                        patientTableView.refreshPatientsList();
 
                         showInfoMessage("Czekanie na uruchomienie systemu");
                         startButton.setDisable(false);
@@ -177,78 +165,69 @@ public class ScreenView extends GridPane {
         HBox leftTopHBox = new HBox(4);
         leftTopHBox.setAlignment(Pos.CENTER_LEFT);
         leftTopHBox.setPadding(new Insets(4, 12, 4, 12));
-
         leftTopHBox.getChildren().addAll(loadMap, loadPatientsList);
 
 
         VBox leftVBox = new VBox(0);
         leftVBox.setAlignment(Pos.BASELINE_LEFT);
-        leftVBox.setBackground(new Background(new BackgroundFill(Color.BLACK,
-                CornerRadii.EMPTY,
-                Insets.EMPTY)));
-
+        leftVBox.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         leftVBox.getChildren().add(leftTopHBox);
-
         leftVBox.setPrefHeight(50);
         leftVBox.setPrefWidth(850);
         VBox.setVgrow(leftVBox, Priority.ALWAYS);
 
         canvas = new MapCanvas(800, 742, programAlgorithm);
-        leftVBox.getChildren().add(canvas);
-
         canvas.setOnMouseClicked(eventHandler);
-
+        leftVBox.getChildren().add(canvas);
 
         VBox rightVBox = new VBox(0);
         rightVBox.setAlignment(Pos.CENTER_RIGHT);
-
-        rightVBox.setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground, CornerRadii.EMPTY, Insets.EMPTY)));
-
+        rightVBox.setBackground(new Background(
+                new BackgroundFill(patientAndHospitalVBoxesBackground, CornerRadii.EMPTY, Insets.EMPTY)
+        ));
 
         VBox rightTopVBox = new VBox(0);
-
         rightTopVBox.setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground, CornerRadii.EMPTY, Insets.EMPTY)));
         rightTopVBox.setPrefHeight(300);
 
         informationVBox.setBackground(new Background(new BackgroundFill(informationVBoxBackground, CornerRadii.EMPTY, Insets.EMPTY)));
         informationVBox.setMaxHeight(270);
+        informationVBox.setPrefHeight(300);
 
         transportButtonsHBox = new HBox(4);
         transportButtonsHBox.setPadding(new Insets(4, 12, 4, 12));
         transportButtonsHBox.setBackground(new Background(new BackgroundFill(waitingBackground, CornerRadii.EMPTY, Insets.EMPTY)));
         transportButtonsHBox.setAlignment(Pos.TOP_LEFT);
-
         transportButtonsHBox.getChildren().addAll(startButton, nextButton);
+
         rightTopVBox.getChildren().addAll(transportButtonsHBox, informationVBox);
 
-        informationVBox.setPrefHeight(300);
-        informationVBox.setMaxHeight(479);
-
-        patientTableView.setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground,
+        patientTableView.setBackground(new Background(new BackgroundFill(
+                patientAndHospitalVBoxesBackground,
                 CornerRadii.EMPTY,
-                Insets.EMPTY)));
+                Insets.EMPTY
+        )));
         patientTableView.setPrefHeight(300);
         patientTableView.setMaxHeight(479);
 
-        hospitalTableView.setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground,
+        hospitalTableView.setBackground(new Background(new BackgroundFill(
+                patientAndHospitalVBoxesBackground,
                 CornerRadii.EMPTY,
-                Insets.EMPTY)));
+                Insets.EMPTY)
+        ));
         hospitalTableView.setPrefHeight(300);
         hospitalTableView.setMaxHeight(479);
-
 
         VBox.setVgrow(informationVBox, Priority.ALWAYS);
         VBox.setVgrow(hospitalTableView, Priority.ALWAYS);
         VBox.setVgrow(patientTableView, Priority.ALWAYS);
 
-
         rightVBox.getChildren().addAll(rightTopVBox, hospitalTableView, patientTableView);
 
         root.getChildren().addAll(leftVBox, rightVBox);
+
         Scene scene = new Scene(root, 1300, 800);
-
         this.add(root, 0, 0);
-
 
         patientTableView.showPatient();
         hospitalTableView.showHospital();
@@ -260,7 +239,6 @@ public class ScreenView extends GridPane {
         showInfoMessage("Przed rozpoczęciem otwórz plik mapy");
     }
 
-
     private void handleStop(ActionEvent actionEvent) {
         this.timeline.stop();
         startButton.setOnAction(this::handleStart);
@@ -270,7 +248,6 @@ public class ScreenView extends GridPane {
     }
 
     private void handleStart(ActionEvent actionEvent) {
-
         ImageView viewStop = new ImageView(AppAssets.pause);
         startButton.setGraphic(viewStop);
         this.timeline.play();
@@ -279,19 +256,15 @@ public class ScreenView extends GridPane {
         handleNextStep(actionEvent);
     }
 
-
     private void handleNextStep(ActionEvent actionEvent) {
-
-        int flag = programAlgorithm.nextStep();
-        if (flag == 1) {
+        if (programAlgorithm.nextStep() == 1) {
             startButton.setOnAction(this::handleStop);
         }
+
         canvas.draw();
         updateInfoBox();
-        patientTableView.refreshPatientslist();
-        hospitalTableView.refreshHospitalslist();
-
-
+        patientTableView.refreshPatientsList();
+        hospitalTableView.refreshHospitalsList();
     }
 
     EventHandler<MouseEvent> eventHandler = new EventHandler<>() {
@@ -304,7 +277,7 @@ public class ScreenView extends GridPane {
 
                 state.addPatientFromCanvas(worldCoords.getX(), worldCoords.getY());
 
-                patientTableView.refreshPatientslist();
+                patientTableView.refreshPatientsList();
                 canvas.draw();
 
                 if (state.getPatientList().size() == 1) {

@@ -19,7 +19,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 
-
 public class HospitalTableView extends VBox {
     private final TableView<LHospital> table = new TableView<>();
 
@@ -33,58 +32,46 @@ public class HospitalTableView extends VBox {
     }
 
     public void showHospital() {
-        setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground,
+        setBackground(
+                new Background(new BackgroundFill(patientAndHospitalVBoxesBackground,
                 CornerRadii.EMPTY,
-                Insets.EMPTY)));
+                Insets.EMPTY))
+        );
+
         Label txt = new Label("SZPITALE");
         txt.setTextAlignment(TextAlignment.CENTER);
 
-        table.setEditable(false);
-
-        TableColumn imageViewCol = new TableColumn("");
+        TableColumn<LHospital, String> imageViewCol = new TableColumn<>("");
         imageViewCol.setMinWidth(24);
         imageViewCol.setMaxWidth(24);
-        imageViewCol.setCellValueFactory(
-                new PropertyValueFactory<LHospital, String>("imageView"));
+        imageViewCol.setCellValueFactory(new PropertyValueFactory<>("imageView"));
 
-        TableColumn nameCol = new TableColumn("Nazwa szpitala");
+        TableColumn<LHospital, String> nameCol = new TableColumn<>("Nazwa szpitala");
         nameCol.prefWidthProperty().bind(table.widthProperty().subtract(24).multiply(0.7).subtract(3));
-        nameCol.setCellValueFactory(
-                new PropertyValueFactory<LHospital, String>("name"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn stateCol = new TableColumn("Wolne łóżka");
-        stateCol.prefWidthProperty().bind(table.widthProperty().subtract(24).multiply(0.2));
-        stateCol.setCellValueFactory(
-                new PropertyValueFactory<LHospital, String>("vacantBeds"));
+        TableColumn<LHospital, String> vacantBedsCol = new TableColumn<>("Wolne łóżka");
+        vacantBedsCol.prefWidthProperty().bind(table.widthProperty().subtract(24).multiply(0.2));
+        vacantBedsCol.setCellValueFactory(new PropertyValueFactory<>("vacantBeds"));
 
-        TableColumn idCol = new TableColumn("Id");
+        TableColumn<LHospital, String> idCol = new TableColumn<>("Id");
         idCol.prefWidthProperty().bind(table.widthProperty().subtract(24).multiply(0.1));
-        idCol.setCellValueFactory(
-                new PropertyValueFactory<LHospital, String>("id"));
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         table.setItems(data);
-        table.getColumns().addAll(imageViewCol, nameCol, stateCol, idCol);
+        table.getColumns().addAll(imageViewCol, nameCol, vacantBedsCol, idCol);
         table.setTableMenuButtonVisible(false);
+        table.setEditable(false);
 
         getChildren().addAll(txt, table);
     }
 
-    public void refreshHospitalslist() {
+    public void refreshHospitalsList() {
         table.getItems().clear();
-
         data.clear();
 
-        setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground,
-                CornerRadii.EMPTY,
-                Insets.EMPTY)));
-        Text txt = new Text("Szpitale");
-        txt.setFont(Font.font("verdana", FontWeight.BLACK, FontPosture.REGULAR, 15));
-        txt.setTextAlignment(TextAlignment.CENTER);
-
-        int vacantBeds = 0;
-
         for (Hospital h : programAlgorithm.getState().getHospitalList()) {
-            vacantBeds = h.getVacantBeds();
+            int vacantBeds = h.getVacantBeds();
 
             ImageView viewHospital = new ImageView(AppAssets.hospital);
             ImageView viewFullHospital = new ImageView(AppAssets.hospitalFull);
@@ -101,14 +88,11 @@ public class HospitalTableView extends VBox {
         table.setItems(data);
     }
 
-
-    public class LHospital {
-
+    private static class LHospital {
         private ImageView imageView;
         private final SimpleStringProperty name;
         private final SimpleIntegerProperty vacantBeds;
         private final SimpleStringProperty id;
-
 
         private LHospital(ImageView imageView, String name, int vacantBeds, String id) {
             this.imageView = imageView;
@@ -117,14 +101,12 @@ public class HospitalTableView extends VBox {
             this.id = new SimpleStringProperty(id);
         }
 
-
         public ImageView getImageView() {
             return imageView;
         }
 
         public void setImageView(ImageView imageView) {
             this.imageView = imageView;
-
         }
 
         public String getName() {
@@ -150,7 +132,5 @@ public class HospitalTableView extends VBox {
         public void setId(String id) {
             this.id.set(id);
         }
-
-
     }
 }

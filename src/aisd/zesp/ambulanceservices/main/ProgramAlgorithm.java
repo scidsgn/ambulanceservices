@@ -1,7 +1,6 @@
 package aisd.zesp.ambulanceservices.main;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ProgramAlgorithm {
     private State state = null;
@@ -9,7 +8,6 @@ public class ProgramAlgorithm {
     private Patient currentPatient;
     private List<Hospital> visitedHospitals;
     private Hospital currentHospital;
-
 
     public Patient getCurrentPatient() {
         return currentPatient;
@@ -21,6 +19,7 @@ public class ProgramAlgorithm {
 
     private void selectPatient(Patient patient) {
         currentPatient = patient;
+
         visitedHospitals = new ArrayList<>();
         currentHospital = null;
     }
@@ -29,7 +28,9 @@ public class ProgramAlgorithm {
         if (state.getConvexHull().isPointInHull(currentPatient)) {
             return true;
         }
+
         currentPatient.setPatientState(PatientState.OUTOFBOUNDS);
+
         return false;
     }
 
@@ -68,7 +69,10 @@ public class ProgramAlgorithm {
 
     public int nextStep() {
         PatientState currentState = (currentPatient == null) ? PatientState.ABANDONED : currentPatient.getPatientState();
-        if (currentState == PatientState.ACCEPTED || currentState == PatientState.ABANDONED || currentState == PatientState.OUTOFBOUNDS) {
+        if (
+                currentState == PatientState.ACCEPTED || currentState == PatientState.ABANDONED ||
+                currentState == PatientState.OUTOFBOUNDS
+        ) {
             Patient patient = state.getNextPatient();
             if (patient == null) {
                 return 1;

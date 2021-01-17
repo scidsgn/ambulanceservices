@@ -79,7 +79,7 @@ public class MapCanvas extends Canvas {
         double mapRatio = getWidth() / getHeight();
         double hullRatio = w / h;
 
-        double scale = 1.0;
+        double scale;
 
         if (mapRatio > hullRatio) {
             scale = (getHeight() - 50) / h;
@@ -144,7 +144,10 @@ public class MapCanvas extends Canvas {
         double[] textBounds = measureText(lengthText);
 
         g.setFill(Color.ORANGE);
-        g.fillRect(middle.getX() - textBounds[0] / 2 - 8, middle.getY() - textBounds[1] / 2, textBounds[0] + 16, textBounds[1]);
+        g.fillRect(
+                middle.getX() - textBounds[0] / 2 - 8, middle.getY() - textBounds[1] / 2,
+                textBounds[0] + 16, textBounds[1]
+        );
         g.setFill(Color.BLACK);
         g.fillText(lengthText, middle.getX() - textBounds[0] / 2, middle.getY() + 4);
     }
@@ -201,7 +204,10 @@ public class MapCanvas extends Canvas {
 
             g.setFill(Color.BLACK);
             g.fillRect(screenPoint.getX() - 9, screenPoint.getY() - 9, 18, 18);
-            g.drawImage(h.getVacantBeds() == 0 ? AppAssets.hospitalFull : AppAssets.hospital, screenPoint.getX() - 8, screenPoint.getY() - 8);
+            g.drawImage(
+                    h.getVacantBeds() == 0 ? AppAssets.hospitalFull : AppAssets.hospital,
+                    screenPoint.getX() - 8, screenPoint.getY() - 8
+            );
 
             g.setFill(Color.WHITE);
             g.fillText("S" + h.getId(), screenPoint.getX() + 16, screenPoint.getY() + 4);
@@ -253,7 +259,10 @@ public class MapCanvas extends Canvas {
 
         if (patient == programAlgorithm.getCurrentPatient()) {
             g.setFill(Color.BLUE);
-            g.fillRect(screenPoint.getX() - 9, screenPoint.getY() - 9, 32 + measureText(String.valueOf(patient.getId()))[0], 18);
+            g.fillRect(
+                    screenPoint.getX() - 9, screenPoint.getY() - 9,
+                    32 + measureText(String.valueOf(patient.getId()))[0], 18
+            );
         }
 
         g.drawImage(img, screenPoint.getX() - 8, screenPoint.getY() - 8);

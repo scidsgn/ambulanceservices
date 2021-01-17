@@ -37,7 +37,6 @@ class PointTest {
         assertThrows(IllegalArgumentException.class, () -> testPoint = new Point(14, null, null));
     }
 
-
     @Test
     public void getRelativeDirectionThrowsOnNullPoint(){
         testPoint = new Point(1,2);

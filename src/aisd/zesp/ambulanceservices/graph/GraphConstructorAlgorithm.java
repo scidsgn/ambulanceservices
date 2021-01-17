@@ -22,7 +22,9 @@ public class GraphConstructorAlgorithm {
             double position = sortedPositions[i];
             Point point = cutPoints.get(positions.indexOf(position));
 
-            lines.add(new GraphConstructorLine(startPoint, point, cutter.getLength() * (position - startPosition)));
+            lines.add(new GraphConstructorLine(
+                    startPoint, point, cutter.getLength() * (position - startPosition)
+            ));
 
             startPosition = position;
             startPoint = point;
@@ -30,7 +32,9 @@ public class GraphConstructorAlgorithm {
 
         points.add(cutter.getStart());
         points.add(cutter.getEnd());
-        lines.add(new GraphConstructorLine(startPoint, cutter.getEnd(), cutter.getLength() * (1 - startPosition)));
+        lines.add(new GraphConstructorLine(
+                startPoint, cutter.getEnd(), cutter.getLength() * (1 - startPosition)
+        ));
     }
 
     private void cutLines(GraphConstructorLine cutter, List<GraphConstructorCut> cuts) {
@@ -63,8 +67,12 @@ public class GraphConstructorAlgorithm {
                 }
 
                 lines.remove(cut.getLine());
-                lines.add(new GraphConstructorLine(line.getStart(), intersection, line.getLength() * cutPosition));
-                lines.add(new GraphConstructorLine(intersection, line.getEnd(), line.getLength() * (1 - cutPosition)));
+                lines.add(new GraphConstructorLine(
+                        line.getStart(), intersection, line.getLength() * cutPosition
+                ));
+                lines.add(new GraphConstructorLine(
+                        intersection, line.getEnd(), line.getLength() * (1 - cutPosition)
+                ));
             }
         }
 
@@ -129,10 +137,6 @@ public class GraphConstructorAlgorithm {
         }
 
         return graph;
-    }
-
-    public Set<Point> getPoints() {
-        return points;
     }
 
     public List<GraphConstructorLine> getLines() {

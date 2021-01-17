@@ -18,7 +18,7 @@ class ParserTest {
 
     @Test
     void parseFunctionsThrowOnLargeNumbers() {
-        String[] buffer = new String[]{"1234567890", "1234567890", "1234567890", "1234567890", "1234567890", "2115"};
+        String[] buffer = new String[]{"1234567890", "1234567890", "1234567890", "1234567890", "1234567890", "123"};
 
         assertThrows(IllegalArgumentException.class, () -> parser.parseHospital(state, buffer));
         assertThrows(IllegalArgumentException.class, () -> parser.parseLandmark(state, buffer));
@@ -27,8 +27,8 @@ class ParserTest {
     }
 
     @Test
-    void parseFunctionsThrowOnNullStrings() {
-        String[] buffer = new String[]{"2115", "Masno", "BOR Crew", "SB Maffija"};
+    void parseFunctionsThrowOnNullState() {
+        String[] buffer = new String[]{"43546", "ABCD", "QWERTY", "ZXCV"};
 
         assertThrows(IllegalArgumentException.class, () -> parser.parseHospital(null, buffer));
         assertThrows(IllegalArgumentException.class, () -> parser.parseLandmark(null, buffer));

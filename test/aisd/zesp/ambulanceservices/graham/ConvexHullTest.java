@@ -10,7 +10,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ConvexHullTest {
-
     private Point pointInCovexHull;
     private Point pointOutCovexHull;
     private Point pointOnTheBorder;
@@ -24,25 +23,20 @@ public class ConvexHullTest {
 
     @BeforeEach
     void setUp() {
-
         pointInCovexHull = new Point(0, 0);
         pointOutCovexHull = new Point(6, 12);
         pointOnTheBorder = new Point(6, -1);
-
 
         first = new Point(-1, -1);
         second = new Point(8, -1);
         third = new Point(5, 10);
 
-
-        points = new ArrayList<Point>();
-
+        points = new ArrayList<>();
         points.add(first);
         points.add(second);
         points.add(third);
 
         testConvexHull = new ConvexHull(points);
-
     }
 
     @Test
@@ -66,6 +60,5 @@ public class ConvexHullTest {
     void isPointInHullSucceedsOnBorderPoint() {
         assertTrue(testConvexHull.isPointInHull(pointOnTheBorder));
     }
-
 }
 

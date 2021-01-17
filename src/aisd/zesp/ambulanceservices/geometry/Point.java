@@ -59,6 +59,7 @@ public class Point implements Comparable<Point> {
         if (com != 0) {
             return com;
         }
+
         return this.getY().compareTo(o.getY());
     }
 

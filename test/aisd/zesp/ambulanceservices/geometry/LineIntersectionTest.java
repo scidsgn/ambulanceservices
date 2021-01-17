@@ -25,8 +25,8 @@ class LineIntersectionTest {
 
     @Test
     void intersectThrowsOnNullPoints() {
-        assertThrows(IllegalArgumentException.class, () ->
-                testIntersection.intersect(null, null, endSecond, endFirst)
+        assertThrows(IllegalArgumentException.class,
+                () -> testIntersection.intersect(null, null, endSecond, endFirst)
         );
     }
 

@@ -23,9 +23,11 @@ public class Reader {
             File file = new File(fileName);
             FileReader fileReader = new FileReader(file);
             BufferedReader reader = new BufferedReader(fileReader);
+
             while ((buffer = reader.readLine()) != null) {
                 lineNumber++;
                 sepCount = 0;
+
                 if (buffer.trim().indexOf('#') == 0) {
                     commentAmount++;
                     if (commentAmount == 0) {
@@ -36,6 +38,7 @@ public class Reader {
                     }
                     continue;
                 }
+
                 for (int i = 0; i < buffer.length(); i++) {
                     if (buffer.charAt(i) == '|') {
                         sepCount++;
@@ -44,6 +47,7 @@ public class Reader {
                 if (sepCount != sepAllowed) {
                     throw new IllegalArgumentException("Wrong number of separators at line " + lineNumber);
                 }
+
                 String[] bufferArray = buffer.split("\\s+\\|\\s+", 6);
 
                 if(commentAmount == 0){
@@ -55,14 +59,14 @@ public class Reader {
                 else if(commentAmount == 2){
                     parser.parseConnection(state, bufferArray);
                 }
-
             }
+
             reader.close();
             fileReader.close();
-
         } catch (IOException e) {
            throw new IllegalArgumentException("File has to be accessible!");
         }
+
         return state;
     }
 
@@ -82,9 +86,11 @@ public class Reader {
 
             while((buffer = reader.readLine()) != null) {
                 sepCount = 0;
+
                 if (buffer.trim().indexOf('#') == 0) {
                     continue;
                 }
+                
                 for (int i = 0; i < buffer.length(); i++) {
                     if (buffer.charAt(i) == '|') {
                         sepCount++;
@@ -93,12 +99,12 @@ public class Reader {
                 if (sepCount != sepAllowed) {
                     throw new IllegalArgumentException("Too many separators in file");
                 }
-                String[] bufferArray = buffer.split("\\s+\\|\\s+", 3);
 
+                String[] bufferArray = buffer.split("\\s+\\|\\s+", 3);
                 parser.parsePatient(state, bufferArray);
             }
         } catch (IOException e){
-            throw  new IllegalArgumentException("File has to be accessible!");
+            throw new IllegalArgumentException("File has to be accessible!");
         }
     }
 }

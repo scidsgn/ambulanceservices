@@ -1,21 +1,22 @@
 package aisd.zesp.ambulanceservices.screen;
 
 import javafx.scene.image.Image;
-import javafx.scene.text.Font;
 
 import java.io.File;
 
 public class AppAssets {
-    public static final Image hospital = new Image(new File("resources/icons/icon_hospital.png").toURI().toString());
-    public static final Image hospitalFull = new Image(new File("resources/icons/icon_hospitalfull.png").toURI().toString());
-    public static final Image monument = new Image(new File("resources/icons/icon_monument.png").toURI().toString());
-    public static final Image patientAbandoned = new Image(new File("resources/icons/icon_patientabandon.png").toURI().toString());
-    public static final Image patientOK = new Image(new File("resources/icons/icon_patientok.png").toURI().toString());
-    public static final Image patientRiding = new Image(new File("resources/icons/icon_patientride.png").toURI().toString());
-    public static final Image patientWaiting = new Image(new File("resources/icons/icon_patientwaiting.png").toURI().toString());
-    public static final Image pause = new Image(new File("resources/icons/icon_pause.png").toURI().toString());
-    public static final Image play = new Image(new File("resources/icons/icon_play.png").toURI().toString());
-    public static final Image step = new Image(new File("resources/icons/icon_step.png").toURI().toString());
+    public static final Image hospital = loadIcon("hospital");
+    public static final Image hospitalFull = loadIcon("hospitalfull");
+    public static final Image monument = loadIcon("monument");
+    public static final Image patientAbandoned = loadIcon("patientabandon");
+    public static final Image patientOK = loadIcon("patientok");
+    public static final Image patientRiding = loadIcon("patientride");
+    public static final Image patientWaiting = loadIcon("patientwaiting");
+    public static final Image pause = loadIcon("pause");
+    public static final Image play = loadIcon("play");
+    public static final Image step = loadIcon("step");
 
-    public static final Font inter = Font.loadFont(new File("resources/fonts/Inter-Regular.ttf").toURI().toString(), 11);
+    public static Image loadIcon(String name) {
+        return new Image(new File("resources/icons/icon_" + name + ".png").toURI().toString());
+    }
 }

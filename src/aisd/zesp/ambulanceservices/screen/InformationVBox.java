@@ -1,6 +1,5 @@
 package aisd.zesp.ambulanceservices.screen;
 
-
 import aisd.zesp.ambulanceservices.main.*;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Background;
@@ -10,11 +9,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 
-
 import static aisd.zesp.ambulanceservices.main.PatientState.*;
 
 public class InformationVBox extends VBox {
-
     private final ProgramAlgorithm programAlgorithm;
 
     private final Text infoMainText = new Text();

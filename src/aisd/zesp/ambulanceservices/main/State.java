@@ -124,6 +124,7 @@ public class State {
             throw new IllegalArgumentException("Length must be greater than zero.");
         }
 
+        connectionIds.add(id);
         graphConstructor.addLine(fh, sh, length);
     }
 

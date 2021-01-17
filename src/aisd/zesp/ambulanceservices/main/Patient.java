@@ -13,11 +13,45 @@ public class Patient extends Point {
     private Hospital patientHospital = null;
     private Hospital nearestHospital = null;
 
+    private final List<String> firstNames;
+    private final List<String> lastNames;
 
     public Patient(int id, double x, double y) {
         super(x, y);
+
         this.id = id;
-        generateName();
+
+        firstNames = new ArrayList<>();
+        lastNames = new ArrayList<>();
+        setUpNameLists();
+
+        name = generateName();
+    }
+
+    private void setUpNameLists() {
+        firstNames.add("Lady");
+        firstNames.add("Olga");
+        firstNames.add("Piotr");
+        firstNames.add("Mariaantonina");
+        firstNames.add("Jacuś");
+        firstNames.add("Dżessika");
+        firstNames.add("Krzesimir");
+        firstNames.add("Bdzigost");
+        firstNames.add("Brajan");
+        firstNames.add("Ekscel");
+        firstNames.add("Mortynka");
+
+        lastNames.add("Kovidek");
+        lastNames.add("Kowalski");
+        lastNames.add("Pałerpojnt");
+        lastNames.add("Martini");
+        lastNames.add("Eliminacjagaussa");
+        lastNames.add("Syntezatormowyivonawwersjidemonstracyjnej");
+        lastNames.add("Gaga");
+        lastNames.add("Meaculpa");
+        lastNames.add("Plac Politechniki Gmach Główny Sala 216");
+        lastNames.add("Konserwator Powierzchni Płaskich");
+        lastNames.add("Schmidt");
     }
 
     public int getId() {
@@ -36,40 +70,13 @@ public class Patient extends Point {
         this.patientState = patientState;
     }
 
-    private void generateName() {
+    private String generateName() {
         Random random = new Random();
-        List<String> firstNames = new ArrayList<>();
-        List<String> surNames = new ArrayList<>();
-
-        firstNames.add("Lady");
-        firstNames.add("Olga");
-        firstNames.add("Piotr");
-        firstNames.add("Mordzia");
-        firstNames.add("Mariaantonina");
-        firstNames.add("Jacuś");
-        firstNames.add("Dżessika");
-        firstNames.add("Krzesimir");
-        firstNames.add("Bdzigost");
-        firstNames.add("Brajan");
-        firstNames.add("Ekscel");
-        firstNames.add("Mortynka");
-
-        surNames.add("Gronkowiec");
-        surNames.add("Kovidek");
-        surNames.add("Kowalski");
-        surNames.add("Pałerpojnt");
-        surNames.add("Martini");
-        surNames.add("Eliminacjagaussa");
-        surNames.add("Syntezatormowyivonawwersjidemonstracyjnej");
-        surNames.add("Gaga");
-        surNames.add("Meaculpa");
-        surNames.add("Plac Politechniki Gmach Główny Sala 216");
-        surNames.add("Konserwator Powierzchni Płaskich");
-        surNames.add("Schmidt");
 
         String firstName = firstNames.get(random.nextInt(firstNames.size() - 1));
-        String surName = surNames.get(random.nextInt(surNames.size() - 1));
-        name = firstName + " " + surName;
+        String surName = lastNames.get(random.nextInt(lastNames.size() - 1));
+
+        return firstName + " " + surName;
     }
 
 

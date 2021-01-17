@@ -25,20 +25,16 @@ public class GrahamAlgorithmTest {
     private List<Point> points;
     private List<Point> points2;
     private List<Point> sortedPoints;
-    private List<Point> convexHullpoints;
     private List<Point> expectedSortedPoints;
-    private List<Point> actualsortedPoints;
+    private List<Point> actualSortedPoints;
 
-    private Map<Double, Point> actualpointsMap;
-    private HashMap expectedpointsMap;
+    private Map<Double, Point> actualPointsMap;
+    private Map<Double, Point> expectedPointsMap;
 
     private GrahamAlgorithm testGrahamAlgorithm;
 
-
     @BeforeEach
     void setUp() {
-
-
         first = new Point(6, 13);
         second = new Point(-1, 3);
         third = new Point(9, 14);
@@ -48,15 +44,14 @@ public class GrahamAlgorithmTest {
         seventh = new Point(5, 25);
         eighth = new Point(-3, 20);
 
-        sortedPoints = new ArrayList<Point>();
-        expectedSortedPoints = new ArrayList<Point>();
-        actualsortedPoints = new ArrayList<Point>();
-        points = new ArrayList<Point>();
-        points2 = new ArrayList<Point>();
-        convexHullpoints = new ArrayList<Point>();
+        sortedPoints = new ArrayList<>();
+        expectedSortedPoints = new ArrayList<>();
+        actualSortedPoints = new ArrayList<>();
+        points = new ArrayList<>();
+        points2 = new ArrayList<>();
 
-        expectedpointsMap = new HashMap<Double, Point>();
-        actualpointsMap = new HashMap<Double, Point>();
+        expectedPointsMap = new HashMap<>();
+        actualPointsMap = new HashMap<>();
 
         testGrahamAlgorithm = new GrahamAlgorithm();
 
@@ -72,68 +67,55 @@ public class GrahamAlgorithmTest {
         sortedPoints.add(fourth);
         sortedPoints.add(second);
 
-
-        convexHullpoints.add(first);
-        convexHullpoints.add(second);
-        convexHullpoints.add(third);
-
-        expectedpointsMap.put(0.2, first);
-        expectedpointsMap.put((-8.0 / 3.0), second);
-        expectedpointsMap.put((3.0 / 13.0), third);
-        expectedpointsMap.put((-8.0 / 11.0), fifth);
+        expectedPointsMap.put(0.2, first);
+        expectedPointsMap.put((-8.0 / 3.0), second);
+        expectedPointsMap.put((3.0 / 13.0), third);
+        expectedPointsMap.put((-8.0 / 11.0), fifth);
 
         expectedSortedPoints.add(fourth);
         expectedSortedPoints.add(second);
         expectedSortedPoints.add(fifth);
-
     }
-
 
     @Test
     void chooseStartPointSucceeds() {
-
         Point actual = testGrahamAlgorithm.chooseStartPoint(points);
         assertEquals(fourth, actual);
     }
 
     @Test
     void chooseStartPointSucceedsOnSameXCoords() {
-
         ninth = new Point(-4, 2);
         points.add(ninth);
-        Point actual = testGrahamAlgorithm.chooseStartPoint(points);
-        assertEquals(ninth, actual);
 
+        Point actual = testGrahamAlgorithm.chooseStartPoint(points);
+
+        assertEquals(ninth, actual);
     }
 
     @Test
     void calculateAnglesSucceeds() {
+        expectedPointsMap.put((2.0 / 3.0), sixth);
+        expectedPointsMap.put((14.0 / 9.0), seventh);
+        expectedPointsMap.put((9.0 / 1.0), eighth);
 
-        expectedpointsMap.put((2.0 / 3.0), sixth);
-        expectedpointsMap.put((14.0 / 9.0), seventh);
-        expectedpointsMap.put((9.0 / 1.0), eighth);
+        actualPointsMap = testGrahamAlgorithm.calculateAngles(fourth, points);
 
-        actualpointsMap = testGrahamAlgorithm.calculateAngles(fourth, points);
-
-        assertEquals(expectedpointsMap, actualpointsMap);
-
+        assertEquals(expectedPointsMap, actualPointsMap);
     }
 
     @Test
     void sortByAnglesSucceds() {
-
         expectedSortedPoints.add(first);
         expectedSortedPoints.add(third);
 
-
-        sortedPoints = testGrahamAlgorithm.sortByAngles(fourth, expectedpointsMap);
+        sortedPoints = testGrahamAlgorithm.sortByAngles(fourth, expectedPointsMap);
 
         assertEquals(expectedSortedPoints, sortedPoints);
     }
 
     @Test
     void choosePointsForConvexHullSucceeds() {
-
         expectedSortedPoints.add(third);
         expectedSortedPoints.add(seventh);
         expectedSortedPoints.add(eighth);
@@ -145,26 +127,19 @@ public class GrahamAlgorithmTest {
         sortedPoints.add(seventh);
         sortedPoints.add(eighth);
 
-        actualsortedPoints = testGrahamAlgorithm.choosePointsForConvexHull(sortedPoints);
+        actualSortedPoints = testGrahamAlgorithm.choosePointsForConvexHull(sortedPoints);
 
-        assertEquals(expectedSortedPoints, actualsortedPoints);
+        assertEquals(expectedSortedPoints, actualSortedPoints);
     }
 
     @Test
     void ChoosePointToConvexHullThrowIllegalArgumentExeption() {
-
-        expectedSortedPoints.add(third);
-        expectedSortedPoints.add(seventh);
-        expectedSortedPoints.add(eighth);
-
         assertThrows(IllegalArgumentException.class, () -> testGrahamAlgorithm.choosePointsForConvexHull(sortedPoints));
-
     }
 
     @Test
     void createConvexHullSucceeds() {
-        points2 = new ArrayList<Point>();
-
+        points2 = new ArrayList<>();
         points2.add(fourth);
         points2.add(second);
         points2.add(fifth);
@@ -180,7 +155,4 @@ public class GrahamAlgorithmTest {
             assertEquals(points2.get(i), actualConvexHullPoints.get(i));
         }
     }
-
-
-
 }

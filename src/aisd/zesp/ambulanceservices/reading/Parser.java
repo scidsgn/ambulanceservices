@@ -18,8 +18,9 @@ public class Parser {
             throw new IllegalArgumentException("There already is hospital with ID " + state.getHospitalById(id));
         }
 
-        Hospital hospital = new Hospital(id, buffer[1], Double.parseDouble(buffer[2]),
-                Double.parseDouble(buffer[3]), Integer.parseInt(buffer[5]));
+        Hospital hospital = new Hospital(
+                id, buffer[1], Double.parseDouble(buffer[2]), Double.parseDouble(buffer[3]), Integer.parseInt(buffer[5])
+        );
 
         state.addHospital(hospital);
     }

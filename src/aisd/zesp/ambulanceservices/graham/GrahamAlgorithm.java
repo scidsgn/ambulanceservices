@@ -29,7 +29,11 @@ public class GrahamAlgorithm {
                 angle = (point.getY() - startPoint.getY()) / (point.getX() - startPoint.getX());
 
                 if (pointsMap.containsKey(angle)) {
-                    if (Math.abs(pointsMap.get(angle).getY() - startPoint.getY()) <= Math.abs(point.getY() - startPoint.getY())) {
+                    if (
+                            Math.abs(
+                                    pointsMap.get(angle).getY() - startPoint.getY()
+                            ) <= Math.abs(point.getY() - startPoint.getY())
+                    ) {
                         pointsMap.put(angle, point);
                     }
                 } else {
@@ -56,18 +60,17 @@ public class GrahamAlgorithm {
     }
 
     public List<Point> choosePointsForConvexHull(List<Point> sortedPoints) {
-        List<Point> convexHullPoints = new ArrayList<>();
-        int size = sortedPoints.size();
-
-        if( size <3){
+        if (sortedPoints.size() < 3){
             throw new IllegalArgumentException();
         }
+
+        List<Point> convexHullPoints = new ArrayList<>();
 
         convexHullPoints.add(sortedPoints.get(0));
         convexHullPoints.add(sortedPoints.get(1));
         convexHullPoints.add(sortedPoints.get(2));
 
-        for (int i = 3; i < size; i++) {
+        for (int i = 3; i < sortedPoints.size(); i++) {
             Point point = sortedPoints.get(i);
             int last = convexHullPoints.size() - 1;
 
