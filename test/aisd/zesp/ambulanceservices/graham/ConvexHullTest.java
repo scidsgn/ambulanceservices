@@ -46,6 +46,13 @@ public class ConvexHullTest {
     }
 
     @Test
+    void getBoundingBoxSucceeds() {
+        double[] expectedBBox = {-1, -1, 8, 10};
+
+        assertArrayEquals(expectedBBox, testConvexHull.getBoundingBox());
+    }
+
+    @Test
     void isPointInHullSucceedsOnInsidePoint() {
         assertTrue(testConvexHull.isPointInHull(pointInCovexHull));
     }

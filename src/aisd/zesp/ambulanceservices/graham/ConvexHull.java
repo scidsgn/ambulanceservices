@@ -27,4 +27,29 @@ public class ConvexHull {
 
         return true;
     }
+
+    public double[] getBoundingBox() {
+        double[] bbox = {Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY};
+
+        for (Point p : hullPoints) {
+            double x = p.getX();
+            double y = p.getY();
+
+            if (bbox[0] > x) {
+                bbox[0] = x;
+            }
+            if (bbox[2] < x) {
+                bbox[2] = x;
+            }
+
+            if (bbox[1] > y) {
+                bbox[1] = y;
+            }
+            if (bbox[3] < y) {
+                bbox[3] = y;
+            }
+        }
+
+        return bbox;
+    }
 }
