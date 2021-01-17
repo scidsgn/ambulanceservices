@@ -36,6 +36,26 @@ public class InformationVBox extends VBox {
         this.getChildren().addAll(infoSubText, infoMainText);
     }
 
+    public void showErrorMessage(String errorMessage) {
+        infoMainText.setText(errorMessage);
+        infoSubText.setText("Błąd");
+
+        infoMainText.setFill(Color.WHITE);
+        infoSubText.setFill(Color.WHITE);
+
+        setBackground(new Background(new BackgroundFill(Color.DARKRED, CornerRadii.EMPTY, Insets.EMPTY)));
+    }
+
+    public void showInfoMessage(String message) {
+        infoMainText.setText(message);
+        infoSubText.setText("");
+
+        infoMainText.setFill(Color.WHITE);
+        infoSubText.setFill(Color.WHITE);
+
+        setBackground(new Background(new BackgroundFill(Color.color(79 / 255., 79 / 255., 79 / 255.), CornerRadii.EMPTY, Insets.EMPTY)));
+    }
+
     public void showInformation(Color bgColor) {
         String information = "";
 

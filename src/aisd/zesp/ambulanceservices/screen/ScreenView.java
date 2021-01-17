@@ -80,6 +80,16 @@ public class ScreenView extends GridPane {
         informationVBox.showInformation(bgColor);
     }
 
+    public void showInfoMessage(String errorMessage) {
+        transportButtonsHBox.setBackground(new Background(new BackgroundFill(informationVBoxBackground, CornerRadii.EMPTY, Insets.EMPTY)));
+        informationVBox.showInfoMessage(errorMessage);
+    }
+
+    public void showErrorMessage(String message) {
+        transportButtonsHBox.setBackground(new Background(new BackgroundFill(Color.DARKRED, CornerRadii.EMPTY, Insets.EMPTY)));
+        informationVBox.showErrorMessage(message);
+    }
+
     public void draw() {
 
         this.timeline = new Timeline(new KeyFrame(Duration.millis(1500), this::handleNextStep));
@@ -134,8 +144,11 @@ public class ScreenView extends GridPane {
                         canvas.autoAlignView();
                         canvas.draw();
                         hospitalTableView.refreshHospitalslist();
-                    } catch (IllegalArgumentException ex) {
-                        Alerts.showAlert(ex.getMessage());
+
+                        showInfoMessage("Przed rozpoczęciem otwórz dodaj pacjentów");
+                    } catch (Exception ex) {
+                        showErrorMessage(ex.getMessage());
+                        //Alerts.showAlert(ex.getMessage());
                     }
                 }
         );
@@ -157,7 +170,9 @@ public class ScreenView extends GridPane {
                         reader.loadPatients(programAlgorithm.getState(), file.getAbsolutePath());
                         canvas.draw();
                         patientTableView.refreshPatientslist();
-                    } catch (IllegalArgumentException ex) {
+
+                        showInfoMessage("Czekanie na uruchomienie systemu");
+                    } catch (Exception ex) {
                         errorMessage = ex.getMessage();
                         Alerts.showAlert(errorMessage);
                     }
@@ -259,6 +274,7 @@ public class ScreenView extends GridPane {
         primaryStage.show();
 
         canvas.draw();
+        showInfoMessage("Przed rozpoczęciem otwórz plik mapy");
     }
 
 
@@ -307,6 +323,10 @@ public class ScreenView extends GridPane {
 
                 patientTableView.refreshPatientslist();
                 canvas.draw();
+
+                if (state.getPatientList().size() == 1) {
+                    showInfoMessage("Czekanie na uruchomienie systemu");
+                }
             }
         }
     };

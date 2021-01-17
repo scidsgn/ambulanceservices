@@ -27,7 +27,6 @@ public class State {
 
         graphConstructor = new GraphConstructor();
         connectionIds = new HashSet<>();
-        List<Hospital> nextHospitalList = new ArrayList<>();
 
         nextHospitalPaths = new ArrayList<>();
     }
@@ -152,11 +151,6 @@ public class State {
             }
 
             paths.sort(Comparator.comparingDouble(p -> connectionsGraph.getPathLength(p)));
-
-            for (List<Point> path : paths) {
-                Hospital h = (Hospital) path.get(0);
-            }
-
             nextHospitalPaths.add(paths);
         }
     }

@@ -33,7 +33,7 @@ public class ProgramAlgorithm {
         return false;
     }
 
-    private boolean goToHospital() {
+    private void goToHospital() {
         if (currentHospital == null) {
             Hospital hospital = state.findNearestHospital(currentPatient);
 
@@ -45,8 +45,6 @@ public class ProgramAlgorithm {
 
             if (nextHospital == null) {
                 currentPatient.setPatientState(PatientState.ABANDONED);
-
-                return false;
             }
 
             visitedHospitals.add(nextHospital);
@@ -55,8 +53,6 @@ public class ProgramAlgorithm {
         }
 
         currentPatient.setPatientState(PatientState.RIDING);
-
-        return true;
     }
 
     private void checkHospitalCapacity() {
