@@ -145,7 +145,7 @@ public class ScreenView extends GridPane {
                         canvas.draw();
                         hospitalTableView.refreshHospitalslist();
 
-                        showInfoMessage("Przed rozpoczęciem otwórz dodaj pacjentów");
+                        showInfoMessage("Przed rozpoczęciem dodaj pacjentów");
                     } catch (Exception ex) {
                         showErrorMessage(ex.getMessage());
                         //Alerts.showAlert(ex.getMessage());
@@ -188,9 +188,6 @@ public class ScreenView extends GridPane {
 
 
         VBox leftVBox = new VBox(0);
-        leftVBox.setStyle("-fx-border-style: solid;"
-                + "-fx-border-width: 1;"
-                + "-fx-border-color: black");
         leftVBox.setAlignment(Pos.BASELINE_LEFT);
         leftVBox.setBackground(new Background(new BackgroundFill(Color.BLACK,
                 CornerRadii.EMPTY,
@@ -218,7 +215,6 @@ public class ScreenView extends GridPane {
 
         rightTopVBox.setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground, CornerRadii.EMPTY, Insets.EMPTY)));
         rightTopVBox.setPrefHeight(300);
-        rightTopVBox.setStyle("-fx-border-style: solid;" + "-fx-border-width: 1;" + "-fx-border-color: black");
 
         informationVBox.setBackground(new Background(new BackgroundFill(informationVBoxBackground, CornerRadii.EMPTY, Insets.EMPTY)));
         informationVBox.setMaxHeight(270);
@@ -232,26 +228,17 @@ public class ScreenView extends GridPane {
         rightTopVBox.getChildren().addAll(transportButtonsHBox, informationVBox);
 
         informationVBox.setPrefHeight(300);
-        informationVBox.setStyle("-fx-border-style: solid;"
-                + "-fx-border-width: 0;"
-                + "-fx-border-color: black");
 
 
         patientTableView.setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground,
                 CornerRadii.EMPTY,
                 Insets.EMPTY)));
         patientTableView.setPrefHeight(300);
-        patientTableView.setStyle("-fx-border-style: solid;"
-                + "-fx-border-width: 0.5;"
-                + "-fx-border-color: black");
 
         hospitalTableView.setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground,
                 CornerRadii.EMPTY,
                 Insets.EMPTY)));
         hospitalTableView.setPrefHeight(300);
-        hospitalTableView.setStyle("-fx-border-style: solid;"
-                + "-fx-border-width: 0.5;"
-                + "-fx-border-color: black");
 
 
         VBox.setVgrow(informationVBox, Priority.ALWAYS);
