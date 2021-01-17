@@ -10,14 +10,14 @@ public class Graph<T> {
 
     public void addNode(T node) throws IllegalArgumentException, NullPointerException {
         if (edges != null) {
-            throw new NullPointerException("Cannot add more nodes after finalizing them.");
+            throw new NullPointerException("Nie można dodać więcej wierzcołków, bo sfinalizowaniu grafu.");
         }
 
         if (node == null) {
-            throw new NullPointerException("Graph node can't be null.");
+            throw new NullPointerException("Wierzchołek grafu nie może być pusty (null).");
         }
         if (nodes.contains(node)) {
-            throw new IllegalArgumentException("Node already exists within the graph.");
+            throw new IllegalArgumentException("Ten wierzchołek znajduje się już w grafie.");
         }
 
         nodes.add(node);
@@ -25,17 +25,17 @@ public class Graph<T> {
 
     public void connectNodes(T n1, T n2, double length) throws IllegalArgumentException, NullPointerException {
         if (edges == null) {
-            throw new NullPointerException("Nodes must be finalized first.");
+            throw new NullPointerException("Wierzchołki muszą być najpierw sfinalizowane.");
         }
 
         int n1Index = nodes.indexOf(n1);
         int n2Index = nodes.indexOf(n2);
         if (n1Index == -1 || n2Index == -1) {
-            throw new IllegalArgumentException("Node(s) are not present in the graph.");
+            throw new IllegalArgumentException("Wierzchołek/wierzchołki nie są rezpresentowane w grafie.");
         }
 
         if (edges[n1Index][n2Index] != null && edges[n1Index][n2Index] != length) {
-            throw new IllegalArgumentException("Nodes are already connected.");
+            throw new IllegalArgumentException("Wierzchołki są już połączone.");
         }
 
         edges[n1Index][n2Index] = length;
@@ -44,7 +44,7 @@ public class Graph<T> {
 
     public void finalizeNodes() throws IllegalArgumentException {
         if (nodes.size() == 0) {
-            throw new IllegalArgumentException("Cannot finalize an empty graph.");
+            throw new IllegalArgumentException("Nie można sfinalizować pustego grafu.");
         }
 
         int n = nodes.size();
@@ -57,13 +57,13 @@ public class Graph<T> {
 
     public Double getLength(T n1, T n2) throws IllegalArgumentException, NullPointerException {
         if (edges == null) {
-            throw new NullPointerException("Nodes must be finalized first.");
+            throw new NullPointerException("Wierzchołki muszą być najpierw sfinalizowane.");
         }
 
         int n1Index = nodes.indexOf(n1);
         int n2Index = nodes.indexOf(n2);
         if (n1Index == -1 || n2Index == -1) {
-            throw new IllegalArgumentException("Node(s) are not present in the graph.");
+            throw new IllegalArgumentException("Wierzchołek/wierzchołki nie są rezprezentowane w grafie.");
         }
 
         return edges[n1Index][n2Index];
@@ -71,12 +71,12 @@ public class Graph<T> {
 
     public boolean getMark(T node) throws IllegalArgumentException, NullPointerException {
         if (marks == null) {
-            throw new NullPointerException("Nodes must be finalized first.");
+            throw new NullPointerException("Wierzchołki muszą być najpierw sfinalizowane.");
         }
 
         int nIndex = nodes.indexOf(node);
         if (nIndex == -1) {
-            throw new IllegalArgumentException("Node is not present in the graph.");
+            throw new IllegalArgumentException("Wierzchołek nie jest rezprezentowany w grafie.");
         }
 
         return marks[nIndex];
@@ -84,12 +84,12 @@ public class Graph<T> {
 
     public List<T> getNeighbors(T node) throws IllegalArgumentException, NullPointerException {
         if (edges == null) {
-            throw new NullPointerException("Nodes must be finalized first.");
+            throw new NullPointerException("Wierzchołki muszą być najpierw sfinalizowane.");
         }
 
         int nIndex = nodes.indexOf(node);
         if (nIndex == -1) {
-            throw new IllegalArgumentException("Node is not present in the graph.");
+            throw new IllegalArgumentException("Wierzchołek nie jest rezprezentowany w grafie.");
         }
 
         ArrayList<T> neighbors = new ArrayList<>();
@@ -116,7 +116,7 @@ public class Graph<T> {
 
     public List<T> getNodes(boolean mark) throws NullPointerException {
         if (marks == null) {
-            throw new NullPointerException("Nodes must be finalized first.");
+            throw new NullPointerException("Wierzchołki muszą być najpierw sfinalizowane.");
         }
 
         return nodes.stream().filter(
@@ -130,13 +130,13 @@ public class Graph<T> {
 
     public double getPathLength(List<T> path) throws IllegalArgumentException, NullPointerException {
         if (edges == null) {
-            throw new NullPointerException("Nodes must be finalized first.");
+            throw new NullPointerException("Wierzchołki muszą być najpierw sfinalizowane.");
         }
         if (path == null) {
-            throw new IllegalArgumentException("Path cannot be null.");
+            throw new IllegalArgumentException("Ścieżka w grafie nie może być pusta");
         }
         if (path.size() < 2) {
-            throw new IllegalArgumentException("Path must contain at least 2 nodes.");
+            throw new IllegalArgumentException("Ścieżka w grafie musi zawierać minimum 2 wierzchołki");
         }
 
         double pathLength = 0;
@@ -148,12 +148,12 @@ public class Graph<T> {
             int n1Index = nodes.indexOf(n1);
             int n2Index = nodes.indexOf(n2);
             if (n1Index == -1 || n2Index == -1) {
-                throw new IllegalArgumentException("Node(s) are not present in the graph.");
+                throw new IllegalArgumentException("Wierzchołek/wierzchołki nie są rezprezentowane w grafie.");
             }
 
             Double length = edges[n1Index][n2Index];
             if (length == null) {
-                throw new NullPointerException("No connection found between nodes.");
+                throw new NullPointerException("Nie można znaleźć połączenia między wierzchołkami ");
             }
 
             pathLength += length;
@@ -168,7 +168,7 @@ public class Graph<T> {
 
     public void setAllMarks(boolean mark) throws NullPointerException {
         if (marks == null) {
-            throw new NullPointerException("Nodes must be finalized first.");
+            throw new NullPointerException("Wierzchołki muszą być najpierw sfinalizowane.");
         }
 
         Arrays.fill(marks, mark);
@@ -176,12 +176,12 @@ public class Graph<T> {
 
     public void setMark(T node, boolean mark) throws IllegalArgumentException, NullPointerException {
         if (marks == null) {
-            throw new NullPointerException("Nodes must be finalized first.");
+            throw new NullPointerException("Wierzchołki muszą być najpierw sfinalizowane.");
         }
 
         int nIndex = nodes.indexOf(node);
         if (nIndex == -1) {
-            throw new IllegalArgumentException("Node is not present in the graph.");
+            throw new IllegalArgumentException("Wierzchołek nie jest rezprezentowany w grafie.");
         }
 
         marks[nIndex] = mark;

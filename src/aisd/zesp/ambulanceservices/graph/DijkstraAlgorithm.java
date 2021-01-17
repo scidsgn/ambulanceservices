@@ -58,7 +58,7 @@ public class DijkstraAlgorithm<T> {
     public void execute(T source) throws IllegalArgumentException {
         int nIndex = graph.indexOf(source);
         if (nIndex == -1) {
-            throw new IllegalArgumentException("Node is not present in the graph.");
+            throw new IllegalArgumentException("Wierzchołek nie jest reprezentowany w grafie.");
         }
 
         Arrays.fill(distances, Double.POSITIVE_INFINITY);
@@ -80,7 +80,7 @@ public class DijkstraAlgorithm<T> {
     public List<T> getPath(T target) throws IllegalArgumentException {
         int nIndex = graph.indexOf(target);
         if (nIndex == -1) {
-            throw new IllegalArgumentException("Node is not present in the graph.");
+            throw new IllegalArgumentException("Wierzchołek nie jest reprezentowany w grafie.");
         }
 
         if (previousNodes.get(nIndex) == null) {

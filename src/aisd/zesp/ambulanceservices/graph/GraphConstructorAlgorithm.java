@@ -102,10 +102,10 @@ public class GraphConstructorAlgorithm {
 
     public void addLine(Point start, Point end, double length) throws IllegalArgumentException, NullPointerException {
         if (start == null || end == null) {
-            throw new NullPointerException("Points cannot be null.");
+            throw new NullPointerException("Wierzchołki nie mogą być puste(null).");
         }
         if (length <= 0) {
-            throw new IllegalArgumentException("Line length must be larger than zero.");
+            throw new IllegalArgumentException("Długość linii musi być większa od zera.");
         }
 
         GraphConstructorLine cutter = new GraphConstructorLine(start, end, length);
@@ -122,7 +122,7 @@ public class GraphConstructorAlgorithm {
 
     public Graph<Point> constructGraph() throws NullPointerException {
         if (points.size() == 0) {
-            throw new NullPointerException("No lines were added to the construction.");
+            throw new NullPointerException("Żadna linia nie została dodana do konstruktora grafa.");
         }
 
         Graph<Point> graph = new Graph<>();

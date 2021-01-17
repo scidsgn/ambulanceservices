@@ -11,7 +11,7 @@ public class Point implements Comparable<Point> {
 
     public Point(double x, Point start, Point end) {
         if (start == null || end == null) {
-            throw new IllegalArgumentException("Neither point can be null!");
+            throw new IllegalArgumentException("Należy podać punkty początku/końca linii, nie mogą one być puste (null).");
         }
         this.x = start.getX() + (end.getX() - start.getX()) * x;
         y = start.getY() + (end.getY() - start.getY()) * x;
@@ -20,7 +20,7 @@ public class Point implements Comparable<Point> {
 
     public double getRelativeDirection(Point a, Point b) {
         if (a == null || b == null) {
-            throw new IllegalArgumentException("Neither point can be null!");
+            throw new IllegalArgumentException("Należy podać punkty tworzące linie, nie mogą one być puste (null).");
         }
         return (b.getX() - a.getX()) * (y - a.getY()) - (b.getY() - a.getY()) * (x - a.getX());
     }
@@ -47,7 +47,7 @@ public class Point implements Comparable<Point> {
 
     public double getDistance(Point point) throws NullPointerException {
         if (point == null) {
-            throw new NullPointerException("Point cannot be null.");
+            throw new NullPointerException("Należy podać punkt, nie może on być pusty (null).");
         }
 
         return Math.sqrt(Math.pow(x - point.getX(), 2) + Math.pow(y - point.getY(), 2));

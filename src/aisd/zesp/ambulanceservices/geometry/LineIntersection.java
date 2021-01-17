@@ -4,7 +4,7 @@ public class LineIntersection {
 
     public Double[] intersect(Point startFirst, Point endFirst, Point startSecond, Point endSecond) {
         if (startFirst == null || endFirst == null || startSecond == null || endSecond == null) {
-            throw new IllegalArgumentException("Intersecting lines defined by non existent points is impossible.");
+            throw new IllegalArgumentException("Niemożliwe jest znalezienie przecięcia liń stworzonych z nieistniejących punktów.");
         }
         Double[] ratios = new Double[2];
 

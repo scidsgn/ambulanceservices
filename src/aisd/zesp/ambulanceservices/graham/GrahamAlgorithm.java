@@ -61,7 +61,7 @@ public class GrahamAlgorithm {
 
     public List<Point> choosePointsForConvexHull(List<Point> sortedPoints) {
         if (sortedPoints.size() < 3){
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Mapa musi zawierać minimum 3 punkty, spośród których minimum jeden nie należy do wspólnej prostej.");
         }
 
         List<Point> convexHullPoints = new ArrayList<>();
