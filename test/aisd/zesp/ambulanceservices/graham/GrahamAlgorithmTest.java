@@ -71,12 +71,7 @@ public class GrahamAlgorithmTest {
 
         sortedPoints.add(fourth);
         sortedPoints.add(second);
-        sortedPoints.add(fifth);
-        sortedPoints.add(first);
-        sortedPoints.add(third);
-        sortedPoints.add(sixth);
-        sortedPoints.add(seventh);
-        sortedPoints.add(eighth);
+
 
         convexHullpoints.add(first);
         convexHullpoints.add(second);
@@ -143,9 +138,27 @@ public class GrahamAlgorithmTest {
         expectedSortedPoints.add(seventh);
         expectedSortedPoints.add(eighth);
 
+        sortedPoints.add(fifth);
+        sortedPoints.add(first);
+        sortedPoints.add(third);
+        sortedPoints.add(sixth);
+        sortedPoints.add(seventh);
+        sortedPoints.add(eighth);
+
         actualsortedPoints = testGrahamAlgorithm.choosePointsForConvexHull(sortedPoints);
 
         assertEquals(expectedSortedPoints, actualsortedPoints);
+    }
+
+    @Test
+    void ChoosePointToConvexHullThrowIllegalArgumentExeption() {
+
+        expectedSortedPoints.add(third);
+        expectedSortedPoints.add(seventh);
+        expectedSortedPoints.add(eighth);
+
+        assertThrows(IllegalArgumentException.class, () -> testGrahamAlgorithm.choosePointsForConvexHull(sortedPoints));
+
     }
 
     @Test
