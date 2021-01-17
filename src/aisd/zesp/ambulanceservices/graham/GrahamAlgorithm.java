@@ -59,6 +59,10 @@ public class GrahamAlgorithm {
         List<Point> convexHullPoints = new ArrayList<>();
         int size = sortedPoints.size();
 
+        if( size <3){
+            throw new IllegalArgumentException();
+        }
+
         convexHullPoints.add(sortedPoints.get(0));
         convexHullPoints.add(sortedPoints.get(1));
         convexHullPoints.add(sortedPoints.get(2));
