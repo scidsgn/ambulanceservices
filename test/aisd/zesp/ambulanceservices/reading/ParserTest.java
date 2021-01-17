@@ -28,11 +28,11 @@ class ParserTest {
 
     @Test
     void parseFunctionsThrowOnNullState() {
-        String[] buffer = new String[]{"43546", "ABCD", "QWERTY", "ZXCV"};
+        String[] buffer = new String[]{"435", "ABCD", "QWERTY", "ZXCV", "ABC"};
 
-        assertThrows(IllegalArgumentException.class, () -> parser.parseHospital(null, buffer));
-        assertThrows(IllegalArgumentException.class, () -> parser.parseLandmark(null, buffer));
-        assertThrows(IllegalArgumentException.class, () -> parser.parsePatient(null, buffer));
-        assertThrows(IllegalArgumentException.class, () -> parser.parseConnection(null, buffer));
+        assertThrows(NullPointerException.class, () -> parser.parseHospital(null, buffer));
+        assertThrows(NullPointerException.class, () -> parser.parseLandmark(null, buffer));
+        assertThrows(NullPointerException.class, () -> parser.parsePatient(null, buffer));
+        assertThrows(NullPointerException.class, () -> parser.parseConnection(null, buffer));
     }
 }

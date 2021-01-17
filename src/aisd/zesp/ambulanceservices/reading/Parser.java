@@ -5,7 +5,11 @@ import aisd.zesp.ambulanceservices.main.*;
 public class Parser {
     private final int allowedLength = 6;
     
-    public void parseHospital(State state, String[] buffer){
+    public void parseHospital(State state, String[] buffer) {
+        if (state == null) {
+            throw new NullPointerException("State cannot be null");
+        }
+
         if (
                 buffer[0].length() > allowedLength || buffer[2].length() > allowedLength ||
                 buffer[3].length() > allowedLength || buffer[4].length() > allowedLength
@@ -25,7 +29,11 @@ public class Parser {
         state.addHospital(hospital);
     }
 
-    public void parseLandmark(State state, String[] buffer){
+    public void parseLandmark(State state, String[] buffer) {
+        if (state == null) {
+            throw new NullPointerException("State cannot be null");
+        }
+
         if (
                 buffer[0].length() > allowedLength || buffer[2].length() > allowedLength ||
                 buffer[3].length() > allowedLength
@@ -43,7 +51,11 @@ public class Parser {
         state.addLandmark(landmark);
     }
 
-    public void parseConnection(State state, String[] buffer){
+    public void parseConnection(State state, String[] buffer) {
+        if (state == null) {
+            throw new NullPointerException("State cannot be null");
+        }
+
         int id = Integer.parseInt(buffer[0]);
         if (
                 state.getHospitalById(Integer.parseInt(buffer[1])) == null ||
@@ -58,7 +70,11 @@ public class Parser {
         );
     }
 
-    public void parsePatient(State state, String[] buffer){
+    public void parsePatient(State state, String[] buffer) {
+        if (state == null) {
+            throw new NullPointerException("State cannot be null");
+        }
+
         if (
                 buffer[0].length() > allowedLength || buffer[1].length() > allowedLength ||
                 buffer[2].length() > allowedLength
