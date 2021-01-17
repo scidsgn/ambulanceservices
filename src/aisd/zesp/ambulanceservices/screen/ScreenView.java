@@ -135,6 +135,7 @@ public class ScreenView extends GridPane {
                         state.finalizeConnections();
                         state.finalizeConvexHull();
                         programAlgorithm.setState(state);
+                        canvas.autoAlignView();
                         canvas.draw();
                         hospitalTableView.refreshHospitalslist();
                         // hospitalVBox.showHospital();
@@ -189,10 +190,10 @@ public class ScreenView extends GridPane {
         vbox.getChildren().add(hbox);
 
         vbox.setPrefHeight(50);
-        vbox.setPrefWidth(1000);
+        vbox.setPrefWidth(850);
         VBox.setVgrow(vbox, Priority.ALWAYS);
 
-        canvas = new MapCanvas(999, 755, programAlgorithm);
+        canvas = new MapCanvas(800, 762, programAlgorithm);
         vbox.getChildren().add(canvas);
 
         canvas.setOnMouseClicked(eventHandler);
@@ -207,7 +208,6 @@ public class ScreenView extends GridPane {
         VBox vbox3 = new VBox(0);
 
         vbox3.setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground, CornerRadii.EMPTY, Insets.EMPTY)));
-        vbox3.setPrefWidth(620);
         vbox3.setPrefHeight(300);
         vbox3.setStyle("-fx-border-style: solid;" + "-fx-border-width: 1;" + "-fx-border-color: black");
 
@@ -222,8 +222,6 @@ public class ScreenView extends GridPane {
         transportButtonsHBox.getChildren().addAll(start, next);
         vbox3.getChildren().addAll(transportButtonsHBox, informationVBox);
 
-
-        informationVBox.setPrefWidth(620);
         informationVBox.setPrefHeight(300);
         informationVBox.setStyle("-fx-border-style: solid;"
                 + "-fx-border-width: 0;"
@@ -233,7 +231,6 @@ public class ScreenView extends GridPane {
         patientTableView.setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground,
                 CornerRadii.EMPTY,
                 Insets.EMPTY)));
-        patientTableView.setPrefWidth(300);
         patientTableView.setPrefHeight(300);
         patientTableView.setStyle("-fx-border-style: solid;"
                 + "-fx-border-width: 0.5;"
@@ -242,7 +239,6 @@ public class ScreenView extends GridPane {
         hospitalTableView.setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground,
                 CornerRadii.EMPTY,
                 Insets.EMPTY)));
-        hospitalTableView.setPrefWidth(200);
         hospitalTableView.setPrefHeight(300);
         hospitalTableView.setStyle("-fx-border-style: solid;"
                 + "-fx-border-width: 0.5;"
@@ -257,7 +253,7 @@ public class ScreenView extends GridPane {
         vbox2.getChildren().addAll(vbox3, hospitalTableView, patientTableView);
 
         root.getChildren().addAll(vbox, vbox2);
-        Scene scene = new Scene(root, 1540, 900);
+        Scene scene = new Scene(root, 1300, 800);
 
         this.add(root, 0, 0);
 
@@ -275,6 +271,7 @@ public class ScreenView extends GridPane {
     private void handleStop(ActionEvent actionEvent) {
         this.timeline.stop();
         start.setOnAction(this::handleStart);
+
         ImageView viewStart = new ImageView(AppAssets.play);
         start.setGraphic(viewStart);
     }
@@ -286,6 +283,7 @@ public class ScreenView extends GridPane {
         this.timeline.play();
         start.setOnAction(this::handleStop);
 
+        handleNextStep(actionEvent);
     }
 
 

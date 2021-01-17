@@ -13,6 +13,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -46,41 +47,30 @@ public class PatientTableView extends VBox {
         setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground,
                 CornerRadii.EMPTY,
                 Insets.EMPTY)));
-        Text txt = new Text("Pacjenci");
-        txt.setFont(Font.font("verdana", FontWeight.BLACK, FontPosture.REGULAR, 15));
-        txt.setTextAlignment(TextAlignment.CENTER);
+        Label txt = new Label("PACJENCI");
 
         table.setEditable(false);
-        table.setStyle("-fx-background-color: #242424");
 
-
-        TableColumn imageViewCol = new TableColumn("znak");
-        imageViewCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
-        imageViewCol.setStyle("-fx-background-color: #242424 ;"
-                + "-fx-border-color: #242424 ");
+        TableColumn imageViewCol = new TableColumn("");
+        imageViewCol.setMinWidth(24);
+        imageViewCol.setMaxWidth(24);
         imageViewCol.setCellValueFactory(
                 new PropertyValueFactory<LPatient, String>("imageView"));
 
         TableColumn nameCol = new TableColumn("Imię i nazwisko");
-        nameCol.prefWidthProperty().bind(table.widthProperty().multiply(0.5).subtract(3));
-        nameCol.setStyle("-fx-background-color: #242424 ;"
-                + "-fx-border-color:#242424 ");
+        nameCol.prefWidthProperty().bind(table.widthProperty().subtract(24).multiply(0.6).subtract(3));
         nameCol.setCellValueFactory(
                 new PropertyValueFactory<LPatient, String>("name"));
 
 
         TableColumn stateCol = new TableColumn("Stan pacjenta");
-        stateCol.prefWidthProperty().bind(table.widthProperty().multiply(0.3));
-        stateCol.setStyle("-fx-background-color: #242424 ;"
-                + "-fx-border-color: #242424 ");
+        stateCol.prefWidthProperty().bind(table.widthProperty().subtract(24).multiply(0.3));
         stateCol.setCellValueFactory(
                 new PropertyValueFactory<LPatient, String>("state"));
 
 
         TableColumn idCol = new TableColumn("Id");
-        idCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
-        idCol.setStyle("-fx-background-color:#242424 ;"
-                + "-fx-border-color:#242424");
+        idCol.prefWidthProperty().bind(table.widthProperty().subtract(24).multiply(0.1));
         idCol.setCellValueFactory(
                 new PropertyValueFactory<LPatient, String>("id"));
 
@@ -93,18 +83,9 @@ public class PatientTableView extends VBox {
     }
 
     public void refreshPatientslist() {
-
-        setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground,
-                CornerRadii.EMPTY,
-                Insets.EMPTY)));
-        Text txt = new Text("Pacjenci");
-        txt.setTextAlignment(TextAlignment.CENTER);
-        txt.setFont(Font.font("verdana", FontWeight.BLACK, FontPosture.REGULAR, 15));
-
         table.getItems().clear();
 
         data.clear();
-        getChildren().clear();
 
 
         for (Patient p : programAlgorithm.getState().getPatientList()) {
@@ -139,10 +120,6 @@ public class PatientTableView extends VBox {
             data.add(person);
         }
         table.setItems(data);
-
-        getChildren().addAll(txt, table);
-
-
     }
 
 

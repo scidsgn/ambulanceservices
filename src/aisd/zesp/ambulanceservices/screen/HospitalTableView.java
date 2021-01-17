@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,13 +21,10 @@ import javafx.scene.text.*;
 
 
 public class HospitalTableView extends VBox {
-
-
     private final TableView<LHospital> table = new TableView<>();
 
     private final Color patientAndHospitalVBoxesBackground = Color.color(24 / 255., 24 / 255., 24 / 255.);
     private final ObservableList<LHospital> data = FXCollections.observableArrayList();
-
 
     private final ProgramAlgorithm programAlgorithm;
 
@@ -34,40 +32,33 @@ public class HospitalTableView extends VBox {
         this.programAlgorithm = programAlgorithm;
     }
 
-
     public void showHospital() {
-
         setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground,
                 CornerRadii.EMPTY,
                 Insets.EMPTY)));
-        Text txt = new Text("Szpitale");
+        Label txt = new Label("SZPITALE");
         txt.setTextAlignment(TextAlignment.CENTER);
 
         table.setEditable(false);
-        table.setStyle("-fx-background-color: #242424 ");
-        txt.setFont(Font.font("verdana", FontWeight.BLACK, FontPosture.REGULAR, 15));
 
-
-        TableColumn imageViewCol = new TableColumn("znak");
-        imageViewCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
+        TableColumn imageViewCol = new TableColumn("");
+        imageViewCol.setMinWidth(24);
+        imageViewCol.setMaxWidth(24);
         imageViewCol.setCellValueFactory(
                 new PropertyValueFactory<LHospital, String>("imageView"));
 
-
         TableColumn nameCol = new TableColumn("Nazwa szpitala");
-        nameCol.prefWidthProperty().bind(table.widthProperty().multiply(0.6).subtract(3));
+        nameCol.prefWidthProperty().bind(table.widthProperty().subtract(24).multiply(0.7).subtract(3));
         nameCol.setCellValueFactory(
                 new PropertyValueFactory<LHospital, String>("name"));
 
-
         TableColumn stateCol = new TableColumn("Wolne łóżka");
-        stateCol.prefWidthProperty().bind(table.widthProperty().multiply(0.2));
+        stateCol.prefWidthProperty().bind(table.widthProperty().subtract(24).multiply(0.2));
         stateCol.setCellValueFactory(
                 new PropertyValueFactory<LHospital, String>("vacantBeds"));
 
-
         TableColumn idCol = new TableColumn("Id");
-        idCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
+        idCol.prefWidthProperty().bind(table.widthProperty().subtract(24).multiply(0.1));
         idCol.setCellValueFactory(
                 new PropertyValueFactory<LHospital, String>("id"));
 
@@ -75,18 +66,13 @@ public class HospitalTableView extends VBox {
         table.getColumns().addAll(imageViewCol, nameCol, stateCol, idCol);
         table.setTableMenuButtonVisible(false);
 
-
         getChildren().addAll(txt, table);
-
-
     }
 
     public void refreshHospitalslist() {
-
         table.getItems().clear();
 
         data.clear();
-        getChildren().clear();
 
         setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground,
                 CornerRadii.EMPTY,
@@ -98,32 +84,21 @@ public class HospitalTableView extends VBox {
         int vacantBeds = 0;
 
         for (Hospital h : programAlgorithm.getState().getHospitalList()) {
-
             vacantBeds = h.getVacantBeds();
 
             ImageView viewHospital = new ImageView(AppAssets.hospital);
             ImageView viewFullHospital = new ImageView(AppAssets.hospitalFull);
             ImageView view = viewHospital;
 
-
             if (vacantBeds == 0) {
-
                 view = viewFullHospital;
-
             }
-
 
             LHospital person = new LHospital(view, h.getName(), vacantBeds, "S" + h.getId());
             data.add(person);
-
-
         }
 
         table.setItems(data);
-
-        getChildren().addAll(txt, table);
-
-
     }
 
 

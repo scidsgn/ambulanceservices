@@ -30,11 +30,10 @@ public class InformationVBox extends VBox {
         setPadding(new Insets(4, 12, 4, 12));
 
         infoMainText.setId("informationMain");
-
+        infoMainText.setWrappingWidth(350);
         infoSubText.setId("informationSub");
-        infoSubText.setTranslateY(80);
 
-        this.getChildren().addAll(infoMainText, infoSubText);
+        this.getChildren().addAll(infoSubText, infoMainText);
     }
 
     public void showInformation(Color bgColor) {

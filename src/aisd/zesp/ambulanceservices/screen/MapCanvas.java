@@ -71,6 +71,26 @@ public class MapCanvas extends Canvas {
         draw();
     }
 
+    public void autoAlignView() {
+        double[] bbox = programAlgorithm.getState().getConvexHull().getBoundingBox();
+        double w = bbox[2];
+        double h = bbox[3];
+
+        double mapRatio = getWidth() / getHeight();
+        double hullRatio = w / h;
+
+        double scale = 1.0;
+
+        if (mapRatio > hullRatio) {
+            scale = (getHeight() - 50) / h;
+        } else {
+            scale = (getWidth() - 50) / w;
+        }
+
+        scale(scale, new Point(0, 0));
+        translate((getWidth() - w * scale) / 2, (getHeight() - h * scale) / 2);
+    }
+
     public Point worldToCanvas(Point point) {
         return new Point(
                 point.getX() * viewScale + viewOffset.getX(),
@@ -230,6 +250,12 @@ public class MapCanvas extends Canvas {
 
         g.setFill(Color.BLACK);
         g.fillRect(screenPoint.getX() - 9, screenPoint.getY() - 9, 18, 18);
+
+        if (patient == programAlgorithm.getCurrentPatient()) {
+            g.setFill(Color.BLUE);
+            g.fillRect(screenPoint.getX() - 9, screenPoint.getY() - 9, 32 + measureText(String.valueOf(patient.getId()))[0], 18);
+        }
+
         g.drawImage(img, screenPoint.getX() - 8, screenPoint.getY() - 8);
 
         g.setFill(Color.WHITE);

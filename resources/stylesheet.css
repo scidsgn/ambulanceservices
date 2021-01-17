@@ -9,6 +9,15 @@
     -fx-font-family: "Inter";
 }
 
+.label {
+    -fx-text-fill: #aaa;
+
+    -fx-font-family: "Inter";
+    -fx-font-size: 10pt;
+
+    -fx-padding: 8px 16px;
+}
+
 .button {
     -fx-background-color: rgb(46, 46, 46);
     -fx-text-fill: white;
@@ -34,7 +43,9 @@
 
 #informationSub {
     -fx-font-family: "Inter";
-    -fx-font-size: 11pt;
+    -fx-font-size: 14pt;
+
+    -fx-padding: 0px 0px 0px 8px;
 }
 
 .table-view {
@@ -53,4 +64,20 @@
 
     -fx-border-color: transparent;
     -fx-border-width: 0px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #888;
+
+    -fx-font-family: "Inter";
+
+    -fx-padding: 4px;
 }
