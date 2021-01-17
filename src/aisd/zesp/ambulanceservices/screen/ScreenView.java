@@ -40,8 +40,6 @@ public class ScreenView extends GridPane {
 
     private MapCanvas canvas;
     private HBox transportButtonsHBox;
-    private HospitalVBox hospitalVBox;
-    private PatientVBox patientVBox;
     private PatientTableView patientTableView;
     private HospitalTableView hospitalTableView;
     private InformationVBox informationVBox;
@@ -88,8 +86,6 @@ public class ScreenView extends GridPane {
         this.timeline.setCycleCount(Timeline.INDEFINITE);
 
 
-        hospitalVBox = new HospitalVBox(programAlgorithm);
-        patientVBox = new PatientVBox(programAlgorithm);
         informationVBox = new InformationVBox(programAlgorithm);
         patientTableView = new PatientTableView(programAlgorithm);
         hospitalTableView = new HospitalTableView(programAlgorithm);
@@ -138,7 +134,6 @@ public class ScreenView extends GridPane {
                         canvas.autoAlignView();
                         canvas.draw();
                         hospitalTableView.refreshHospitalslist();
-                        // hospitalVBox.showHospital();
                     } catch (IllegalArgumentException ex) {
                         Alerts.showAlert(ex.getMessage());
                     }
@@ -162,7 +157,6 @@ public class ScreenView extends GridPane {
                         reader.loadPatients(programAlgorithm.getState(), file.getAbsolutePath());
                         canvas.draw();
                         patientTableView.refreshPatientslist();
-                        // patientVBox.showPatient();
                     } catch (IllegalArgumentException ex) {
                         errorMessage = ex.getMessage();
                         Alerts.showAlert(errorMessage);
@@ -171,45 +165,45 @@ public class ScreenView extends GridPane {
         );
 
 
-        HBox hbox = new HBox(4);
-        hbox.setAlignment(Pos.CENTER_LEFT);
-        hbox.setPadding(new Insets(4, 12, 4, 12));
+        HBox leftTopHBox = new HBox(4);
+        leftTopHBox.setAlignment(Pos.CENTER_LEFT);
+        leftTopHBox.setPadding(new Insets(4, 12, 4, 12));
 
-        hbox.getChildren().addAll(loadMap, loadPatientsList);
+        leftTopHBox.getChildren().addAll(loadMap, loadPatientsList);
 
 
-        VBox vbox = new VBox(0);
-        vbox.setStyle("-fx-border-style: solid;"
+        VBox leftVBox = new VBox(0);
+        leftVBox.setStyle("-fx-border-style: solid;"
                 + "-fx-border-width: 1;"
                 + "-fx-border-color: black");
-        vbox.setAlignment(Pos.BASELINE_LEFT);
-        vbox.setBackground(new Background(new BackgroundFill(Color.BLACK,
+        leftVBox.setAlignment(Pos.BASELINE_LEFT);
+        leftVBox.setBackground(new Background(new BackgroundFill(Color.BLACK,
                 CornerRadii.EMPTY,
                 Insets.EMPTY)));
 
-        vbox.getChildren().add(hbox);
+        leftVBox.getChildren().add(leftTopHBox);
 
-        vbox.setPrefHeight(50);
-        vbox.setPrefWidth(850);
-        VBox.setVgrow(vbox, Priority.ALWAYS);
+        leftVBox.setPrefHeight(50);
+        leftVBox.setPrefWidth(850);
+        VBox.setVgrow(leftVBox, Priority.ALWAYS);
 
         canvas = new MapCanvas(800, 762, programAlgorithm);
-        vbox.getChildren().add(canvas);
+        leftVBox.getChildren().add(canvas);
 
         canvas.setOnMouseClicked(eventHandler);
 
 
-        VBox vbox2 = new VBox(0);
-        vbox2.setAlignment(Pos.CENTER_RIGHT);
+        VBox rightVBox = new VBox(0);
+        rightVBox.setAlignment(Pos.CENTER_RIGHT);
 
-        vbox2.setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground, CornerRadii.EMPTY, Insets.EMPTY)));
+        rightVBox.setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground, CornerRadii.EMPTY, Insets.EMPTY)));
 
 
-        VBox vbox3 = new VBox(0);
+        VBox rightTopVBox = new VBox(0);
 
-        vbox3.setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground, CornerRadii.EMPTY, Insets.EMPTY)));
-        vbox3.setPrefHeight(300);
-        vbox3.setStyle("-fx-border-style: solid;" + "-fx-border-width: 1;" + "-fx-border-color: black");
+        rightTopVBox.setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground, CornerRadii.EMPTY, Insets.EMPTY)));
+        rightTopVBox.setPrefHeight(300);
+        rightTopVBox.setStyle("-fx-border-style: solid;" + "-fx-border-width: 1;" + "-fx-border-color: black");
 
         informationVBox.setBackground(new Background(new BackgroundFill(informationVBoxBackground, CornerRadii.EMPTY, Insets.EMPTY)));
         informationVBox.setMaxHeight(270);
@@ -220,7 +214,7 @@ public class ScreenView extends GridPane {
         transportButtonsHBox.setAlignment(Pos.TOP_LEFT);
 
         transportButtonsHBox.getChildren().addAll(start, next);
-        vbox3.getChildren().addAll(transportButtonsHBox, informationVBox);
+        rightTopVBox.getChildren().addAll(transportButtonsHBox, informationVBox);
 
         informationVBox.setPrefHeight(300);
         informationVBox.setStyle("-fx-border-style: solid;"
@@ -250,9 +244,9 @@ public class ScreenView extends GridPane {
         VBox.setVgrow(patientTableView, Priority.ALWAYS);
 
 
-        vbox2.getChildren().addAll(vbox3, hospitalTableView, patientTableView);
+        rightVBox.getChildren().addAll(rightTopVBox, hospitalTableView, patientTableView);
 
-        root.getChildren().addAll(vbox, vbox2);
+        root.getChildren().addAll(leftVBox, rightVBox);
         Scene scene = new Scene(root, 1300, 800);
 
         this.add(root, 0, 0);
