@@ -43,7 +43,7 @@ public class ScreenView extends GridPane {
     private PatientTableView patientTableView;
     private HospitalTableView hospitalTableView;
     private InformationVBox informationVBox;
-    private Button start;
+    private Button startButton, nextButton;
 
     private final Color informationVBoxBackground = Color.color(79 / 255., 79 / 255., 79 / 255.);
     private final Color Background = Color.color(40 / 255., 40 / 255., 40 / 255.);
@@ -106,17 +106,19 @@ public class ScreenView extends GridPane {
         root.setAlignment(Pos.CENTER);
 
 
-        start = new Button("");
-        start.setOnAction(this::handleStart);
+        startButton = new Button("");
+        startButton.setOnAction(this::handleStart);
         ImageView viewPlay = new ImageView(AppAssets.play);
-        start.setGraphic(viewPlay);
-        start.setPrefSize(40, 40);
+        startButton.setGraphic(viewPlay);
+        startButton.setPrefSize(40, 40);
+        startButton.setDisable(true);
 
-        Button next = new Button("");
-        next.setOnAction(this::handleNextStep);
+        nextButton = new Button("");
+        nextButton.setOnAction(this::handleNextStep);
         ImageView view = new ImageView(AppAssets.step);
-        next.setGraphic(view);
-        next.setPrefSize(40, 40);
+        nextButton.setGraphic(view);
+        nextButton.setPrefSize(40, 40);
+        nextButton.setDisable(true);
 
 
         FileChooser fileChooser = new FileChooser();
@@ -125,14 +127,11 @@ public class ScreenView extends GridPane {
 
 
         Button loadMap = new Button("Otwórz mapę...");
+        Button loadPatientsList = new Button("Dodaj pacjentów...");
+        loadPatientsList.setDisable(true);
 
         loadMap.setOnAction(
                 e -> {
-                    if (programAlgorithm.getState() != null) {
-                        Alerts.showAlert("Mapa jest już załadowana");
-                        return;
-                    }
-
                     fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt Files", "*.txt"));
                     File file = fileChooser.showOpenDialog(primaryStage);
 
@@ -146,22 +145,16 @@ public class ScreenView extends GridPane {
                         hospitalTableView.refreshHospitalslist();
 
                         showInfoMessage("Przed rozpoczęciem dodaj pacjentów");
+                        loadPatientsList.setDisable(false);
+                        loadMap.setDisable(true);
                     } catch (Exception ex) {
                         showErrorMessage(ex.getMessage());
-                        //Alerts.showAlert(ex.getMessage());
                     }
                 }
         );
 
-        Button loadPatientsList = new Button("Dodaj pacjentów...");
         loadPatientsList.setOnAction(
                 e -> {
-                    if (programAlgorithm.getState() == null) {
-                        Alerts.showAlert("Najpierw należy załadowac mapę państwa");
-
-                        return;
-                    }
-
                     fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt Files", "*.txt"));
                     File file = fileChooser.showOpenDialog(primaryStage);
 
@@ -172,9 +165,10 @@ public class ScreenView extends GridPane {
                         patientTableView.refreshPatientslist();
 
                         showInfoMessage("Czekanie na uruchomienie systemu");
+                        startButton.setDisable(false);
+                        nextButton.setDisable(false);
                     } catch (Exception ex) {
-                        errorMessage = ex.getMessage();
-                        Alerts.showAlert(errorMessage);
+                        showErrorMessage(ex.getMessage());
                     }
                 }
         );
@@ -199,7 +193,7 @@ public class ScreenView extends GridPane {
         leftVBox.setPrefWidth(850);
         VBox.setVgrow(leftVBox, Priority.ALWAYS);
 
-        canvas = new MapCanvas(800, 762, programAlgorithm);
+        canvas = new MapCanvas(800, 742, programAlgorithm);
         leftVBox.getChildren().add(canvas);
 
         canvas.setOnMouseClicked(eventHandler);
@@ -224,21 +218,23 @@ public class ScreenView extends GridPane {
         transportButtonsHBox.setBackground(new Background(new BackgroundFill(waitingBackground, CornerRadii.EMPTY, Insets.EMPTY)));
         transportButtonsHBox.setAlignment(Pos.TOP_LEFT);
 
-        transportButtonsHBox.getChildren().addAll(start, next);
+        transportButtonsHBox.getChildren().addAll(startButton, nextButton);
         rightTopVBox.getChildren().addAll(transportButtonsHBox, informationVBox);
 
         informationVBox.setPrefHeight(300);
-
+        informationVBox.setMaxHeight(479);
 
         patientTableView.setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground,
                 CornerRadii.EMPTY,
                 Insets.EMPTY)));
         patientTableView.setPrefHeight(300);
+        patientTableView.setMaxHeight(479);
 
         hospitalTableView.setBackground(new Background(new BackgroundFill(patientAndHospitalVBoxesBackground,
                 CornerRadii.EMPTY,
                 Insets.EMPTY)));
         hospitalTableView.setPrefHeight(300);
+        hospitalTableView.setMaxHeight(479);
 
 
         VBox.setVgrow(informationVBox, Priority.ALWAYS);
@@ -267,18 +263,18 @@ public class ScreenView extends GridPane {
 
     private void handleStop(ActionEvent actionEvent) {
         this.timeline.stop();
-        start.setOnAction(this::handleStart);
+        startButton.setOnAction(this::handleStart);
 
         ImageView viewStart = new ImageView(AppAssets.play);
-        start.setGraphic(viewStart);
+        startButton.setGraphic(viewStart);
     }
 
     private void handleStart(ActionEvent actionEvent) {
 
         ImageView viewStop = new ImageView(AppAssets.pause);
-        start.setGraphic(viewStop);
+        startButton.setGraphic(viewStop);
         this.timeline.play();
-        start.setOnAction(this::handleStop);
+        startButton.setOnAction(this::handleStop);
 
         handleNextStep(actionEvent);
     }
@@ -288,7 +284,7 @@ public class ScreenView extends GridPane {
 
         int flag = programAlgorithm.nextStep();
         if (flag == 1) {
-            start.setOnAction(this::handleStop);
+            startButton.setOnAction(this::handleStop);
         }
         canvas.draw();
         updateInfoBox();
@@ -313,6 +309,8 @@ public class ScreenView extends GridPane {
 
                 if (state.getPatientList().size() == 1) {
                     showInfoMessage("Czekanie na uruchomienie systemu");
+                    startButton.setDisable(false);
+                    nextButton.setDisable(false);
                 }
             }
         }

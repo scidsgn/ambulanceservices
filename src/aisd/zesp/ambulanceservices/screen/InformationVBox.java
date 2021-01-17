@@ -32,6 +32,7 @@ public class InformationVBox extends VBox {
         infoMainText.setId("informationMain");
         infoMainText.setWrappingWidth(350);
         infoSubText.setId("informationSub");
+        infoSubText.setWrappingWidth(350);
 
         this.getChildren().addAll(infoSubText, infoMainText);
     }

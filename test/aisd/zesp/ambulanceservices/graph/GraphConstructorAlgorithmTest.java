@@ -6,16 +6,15 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GraphConstructorTest {
-    private GraphConstructor gconst;
+class GraphConstructorAlgorithmTest {
+    private GraphConstructorAlgorithm gconst;
 
     @BeforeEach
     void createGraphConstructor() {
-        gconst = new GraphConstructor();
+        gconst = new GraphConstructorAlgorithm();
     }
 
     boolean compareLines(List<GraphConstructorLine> expected, List<GraphConstructorLine> actual) {

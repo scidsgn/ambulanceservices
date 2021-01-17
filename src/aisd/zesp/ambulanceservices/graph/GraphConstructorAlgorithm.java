@@ -5,7 +5,7 @@ import aisd.zesp.ambulanceservices.geometry.Point;
 
 import java.util.*;
 
-public class GraphConstructor {
+public class GraphConstructorAlgorithm {
     private final List<GraphConstructorLine> lines = new ArrayList<>();
     private final Set<Point> points = new HashSet<>();
 

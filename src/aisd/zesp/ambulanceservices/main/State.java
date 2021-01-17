@@ -5,7 +5,7 @@ import aisd.zesp.ambulanceservices.graham.ConvexHull;
 import aisd.zesp.ambulanceservices.graham.GrahamAlgorithm;
 import aisd.zesp.ambulanceservices.graph.DijkstraAlgorithm;
 import aisd.zesp.ambulanceservices.graph.Graph;
-import aisd.zesp.ambulanceservices.graph.GraphConstructor;
+import aisd.zesp.ambulanceservices.graph.GraphConstructorAlgorithm;
 
 import java.util.*;
 
@@ -15,7 +15,7 @@ public class State {
     private final List<Landmark> landmarkList;
 
     private final Set<Integer> connectionIds;
-    private final GraphConstructor graphConstructor;
+    private final GraphConstructorAlgorithm graphConstructor;
     private Graph<Point> connectionsGraph;
     private final List<List<List<Point>>> nextHospitalPaths;
     private ConvexHull convexHull;
@@ -25,7 +25,7 @@ public class State {
         patientList = new ArrayList<>();
         landmarkList = new ArrayList<>();
 
-        graphConstructor = new GraphConstructor();
+        graphConstructor = new GraphConstructorAlgorithm();
         connectionIds = new HashSet<>();
 
         nextHospitalPaths = new ArrayList<>();
