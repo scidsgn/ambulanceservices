@@ -10,7 +10,7 @@ public class Graph<T> {
 
     public void addNode(T node) throws IllegalArgumentException, NullPointerException {
         if (edges != null) {
-            throw new NullPointerException("Nie można dodać więcej wierzcołków, bo sfinalizowaniu grafu.");
+            throw new NullPointerException("Nie można dodać więcej wierzchołków, po sfinalizowaniu grafu.");
         }
 
         if (node == null) {
