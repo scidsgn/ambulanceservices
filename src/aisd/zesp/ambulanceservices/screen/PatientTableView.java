@@ -101,7 +101,7 @@ public class PatientTableView extends VBox {
     }
 
 
-    private static class LPatient {
+    public static class LPatient {
         private ImageView imageView;
         private final SimpleStringProperty name;
         private final SimpleStringProperty state;

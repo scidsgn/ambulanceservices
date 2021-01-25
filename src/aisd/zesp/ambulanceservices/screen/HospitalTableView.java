@@ -88,7 +88,7 @@ public class HospitalTableView extends VBox {
         table.setItems(data);
     }
 
-    private static class LHospital {
+    public static class LHospital {
         private ImageView imageView;
         private final SimpleStringProperty name;
         private final SimpleIntegerProperty vacantBeds;
